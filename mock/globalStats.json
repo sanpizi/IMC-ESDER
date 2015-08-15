@@ -1,0 +1,15 @@
+{
+    "sites": {
+    	"total": 1200,
+    	"online": 1120,
+    	"offline": 14,
+    	"alarm": 66
+    },
+    "alarms": {
+        "total": 151084,
+        "fatal": 3212,
+        "urgent": 0,
+        "important": 147872,
+        "general": 0
+    }
+}

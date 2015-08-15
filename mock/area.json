@@ -1,0 +1,25 @@
+{
+	"sitesCount": 1455,
+	"alarmStats": {
+		"total": 12,
+		"fatal": 3,
+		"urgent": 9,
+		"important": 13,
+		"general": 30
+	},
+	"areaList": [
+		{
+			"id": "17472",
+			"name": "Default area",
+			"sitesCount": 15,
+			"alarms": {
+				"total": 2,
+				"fatal": 1,
+				"urgent": 1,
+				"important": 0,
+				"general": 0				
+			},
+			"siteList": null
+		}
+	]
+}

@@ -1,0 +1,15 @@
+{
+    "siteList": [{
+        "id": 1,
+        "name": "KI0097",
+        "status": "offline",
+        "areaId": 1,
+        "areaName": "KIEV"
+    }, {
+        "id": 2,
+        "name": "KI0361",
+        "status": "offline",
+        "areaId": 1,
+        "areaName": "KIEV"
+    }]
+}

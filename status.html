@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>IMC-ESDER</title>
+		<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="scripts/highcharts.js"></script>
+		<script type="text/javascript" src="scripts/common.js"></script>
+		<script type="text/javascript" src="scripts/index.js"></script>
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="container">
+			<div class="sidebar shadow">
+				<div class="area-search">
+					<div class="search">
+						<input class="keywords" type="input" placeholder="Search Area" />
+					</div>
+				</div>
+				<div class="area-tree">Loading...</div>
+			</div>
+			<div class="main">
+				<div class="overview shadow">
+					<div class="totalSites">Total sites:<a style="margin-left:5px" title="View all sites" href="#" id="totalSitesNum"></a> ( 
+						<span title="Online" class="site-status-online"></span><a title="View all online sites" href="#" id="onlineSitesNum"></a>
+						<span style="margin-left:10px" title="Alarm" class="site-status-alarm"></span><a title="View all alarm sites" href="#" id="alarmSitesNum"></a>
+						<span style="margin-left:10px" title="Offline" class="site-status-offline"></span><a title="View all offline sites" href="#" id="offlineSitesNum"></a> )</div>
+					<div class="alarms">
+						<ul>
+							<li>Alarms:</li>
+							<li><span title="Fatal" class="alarm-fatal"></span>Fatal: <a href="#" id="fatalAlarmNum"></a></li>
+							<li><span title="Urgent" class="alarm-urgent"></span>Urgent: <a href="#" id="urgentAlarmNum"></a></li>
+							<li><span title="Important" class="alarm-important"></span>Important: <a href="#" id="importantAlarmNum"></a></li>
+							<li><span title="General" class="alarm-general"></span>General: <a href="#" id="generalAlarmNum"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="sitemap"></div>
+				<div class="statistics"></div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="footer">Copyright 2015 Huawei Technologies Co., Ltd. All rights reserved.</div>
+	</body>
+</html>

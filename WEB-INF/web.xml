@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <servlet>
+        <servlet-name>BootstrapServlet</servlet-name>
+        <servlet-class>com.zyt.ws.BootstrapServlet</servlet-class>
+        <init-param>
+            <param-name>dbHost</param-name>
+            <param-value>localhost</param-value>
+        </init-param>
+        <init-param>
+            <param-name>dbPort</param-name>
+            <param-value>1433</param-value>
+        </init-param>
+        <init-param>
+            <param-name>dbName</param-name>
+            <param-value>sdimc</param-value>
+        </init-param>
+        <init-param>
+            <param-name>userName</param-name>
+            <param-value>sa</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>000000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>connPoolCount</param-name>
+            <param-value>5</param-value>
+        </init-param>
+        <init-param>
+            <param-name>siteOnlineInternalInMinutes</param-name> <!-- in minutes -->
+            <param-value>15</param-value>
+        </init-param>
+        <load-on-startup>10</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BootstrapServlet</servlet-name>
+        <url-pattern>/only/for/bootstrap/not/for/external/usage</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GlobalStatsServlet</servlet-name>
+        <servlet-class>com.zyt.ws.GlobalStatsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GlobalStatsServlet</servlet-name>
+        <url-pattern>/globalStats</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AreasServlet</servlet-name>
+        <servlet-class>com.zyt.ws.AreasServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AreasServlet</servlet-name>
+        <url-pattern>/areas</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SitesServlet</servlet-name>
+        <servlet-class>com.zyt.ws.SitesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SitesServlet</servlet-name>
+        <url-pattern>/sites</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SiteDetailServlet</servlet-name>
+        <servlet-class>com.zyt.ws.SiteDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SiteDetailServlet</servlet-name>
+        <url-pattern>/site/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DailyAlarmStatsServlet</servlet-name>
+        <servlet-class>com.zyt.ws.DailyAlarmStatsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DailyAlarmStatsServlet</servlet-name>
+        <url-pattern>/alarmsStat</url-pattern>
+    </servlet-mapping>
+</web-app>
