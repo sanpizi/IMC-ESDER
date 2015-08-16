@@ -137,24 +137,24 @@ Page.prototype = {
 
     //调整树菜单高度
     initTreeHeight: function() {
-        var
-            $areaTree = $('.area-tree'),
-            $container = $('.container'),
-            headerHeight = $('.header').outerHeight(),
-            containerMargin = parseInt($container.css('margin-top')) + parseInt($container.css('margin-bottom')),
-            footerHeight = $('.footer').outerHeight(true),
-            searchHeight = $('.area-search').outerHeight(true),
-            areaTreePadding = parseInt($areaTree.css('padding-top')) + parseInt($areaTree.css('padding-bottom')),
-            mainHeight = $('.main').height(),
-            sideBarHeight = $(window).height() - headerHeight - containerMargin - footerHeight;
+        // var
+        //     $areaTree = $('.area-tree'),
+        //     $container = $('.container'),
+        //     headerHeight = $('.header').outerHeight(),
+        //     containerMargin = parseInt($container.css('margin-top')) + parseInt($container.css('margin-bottom')),
+        //     footerHeight = $('.footer').outerHeight(true),
+        //     searchHeight = $('.area-search').outerHeight(true),
+        //     areaTreePadding = parseInt($areaTree.css('padding-top')) + parseInt($areaTree.css('padding-bottom')),
+        //     mainHeight = $('.main').height(),
+        //     sideBarHeight = $(window).height() - headerHeight - containerMargin - footerHeight;
 
-        if (mainHeight > sideBarHeight) {
-            $areaTree.height(mainHeight - searchHeight - areaTreePadding);
-        } else {
-            $areaTree.height(sideBarHeight - searchHeight - areaTreePadding);
-        }
+        // if (mainHeight > sideBarHeight) {
+        //     $areaTree.height(mainHeight - searchHeight - areaTreePadding);
+        // } else {
+        //     $areaTree.height(sideBarHeight - searchHeight - areaTreePadding);
+        // }
 
-        //$('.area-tree').height($(window).height() - 205);
+        $('.area-tree').height($(window).height() - 205);
     },
 
     //初始化区域搜索框
@@ -435,7 +435,8 @@ $.fn.extend({
         var defaultOption = {
             paging: true,
             pageSize: 20,
-            currentPage: 1,
+            pageNum: 9, //分页码个数
+            currentPage: 234,
             order: null,
             filter: null
         };
@@ -470,15 +471,15 @@ $.fn.extend({
                     } : {},
                     dataType: "json",
                     success: function(data) {
-                        var data = data.alarmsList,
+                        var arrAlarms = data.alarmsList,
                             $tbody = self.element.find('tbody');
-                        if (data.length === 0) {
+                        if (arrAlarms.length === 0) {
                             $tbody.html('<tr><td colspan="' + self.columns.length + '" class="g-error">No data...</td></tr>');
                         } else {
                             var html = '';
-                            for (var i = 0; i < data.length; i++) {
+                            for (var i = 0; i < arrAlarms.length; i++) {
                                 var tr = '<tr>',
-                                    arrTd = data[i];
+                                    arrTd = arrAlarms[i];
                                 for (var j = 0; j < arrTd.length; j++) {
                                     tr += '<td>' + arrTd[j] + '</td>';
                                 };
@@ -486,13 +487,81 @@ $.fn.extend({
                                 html = html + tr;
                             };
 
-                            //分页
-                            if (self.option.paging) {
-                                var pageHtml = '<div class="paging"></div>'
-                            }
-
                             //填充数据到页面
                             $tbody.html(html);
+
+
+                            //是否分页
+                            if (self.option.paging) {
+                                var pageSize = self.option.pageSize,
+                                    totalRecords = data.totalRecords,
+                                    pageAmount = parseInt(totalRecords / pageSize) + 1,
+                                    currentPage = (function() {
+                                        var currentPage = 1;
+                                        if (self.option.currentPage > 0) {
+                                            if (self.option.currentPage < pageAmount) {
+                                                currentPage = self.option.currentPage;
+                                            } else {
+                                                currentPage = pageAmount;
+                                            }
+                                        }
+                                        return currentPage;
+                                    })(),
+                                    pageNum = pageAmount < self.option.pageNum ? pageAmount : self.option.pageNum,
+                                    pageStart = (function() {
+                                        var pageStart = 1,
+                                            offset = Math.floor(self.option.pageNum / 2);
+                                        if (currentPage > offset && currentPage <= pageAmount - offset) {
+                                            pageStart = currentPage - offset;
+                                        } else if (pageAmount < currentPage + offset) {
+                                            pageStart = pageAmount - pageNum + 1;
+                                        }
+                                        return pageStart;
+                                    })(),
+                                    pagingTmpl = Page.prototype.tmpl('<div class="paging">'+
+                                    '     <ul id="turnTo">'+
+                                    '         <li <%if (currentPage === 1) {%>class="p-disabled"<%}%>>Previous</li>'+
+                                    '<%if (pageStart > 1) {%>' +
+                                    '         <li >1</li>'+
+                                    '         <li class="p-disabled">...</li>'+
+                                    '<%}%>' +
+                                    '<%for (var k = 0; k < pageNum; k++) {%>'+
+                                    '         <li <%if (currentPage === pageStart + k) {%>class="p-disabled p-current"<%}%>><%=pageStart + k%></li>'+
+                                    '<%}%>'+
+                                    '<%if (pageStart + pageNum - 1 < pageAmount) {%>' +
+                                    '         <li class="p-disabled">...</li>'+
+                                    '         <li ><%=pageAmount%></li>'+
+                                    '<%}%>' +
+                                    '         <li <%if (currentPage === pageAmount) {%>class="p-disabled"<%}%>>Next</li>'+
+                                    '     </ul>'+
+                                    '     <div class="p-stat">Showing <%=recordStart%> to <%=recordEnd%> of <%=recordTotal%> entries</div>'+
+                                    '     <div style="clear:both"></div>'+
+                                    ' </div>');
+
+                                self.element.append(pagingTmpl({
+                                    recordStart: pageSize * (currentPage - 1) + 1,
+                                    recordEnd: totalRecords < currentPage * pageSize ? totalRecords : currentPage * pageSize,
+                                    recordTotal: totalRecords,
+                                    currentPage: currentPage,
+                                    pageAmount: pageAmount,
+                                    pageStart: pageStart,
+                                    pageNum: pageNum
+                                }));
+
+                                //绑定翻页事件
+                                $('#turnTo').on('click', 'li', function() {
+                                    $li = $(this);
+                                    if ($li.hasClass('p-disabled')) {
+                                        return;
+                                    }
+
+                                    //跳转页
+                                    self.turnTo($li.text());
+                                });
+                            }
+
+                            //重新调整菜单高度
+                            Page.prototype.initTreeHeight();
                         }
                     },
                     error: function(err) {
@@ -504,6 +573,11 @@ $.fn.extend({
             turnTo: function(pageNum) {
                 if (isNaN(pageNum)) {
                     //快捷翻页
+                    if (pageNum === 'Previous') {
+                        //
+                    } else {
+                        //
+                    }
                 } else {
                     //跳转到指定页
                 }

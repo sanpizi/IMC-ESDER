@@ -3,7 +3,7 @@ $(document).ready(function() {
         init: function() {
             this._init();
 
-            var $grid = $('table'),
+            var $grid = $('.grid'),
                 grid;
             
             grid = $grid.grid({
