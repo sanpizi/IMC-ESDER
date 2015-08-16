@@ -18,6 +18,9 @@ Page.prototype = {
         //生成 heaer
         this.renderHeader();
 
+        //生成 footer
+        this.renderFooter();
+
         //老版本的 chrome 在 domready 时有高度计算 bug，加setTimeout 可解决
         window.setTimeout(function() {
             self.initTreeHeight();
@@ -135,8 +138,15 @@ Page.prototype = {
         }));
     },
 
+    //生成 header
+    renderFooter: function() {
+        var footerHtml = 'Copyright 2015 Huawei Technologies Co., Ltd. All rights reserved.';
+        $('.footer').html(footerHtml);
+    },
+
     //调整树菜单高度
     initTreeHeight: function() {
+        //与右边内容同高
         // var
         //     $areaTree = $('.area-tree'),
         //     $container = $('.container'),
@@ -154,6 +164,7 @@ Page.prototype = {
         //     $areaTree.height(sideBarHeight - searchHeight - areaTreePadding);
         // }
 
+        //适应窗口高度
         $('.area-tree').height($(window).height() - 205);
     },
 
@@ -427,41 +438,59 @@ $.fn.extend({
     grid: function(option) {
         var $grid = $(this);
 
-        if (!(option && option.ajax.length)) {
+        if (!option) {
+            console.error('Grid 缺少配置。');
+            return;
+        }
+        if (!option.ajax.length) {
             console.error('Grid 缺少 url 配置。');
+            return;
+        }
+        if (!option.header.length) {
+            console.error('Grid 缺少 header 配置。');
             return;
         }
 
         var defaultOption = {
             paging: true,
-            pageSize: 20,
+            pageSize: 10,
             pageNum: 9, //分页码个数
-            currentPage: 234,
+            currentPage: 1,
             order: null,
             filter: null
         };
 
+        //合并配置
         var option = $.extend(defaultOption, option);
 
-        var arrColumns = (function() {
-            var arrCols = [];
-            $grid.find('thead th').each(function(index, el) {
-                arrCols.push(el.innerText);
-            });
-
-            return arrCols;
-        })();
-
+        //表格对象
         var grid = {
-            element: $grid,
-            columns: arrColumns,
-            option: option,
+            element: $grid, //表格所在 dom 元素
+            option: option, //表格配置
+
+            //初始化表格
             init: function() {
-                var self = this;
+                var self = this,
+                    gridHtml = Page.prototype.tmpl('<table cellpadding="0" cellspacing="0" >'+
+                    '    <thead>'+
+                    '        <tr>'+
+                    '<%for (var i = 0; i < arrCols.length; i++) {%>'+
+                    '            <th><%=arrCols[i]%></th>'+
+                    '<%}%>'+
+                    '        </tr>'+
+                    '    </thead>'+
+                    '    <tbody></tbody>'+
+                    '</table>', {
+                        arrCols: self.option.header
+                    });
 
-                this.loading();
+                //生成表头与基本表格结构
+                $grid.html(gridHtml);
 
-                //取数据
+                //显示加载中
+                this.loading(); 
+
+                //取表格数据
                 $.ajax({                    
                     type: "GET",
                     url: this.option.ajax,
@@ -474,13 +503,14 @@ $.fn.extend({
                         var arrAlarms = data.alarmsList,
                             $tbody = self.element.find('tbody');
                         if (arrAlarms.length === 0) {
-                            $tbody.html('<tr><td colspan="' + self.columns.length + '" class="g-error">No data...</td></tr>');
+                            $tbody.html('<tr><td colspan="' + self.option.header.length + '" class="g-error">No data...</td></tr>');
                         } else {
-                            var html = '';
-                            for (var i = 0; i < arrAlarms.length; i++) {
+                            var html = '',
+                                recordsNum = self.option.pageSize < arrAlarms.length ? self.option.pageSize : arrAlarms.length;
+                            for (var i = 0; i < recordsNum; i++) {
                                 var tr = '<tr>',
                                     arrTd = arrAlarms[i];
-                                for (var j = 0; j < arrTd.length; j++) {
+                                for (var j = 0; j < self.option.header.length; j++) {
                                     tr += '<td>' + arrTd[j] + '</td>';
                                 };
                                 tr += '</tr>';
@@ -489,7 +519,6 @@ $.fn.extend({
 
                             //填充数据到页面
                             $tbody.html(html);
-
 
                             //是否分页
                             if (self.option.paging) {
@@ -535,10 +564,9 @@ $.fn.extend({
                                     '         <li <%if (currentPage === pageAmount) {%>class="p-disabled"<%}%>>Next</li>'+
                                     '     </ul>'+
                                     '     <div class="p-stat">Showing <%=recordStart%> to <%=recordEnd%> of <%=recordTotal%> entries</div>'+
-                                    '     <div style="clear:both"></div>'+
                                     ' </div>');
 
-                                self.element.append(pagingTmpl({
+                                var pagingHtml = pagingTmpl({
                                     recordStart: pageSize * (currentPage - 1) + 1,
                                     recordEnd: totalRecords < currentPage * pageSize ? totalRecords : currentPage * pageSize,
                                     recordTotal: totalRecords,
@@ -546,7 +574,10 @@ $.fn.extend({
                                     pageAmount: pageAmount,
                                     pageStart: pageStart,
                                     pageNum: pageNum
-                                }));
+                                });
+
+                                //插入表格内容
+                                self.element.append(pagingHtml);
 
                                 //绑定翻页事件
                                 $('#turnTo').on('click', 'li', function() {
@@ -566,24 +597,36 @@ $.fn.extend({
                     },
                     error: function(err) {
                         console.error('加载表格数据失败。')
-                        self.element.find('tbody').html('<tr><td colspan="' + self.columns.length + '" class="g-error">No data...</td></tr>');
+                        self.element.find('tbody').html('<tr><td colspan="' + self.option.header.length + '" class="g-error">No data...</td></tr>');
                     }
                 });
             },
+
+            //翻页
             turnTo: function(pageNum) {
                 if (isNaN(pageNum)) {
                     //快捷翻页
                     if (pageNum === 'Previous') {
-                        //
-                    } else {
-                        //
+                        this.option.currentPage--;
+                    } else {                        
+                        this.option.currentPage++;
                     }
                 } else {
                     //跳转到指定页
+                    this.option.currentPage = parseInt(pageNum);
                 }
+
+                //重新初始化表格
+                this.init();
             },
+
+            //表格显示"Loading..."
             loading: function() {
-                this.element.find('tbody').html('<tr><td colspan="' + this.columns.length + '" class="g-loading">Loading...</td></tr>');
+                if (this.option.paging) {
+                    this.element.find('.paging').remove();
+                }
+                
+                this.element.find('tbody').html('<tr><td colspan="' + this.option.header.length + '" class="g-loading">Loading...</td></tr>');
             }
         }
 

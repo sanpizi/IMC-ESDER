@@ -7,7 +7,8 @@ $(document).ready(function() {
                 grid;
             
             grid = $grid.grid({
-                "ajax": "/mock/alarms.json"
+                "ajax": "/mock/alarms.json",
+                "header": ["Site Id", "Site Name", "Signal Name", "Sampling Data", "Sampling Time", "Status"]
             });
 
             $grid.data('grid', grid);

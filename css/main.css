@@ -442,18 +442,20 @@ ul, li {
 
 .paging {
     padding-top: 10px;
-    /*color: #999;*/
+    height: 20px;
 }
 .paging ul {
     float: left;
 }
 .paging li {
-    display: inline-block;
+    display: block;
+    float: left;
     color: #324fe1;
     cursor: pointer;
     padding: 0 5px;
     text-align: center;
     border-radius: 4px;
+    margin-right: 1px;
 }
 .paging li:hover {
     background-color: #eee;
