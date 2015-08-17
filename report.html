@@ -1,34 +1,77 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>IMC-ESDER</title>
-<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="scripts/highcharts.js"></script>
-<script type="text/javascript" src="scripts/common.js"></script>
-<script type="text/javascript" src="scripts/index.js"></script>
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-</head>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>IMC-ESDER</title>
+		<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="scripts/common.js"></script>
+		<script type="text/javascript" src="scripts/report.js"></script>
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="container">
+			<div class="sidebar shadow">
+				<div class="area-search">
+					<div class="search">
+						<input class="keywords" type="input" placeholder="Search Area" />
+					</div>
+				</div>
+				<div class="area-tree">Loading...</div>
+			</div>
+			<div class="main">
+				<div class="content">
+					<h1>History Data</h1>
+					<div class="query">
+						<div class="label">Area:</div>
+						<div class="condition">
+							<select id="areaId">
+								<option value="">-- all --</option>
+								<option value="1">area1</option>
+								<option value="2">area2</option>
+								<option value="3">area3</option>
+								<option value="4">area4</option>
+							</select>
+						</div>
 
-<body>
-	<div class="header"></div>
+						<div class="label">Site:</div>
+						<div class="condition">
+							<select id="siteId">
+								<option value="">-- all --</option>
+								<option value="1">site1</option>
+								<option value="2">site2</option>
+								<option value="3">site3</option>
+								<option value="4">site4</option>
+							</select>
+						</div>
 
-	<div class="container">
-		<div class="sidebar shadow">
-			<div class="area-search">
-				<div class="search">
-					<input class="keywords" type="input" placeholder="Search Area" />
+						<div class="label">Status:</div>
+						<div class="condition">
+							<select id="areaId">
+								<option value="">-- all --</option>
+								<option value="fatal">Fatal</option>
+								<option value="ugrent">Ugrent</option>
+								<option value="important">Important</option>
+								<option value="general">General</option>
+							</select>
+						</div>
+
+						<div class="label">Date:</div>
+						<div class="condition">
+							<input class="date" type="text"></input>
+							-
+							<input class="date" type="text"></input>
+						</div>
+
+						<div>
+							<input class="bt" type="button" value="Filter"></input>
+						</div>
+					</div>
+					<div class="grid"></div>
 				</div>
 			</div>
-			<div class="area-tree">Loading...</div>
+			<div style="clear:both"></div>
 		</div>
-		<div class="main">
-			TODO
-		</div>
-
-		<div style="clear:both"></div>
-	</div>
-
-	<div class="footer"></div>
-</body>
+		<div class="footer"></div>
+	</body>
 </html>
