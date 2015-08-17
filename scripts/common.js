@@ -116,7 +116,7 @@ Page.prototype = {
             '			<ul>' +
             '				<li class="dropdown"><a href="javascript:void(0);"><%=username%><span class="arrow-down"></span></a>' +
             '					<ul>' +
-            '						<li><a href="modify-account.html">Modify account</a></li>' +
+            '						<li><a href="change-password.html">Change password</a></li>' +
             '						<li><a id="logout" href="javascript:void(0);">Log out</a></li>' +
             '					</ul>' +
             '				</li>' +
