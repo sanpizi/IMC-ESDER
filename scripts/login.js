@@ -65,7 +65,7 @@ $(document).ready(function() {
                 success: function(data) {
                     if (data.result === 0) {
                         document.cookie = "username=" + $username.val();
-                        window.location.href = '/status.html';
+                        window.location.href = '/overview.html';
                     } else {
                         window.alert('The username or password is incorrect.');
                         $username.prop('disabled', false).focus();
