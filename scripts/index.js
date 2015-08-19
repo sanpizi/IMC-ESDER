@@ -73,7 +73,7 @@ $(document).ready(function() {
 
                     //绑定站点点击事件
                     $('#sites-matrix').on('click','span', function() {
-                        window.location.href = '/site-details.html?siteId=' + this.getAttribute('data-site-id');
+                        window.location.href = '/realtime-details.html?siteId=' + this.getAttribute('data-site-id');
                     });
                 },
                 error: function(err) {

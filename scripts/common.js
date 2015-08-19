@@ -125,10 +125,10 @@ Page.prototype = {
             '		</div>' +
             '		<div class="navbar">' +
             '			<ul>' +
-            '				<li><a href="status.html" <%if (!path.indexOf("/status.html")) {%>class="selected"<%}%>>Status</a></li>' +
-            '				<li><a href="audit.html" <%if (!path.indexOf("/audit.html")) {%>class="selected"<%}%>>Audit</a></li>' +
-            '				<li><a href="report.html" <%if (!path.indexOf("/report.html")) {%>class="selected"<%}%>>Report</a></li>' +
-            '				<li><a href="settings.html" <%if (!path.indexOf("/settings.html")) {%>class="selected"<%}%>>Settings</a></li>' +
+            '				<li><a href="overview.html" <%if (!path.indexOf("/overview")) {%>class="selected"<%}%>>Overview</a></li>' +
+            '				<li><a href="realtime.html" <%if (!path.indexOf("/realtime")) {%>class="selected"<%}%>>Realtime</a></li>' +
+            '				<li><a href="history.html" <%if (!path.indexOf("/history")) {%>class="selected"<%}%>>History</a></li>' +
+            '				<li><a href="settings.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
             '			</ul>' +
             '		</div>');
 
@@ -371,7 +371,7 @@ Page.prototype = {
                     if (data.siteList.length) {
                         //生成 html
                         var html = '';
-                        var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status%>"></span><a<%if (selected) {%> class="selected"<%}%> href="site-details.html?siteId=<%=id%>"><%=name%></a></li>');
+                        var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status%>"></span><a<%if (selected) {%> class="selected"<%}%> href="realtime-details.html?siteId=<%=id%>"><%=name%></a></li>');
                         for (var i = 0, l = data.siteList.length; i < l; i++) {
                             data.siteList[i].selected = self.params.siteId == data.siteList[i].id;
                             html += siteTmpl(data.siteList[i]);
@@ -631,6 +631,8 @@ $.fn.extend({
         }
 
         grid.init();
+
+        grid.element.data('grid', grid);
 
         return grid;
     }
