@@ -361,9 +361,9 @@ input,select,textarea,button {
     margin-left: 10px;
 }
 .main .sitemap {
-    height: 450px;
+    min-height: 520px;
     background: #fff url(../images/map.gif) no-repeat center center;
-    /*background-size: auto 100%;*/
+    background-size: auto 100%;
     margin-top: 15px;
 }
 #sites-matrix {

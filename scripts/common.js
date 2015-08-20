@@ -127,7 +127,7 @@ Page.prototype = {
             '			<ul>' +
             '				<li><a href="overview.html" <%if (!path.indexOf("/overview")) {%>class="selected"<%}%>>Overview</a></li>' +
             '				<li><a href="realtime.html" <%if (!path.indexOf("/realtime")) {%>class="selected"<%}%>>Realtime</a></li>' +
-            '				<li><a href="history.html" <%if (!path.indexOf("/history")) {%>class="selected"<%}%>>History</a></li>' +
+            '				<li><a href="report.html" <%if (!path.indexOf("/report")) {%>class="selected"<%}%>>Report</a></li>' +
             '				<li><a href="settings.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
             '			</ul>' +
             '		</div>');
