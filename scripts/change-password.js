@@ -65,7 +65,8 @@ $(document).ready(function() {
                     },
                     success: function(data) {
                         if (data.result === 0) {
-                            alert('Change password successful.')
+                            alert('Change password successful! You need to log in again.')
+                            location.href = '/index.html';
                         } else {
                             alert(data.errMsg);
                         }
