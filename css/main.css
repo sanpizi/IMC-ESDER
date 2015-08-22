@@ -25,7 +25,7 @@ input,select,textarea,button {
 .alarm-urgent, 
 .alarm-important, 
 .alarm-general, 
-.site-status-online, 
+.site-status-normal, 
 .site-status-offline, 
 .site-status-alarm {
     display: inline-block;
@@ -48,7 +48,7 @@ input,select,textarea,button {
 .alarm-general {
     background-color: #06c;
 }
-.site-status-online {
+.site-status-normal {
     background-color: #0c0;
 }
 .site-status-offline {

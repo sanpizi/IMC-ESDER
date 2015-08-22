@@ -24,7 +24,7 @@ $(document).ready(function() {
                 success: function(data) {                    
                     //站点总数
                     $('#totalSitesNum').text(data.sites.total);
-                    $('#onlineSitesNum').text(data.sites.online);
+                    $('#onlineSitesNum').text(data.sites.normal);
                     $('#alarmSitesNum').text(data.sites.alarm);
                     $('#offlineSitesNum').text(data.sites.offline);
 
@@ -44,18 +44,21 @@ $(document).ready(function() {
         //渲染矩阵
         renderSitesMatrix: function() {
             var slef = this,
-                maxSites = 2000; //站点矩阵最大显示数量
+                maxSites = 1000; //站点矩阵最大显示数量
 
             //获取所有站点信息
             $.ajax({
                 type: "GET",
                 url: "/sites",
-                data: {},
+                data: {
+                    startRecord: 1,
+                    recordNum: maxSites
+                },
                 dataType: "json",
                 success: function(data) {
                     var arrSites = data.siteList || [],
                         html = '<div id="sites-matrix">',
-                        siteTmpl = slef.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Name: <%=siteName%>&#10;Area: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status%>"></span>');
+                        siteTmpl = slef.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Name: <%=siteName%>&#10;Area: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status.toLowerCase()%>"></span>');
 
                     for (var i = 0; i < arrSites.length && i < maxSites; i++) {
                         html += siteTmpl({

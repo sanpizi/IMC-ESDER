@@ -4,6 +4,9 @@ $(document).ready(function() {
             var self = this,
                 $login = $('#login');
 
+            //获取 url 参数
+            this.getUrlParams();
+
             //设置焦点
             $('#username').focus();
 
@@ -30,7 +33,8 @@ $(document).ready(function() {
 
         //登录
         login: function() {
-            var $username = $('#username'),
+            var self = this,
+                $username = $('#username'),
                 $password = $('#password'),
                 $login = $('#login');
 
@@ -56,23 +60,29 @@ $(document).ready(function() {
             //提交验证表单
             $.ajax({
                 type: "get",
-                url: "/mock/login.json",
+                url: "/login",
                 data: {
-                    "username": !$username.val(),
-                    "password": !$password.val()
+                    "username": $username.val(),
+                    "password": $password.val()
                 },
                 dataType: "json",
                 success: function(data) {
                     if (data.result === 0) {
                         document.cookie = "username=" + $username.val();
-                        window.location.href = '/overview.html';
+                        if (self.params.goUrl) {
+                            window.location.href = self.params.goUrl;
+                        } else {
+                            window.location.href = '/overview.html';
+                        }                        
                     } else {
                         window.alert('The username or password is incorrect.');
-                        $username.prop('disabled', false).focus();
+                        $login.prop('disabled', false);
+                        $username.focus();
                     }
                 },
                 error: function(error) {
-                    $username.prop('disabled', false).focus();
+                    $login.prop('disabled', false)
+                    $username.focus();
                     //window.alert('Login failed.');
                     console.error('Login failed.');
                 }

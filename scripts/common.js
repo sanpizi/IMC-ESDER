@@ -12,6 +12,14 @@ Page.prototype = {
     init: function() {
         var self = this;
 
+        //检查 session
+        $(document).ajaxError(function(event, xhr, settings, thrownError) {
+            var currentUrl = encodeURI(location.href);
+            if (xhr.status === 401) {
+                location.href = '/index.html?goUrl=' + currentUrl;
+            }
+        });
+
         //获取 url 参数
         this.getUrlParams();
 
@@ -411,7 +419,7 @@ Page.prototype = {
     logout: function() {
         $.ajax({
             type: "get",
-            url: "/mock/logout.json",
+            url: "/logout",
             dataType: "json",
             success: function(data) {
                 window.location.href = '/index.html';

@@ -85,4 +85,65 @@
         <servlet-name>DailyAlarmStatsServlet</servlet-name>
         <url-pattern>/alarmsStat</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.zyt.ws.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.zyt.ws.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyAccountServlet</servlet-name>
+        <servlet-class>com.zyt.ws.ModifyAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyAccountServlet</servlet-name>
+        <url-pattern>/modifyAccount</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>RealAlarmsServlet</servlet-name>
+        <servlet-class>com.zyt.ws.RealAlarmsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RealAlarmsServlet</servlet-name>
+        <url-pattern>/alarms</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HisAlarmsServlet</servlet-name>
+        <servlet-class>com.zyt.ws.HisAlarmsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HisAlarmsServlet</servlet-name>
+        <url-pattern>/hisalarms</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.zyt.ws.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <servlet-name>AreasServlet</servlet-name>
+        <servlet-name>DailyAlarmStatsServlet</servlet-name>
+        <servlet-name>GlobalStatsServlet</servlet-name>
+        <servlet-name>ModifyAccountServlet</servlet-name>
+        <servlet-name>SiteDetailServlet</servlet-name>
+        <servlet-name>SitesServlet</servlet-name>
+        <servlet-name>RealAlarmsServlet</servlet-name>
+        <servlet-name>HisAlarmsServlet</servlet-name>
+    </filter-mapping>
 </web-app>
