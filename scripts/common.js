@@ -12,10 +12,11 @@ Page.prototype = {
     init: function() {
         var self = this;
 
-        //检查 session
+        //当 session 丢失以后
         $(document).ajaxError(function(event, xhr, settings, thrownError) {
             var currentUrl = encodeURI(location.href);
             if (xhr.status === 401) {
+                alert('Session timeout, you need to log in again.');
                 location.href = '/index.html?goUrl=' + currentUrl;
             }
         });
