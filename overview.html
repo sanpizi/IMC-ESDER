@@ -21,17 +21,17 @@
 			</div>
 			<div class="main">
 				<div class="overview shadow">
-					<div class="totalSites">Total sites:<a style="margin-left:5px" title="View all sites" href="#" id="totalSitesNum"></a> ( 
-						<span title="Normal" class="site-status-normal"></span><a title="View all online sites" href="#" id="onlineSitesNum"></a>
-						<span style="margin-left:10px" title="Alarm" class="site-status-alarm"></span><a title="View all alarm sites" href="#" id="alarmSitesNum"></a>
-						<span style="margin-left:10px" title="Offline" class="site-status-offline"></span><a title="View all offline sites" href="#" id="offlineSitesNum"></a> )</div>
+					<div class="totalSites">Total sites:<a style="margin-left:5px" title="View all sites" href="/realtime.html" id="totalSitesNum"></a> ( 
+						<span title="Normal" class="site-status-normal"></span><a title="View all online sites" href="/realtime.html?status=normal" id="onlineSitesNum"></a>
+						<span style="margin-left:10px" title="Alarm" class="site-status-alarm"></span><a title="View all alarm sites" href="/realtime.html?status=alarm" id="alarmSitesNum"></a>
+						<span style="margin-left:10px" title="Offline" class="site-status-offline"></span><a title="View all offline sites" href="/realtime.html?status=offline" id="offlineSitesNum"></a> )</div>
 					<div class="alarms">
 						<ul>
-							<li>Alarms:</li>
-							<li><span title="Fatal" class="alarm-fatal"></span>Fatal: <a href="#" id="fatalAlarmNum"></a></li>
-							<li><span title="Urgent" class="alarm-urgent"></span>Urgent: <a href="#" id="urgentAlarmNum"></a></li>
-							<li><span title="Important" class="alarm-important"></span>Important: <a href="#" id="importantAlarmNum"></a></li>
-							<li><span title="General" class="alarm-general"></span>General: <a href="#" id="generalAlarmNum"></a></li>
+							<li>Total alarms:</li>
+							<li><span title="Fatal" class="alarm-fatal"></span>Fatal: <a href="/realtime.html?status=fatal" id="fatalAlarmNum"></a></li>
+							<li><span title="Urgent" class="alarm-urgent"></span>Urgent: <a href="/realtime.html?status=urgent" id="urgentAlarmNum"></a></li>
+							<li><span title="Important" class="alarm-important"></span>Important: <a href="/realtime.html?status=important" id="importantAlarmNum"></a></li>
+							<li><span title="General" class="alarm-general"></span>General: <a href="/realtime.html?status=general" id="generalAlarmNum"></a></li>
 						</ul>
 					</div>
 				</div>

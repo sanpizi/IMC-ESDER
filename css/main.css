@@ -353,7 +353,7 @@ input,select,textarea,button {
 .main .overview a:hover {
     color: #223599;
 }
-.main .overview .alarms {
+.main  .alarms {
     float: right;
 }
 .main .overview .alarms li {
@@ -365,6 +365,7 @@ input,select,textarea,button {
     background: #fff url(../images/map.gif) no-repeat center center;
     background-size: auto 100%;
     margin-top: 15px;
+    line-height: 0;
 }
 #sites-matrix {
     padding: 10px;
@@ -419,6 +420,23 @@ input,select,textarea,button {
 .main .pannel .pannel-content li span.label {
    display: inline-block;
    width: 300px;
+}
+
+.main .site-details {
+    padding: 0px 20px;
+    height: 40px;
+    line-height: 40px;
+}
+.main .site-details-title {
+    float: left;
+    font-size: 16px;
+}
+.main .site-details .alarms {
+    float: right;
+}
+.main .site-details .alarms li {
+    display: inline-block;
+    margin-left: 10px;
 }
 
 .main .content {
@@ -520,7 +538,7 @@ input,select,textarea,button {
 
 .form {
     border-top: 1px solid #ddd;
-    margin: 15px 0;
+    margin-top: 15px;
     padding: 20px 0;
 }
 .form .f-item {
@@ -550,7 +568,13 @@ input,select,textarea,button {
 }
 .form .f-bt input {
     padding: 4px 15px;
+    margin-right: 10px;
 }
+.form table input {
+    width: 100px;
+}
+
+
 /*
 .form .f-bt input {
     background-color: #425f94;

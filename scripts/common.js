@@ -499,7 +499,7 @@ $.fn.extend({
 
                 //数据查询参数
                 var queryData = self.option.paging ? $.extend({
-                        start: self.option.pageSize * (self.option.currentPage - 1),
+                        start: self.option.pageSize * (self.option.currentPage - 1) + 1,
                         amount: self.option.pageSize
                     }, self.option.params) : self.option.params;
 
@@ -540,7 +540,7 @@ $.fn.extend({
                             if (self.option.paging) {
                                 var pageSize = self.option.pageSize,
                                     totalRecords = data.totalRecords,
-                                    pageAmount = parseInt(totalRecords / pageSize) + 1,
+                                    pageAmount = Math.ceil(totalRecords / pageSize),
                                     currentPage = (function() {
                                         var currentPage = 1;
                                         if (self.option.currentPage > 0) {

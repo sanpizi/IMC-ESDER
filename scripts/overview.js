@@ -44,7 +44,7 @@ $(document).ready(function() {
         //渲染矩阵
         renderSitesMatrix: function() {
             var slef = this,
-                maxSites = 1000; //站点矩阵最大显示数量
+                maxSites = 2000; //站点矩阵最大显示数量
 
             //获取所有站点信息
             $.ajax({

@@ -22,7 +22,92 @@
 			<div class="area-tree">Loading...</div>
 		</div>
 		<div class="main">
-			TODO
+			<div class="content">
+				<h1>Parameter Settings</h1>
+				<div class="query" style="margin-bottom:0;">
+					<div style="float:right">
+						<span style="margin-right:5px;">Affect sites:</span>
+						<span id="affectSites">1200</span>
+					</div>
+
+					<div class="label">Area:</div>
+					<div class="condition">
+						<select id="areaId">
+							<option value="">-- all --</option>
+							<option value="1">area1</option>
+							<option value="2">area2</option>
+							<option value="3">area3</option>
+							<option value="4">area4</option>
+						</select>
+					</div>
+
+					<div class="label">Site:</div>
+					<div class="condition">
+						<select id="areaId">
+							<option value="">-- all --</option>
+							<option value="1">Site 1</option>
+							<option value="2">Site 2</option>
+						</select>
+					</div>
+
+				</div>
+
+				<div class="grid form" style="border:none;margin-top:0px;">
+					<table cellspacing="0" cellpadding="0">
+						<thead>
+							<tr>
+								<th width="260">Parameter</th>
+								<th width="120">Value</th>
+								<th width="70">Unit</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>DeviceReset</td>
+								<td><input type="input" value="0" /></td>
+								<td>-</td>
+								<td>The settting value is 21930, the device will reset.</td>
+							</tr>
+							<tr>
+								<td>AC1Status</td>
+								<td><input type="input" value="Stop" /></td>
+								<td>-</td>
+								<td>0: stop, 1: run.</td>
+							</tr>
+							<tr>
+								<td>AC2Status</td>
+								<td><input type="input" value="Stop" /></td>
+								<td>-</td>
+								<td>0: stop, 1: run.</td>
+							</tr>
+							<tr>
+								<td>FanStatus</td>
+								<td><input type="input" value="Stop" /></td>
+								<td>-</td>
+								<td>0: stop, 1: run.</td>
+							</tr>
+							<tr>
+								<td>Tun off fan when low voltage</td>
+								<td><input type="input" value="1" /></td>
+								<td>-</td>
+								<td>0: Disable, 1: Enable (default).</td>
+							</tr>
+							<tr>
+								<td>Indoor and outdoor temperature diffrence</td>
+								<td><input type="input" value="2" /></td>
+								<td>Celsius</td>
+								<td>Scope: [1, 10], default vaule: 2.</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="f-bt" style="border:none;margin-top:5px;">
+						<input type="button" name="save" id="save" value="Save" />
+						<!-- <input type="button" name="restore" id="save" value="Restore defaults" /> -->
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div style="clear:both"></div>

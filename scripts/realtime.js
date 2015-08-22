@@ -8,6 +8,7 @@ $(document).ready(function() {
             
             grid = $grid.grid({
                 ajax: "/alarms",
+                pageSize: 20,
                 params: {
                     //查询参数
                 },
