@@ -7,8 +7,49 @@ $(document).ready(function() {
                 grid;
             
             grid = $grid.grid({
-                "ajax": "/mock/alarms.json",
-                "header": ["Site Id", "Site Name", "Signal Name", "Sampling Data", "Sampling Time", "Status"]
+                ajax: "/hisalarms",
+                params: {
+                    //查询参数
+                },
+                columns: [
+                    {
+                        header: "Site Id",
+                        content: function(data) {
+                            return data.siteId;
+                        }
+                    },
+                    {
+                        header: "Site Name",
+                        content: function(data) {
+                            return data.siteName;
+                        }
+                    },
+                    {
+                        header: "Signal Name",
+                        content: function(data) {
+                            return data.signalName;
+                        }
+                    },
+                    {
+                        header: "Sampling Data",
+                        content: function(data) {
+                            return data.samplingData;
+                        }
+                    },
+                    {
+                        header: "Sampling Time",
+                        content: function(data) {
+                            return data.samplingTime;
+                        }
+                    },
+                    {
+                        header: "Status",
+                        content: function(data) {
+                            var html = data.warning.toLowerCase() === 'yes' ? '<span style="color:#f00">Warning</span>' : 'Normal'
+                            return html;
+                        }
+                    }
+                ]
             });
 
             $grid.data('grid', grid);

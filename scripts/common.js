@@ -454,7 +454,7 @@ $.fn.extend({
             console.error('Grid 缺少 url 配置。');
             return;
         }
-        if (!option.header.length) {
+        if (!option.columns.length) {
             console.error('Grid 缺少 header 配置。');
             return;
         }
@@ -464,12 +464,11 @@ $.fn.extend({
             pageSize: 10,
             pageNum: 9, //分页码个数
             currentPage: 1,
-            order: null,
-            filter: null
+            params: {}
         };
 
         //合并配置
-        var option = $.extend(defaultOption, option);
+        var option = $.extend(true, defaultOption, option);
 
         //表格对象
         var grid = {
@@ -483,13 +482,13 @@ $.fn.extend({
                     '    <thead>'+
                     '        <tr>'+
                     '<%for (var i = 0; i < arrCols.length; i++) {%>'+
-                    '            <th><%=arrCols[i]%></th>'+
+                    '            <th><%=arrCols[i].header%></th>'+
                     '<%}%>'+
                     '        </tr>'+
                     '    </thead>'+
                     '    <tbody></tbody>'+
                     '</table>', {
-                        arrCols: self.option.header
+                        arrCols: self.option.columns
                     });
 
                 //生成表头与基本表格结构
@@ -498,28 +497,37 @@ $.fn.extend({
                 //显示加载中
                 this.loading(); 
 
+                //数据查询参数
+                var queryData = self.option.paging ? $.extend({
+                        start: self.option.pageSize * (self.option.currentPage - 1),
+                        amount: self.option.pageSize
+                    }, self.option.params) : self.option.params;
+
                 //取表格数据
                 $.ajax({                    
                     type: "GET",
                     url: this.option.ajax,
-                    data: self.option.paging ? {
-                        startIndex: self.option.pageSize * (self.option.currentPage - 1),
-                        amount: self.option.pageSize
-                    } : {},
+                    data: queryData,
                     dataType: "json",
                     success: function(data) {
                         var arrAlarms = data.alarmsList,
                             $tbody = self.element.find('tbody');
                         if (arrAlarms.length === 0) {
-                            $tbody.html('<tr><td colspan="' + self.option.header.length + '" class="g-error">No data...</td></tr>');
+                            $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
                         } else {
                             var html = '',
                                 recordsNum = self.option.pageSize < arrAlarms.length ? self.option.pageSize : arrAlarms.length;
                             for (var i = 0; i < recordsNum; i++) {
                                 var tr = '<tr>',
-                                    arrTd = arrAlarms[i];
-                                for (var j = 0; j < self.option.header.length; j++) {
-                                    tr += '<td>' + arrTd[j] + '</td>';
+                                    record = arrAlarms[i];
+                                for (var j = 0; j < self.option.columns.length; j++) {
+                                    var content = '';
+                                    try {
+                                        content = self.option.columns[j].content(record)
+                                    } catch (err) {
+                                        console.error('格式化表格数据出错。')
+                                    }
+                                    tr += '<td>' + content + '</td>';
                                 };
                                 tr += '</tr>';
                                 html = html + tr;
@@ -605,7 +613,7 @@ $.fn.extend({
                     },
                     error: function(err) {
                         console.error('加载表格数据失败。')
-                        self.element.find('tbody').html('<tr><td colspan="' + self.option.header.length + '" class="g-error">No data...</td></tr>');
+                        self.element.find('tbody').html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
                     }
                 });
             },
@@ -634,7 +642,7 @@ $.fn.extend({
                     this.element.find('.paging').remove();
                 }
                 
-                this.element.find('tbody').html('<tr><td colspan="' + this.option.header.length + '" class="g-loading">Loading...</td></tr>');
+                this.element.find('tbody').html('<tr><td colspan="' + this.option.columns.length + '" class="g-loading">Loading...</td></tr>');
             }
         }
 
