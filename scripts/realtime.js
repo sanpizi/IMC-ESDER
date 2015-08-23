@@ -52,7 +52,7 @@ $(document).ready(function() {
             });
 
             //更新总告警数
-            this.getTotalWarning();
+            //this.getTotalWarning();
         },
 
         //更新总告警数

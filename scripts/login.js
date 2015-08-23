@@ -70,7 +70,7 @@ $(document).ready(function() {
                     if (data.result === 0) {
                         document.cookie = "username=" + $username.val();
                         if (self.params.goUrl) {
-                            window.location.href = self.params.goUrl;
+                            window.location.href = decodeURIComponent(self.params.goUrl);
                         } else {
                             window.location.href = '/overview.html';
                         }                        

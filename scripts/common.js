@@ -14,7 +14,7 @@ Page.prototype = {
 
         //当 session 丢失以后
         $(document).ajaxError(function(event, xhr, settings, thrownError) {
-            var currentUrl = encodeURI(location.href);
+            var currentUrl = encodeURIComponent(location.href);
             if (xhr.status === 401) {
                 if (!self.sessionTimeout) {
                     self.sessionTimeout = true;
@@ -383,7 +383,7 @@ Page.prototype = {
                     if (data.siteList.length) {
                         //生成 html
                         var html = '';
-                        var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status%>"></span><a<%if (selected) {%> class="selected"<%}%> href="realtime-details.html?siteId=<%=id%>"><%=name%></a></li>');
+                        var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status.toLowerCase()%>"></span><a<%if (selected) {%> class="selected"<%}%> href="realtime-details.html?siteId=<%=id%>"><%=name%></a></li>');
                         for (var i = 0, l = data.siteList.length; i < l; i++) {
                             data.siteList[i].selected = self.params.siteId == data.siteList[i].id;
                             html += siteTmpl(data.siteList[i]);

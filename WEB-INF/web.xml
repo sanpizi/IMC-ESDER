@@ -8,7 +8,7 @@
         <servlet-class>com.zyt.ws.BootstrapServlet</servlet-class>
         <init-param>
             <param-name>dbHost</param-name>
-            <param-value>localhost</param-value>
+            <param-value>127.0.0.1</param-value>
         </init-param>
         <init-param>
             <param-name>dbPort</param-name>

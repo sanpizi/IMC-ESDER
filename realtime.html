@@ -23,10 +23,6 @@
 				<div class="content">
 					<h1>Realtime Data</h1>
 					<div class="query">
-						<div style="float:right">
-							<span style="margin-right:5px;">Total Warning sites:</span>
-							<span id="totalWarningSite"></span>
-						</div>
 
 						<div class="label">Area:</div>
 						<div class="condition">
@@ -39,13 +35,28 @@
 							</select>
 						</div>
 
-						<div class="label">Status:</div>
+						<div class="label">Site:</div>
 						<div class="condition">
-							<select id="areaId">
+							<select id="siteId">
 								<option value="">-- all --</option>
-								<option value="warning">Warning</option>
-								<option value="normal">Normal</option>
+								<option value="site1">Warning</option>
+								<option value="site2">Normal</option>
 							</select>
+						</div>
+
+						<div class="label">Alarm:</div>
+						<div class="condition">
+							<select id="siteId">
+								<option value="">-- all --</option>
+								<option value="fatal">Fatal</option>
+								<option value="urgent">Urgent</option>
+								<option value="important">Important</option>
+								<option value="general">General</option>
+							</select>
+						</div>
+						
+						<div>
+							<input class="bt" type="button" value="Filter"></input>
 						</div>
 
 					</div>

@@ -570,8 +570,11 @@ input,select,textarea,button {
     padding: 4px 15px;
     margin-right: 10px;
 }
-.form table input {
-    width: 100px;
+.form table .setting-input {
+    width: 135px;
+}
+.form table .setting-button {
+    padding: 2px 7px;
 }
 
 
