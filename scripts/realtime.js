@@ -9,9 +9,7 @@ $(document).ready(function() {
             grid = $grid.grid({
                 ajax: "/alarms",
                 pageSize: 20,
-                params: {
-                    //查询参数
-                },
+                params: this.params,
                 columns: [
                     {
                         header: "Site Id",

@@ -16,8 +16,11 @@ Page.prototype = {
         $(document).ajaxError(function(event, xhr, settings, thrownError) {
             var currentUrl = encodeURI(location.href);
             if (xhr.status === 401) {
-                alert('Session timeout, you need to log in again.');
-                location.href = '/index.html?goUrl=' + currentUrl;
+                if (!self.sessionTimeout) {
+                    self.sessionTimeout = true;
+                    alert('Session timeout, you need to log in again.');
+                    location.href = '/index.html?goUrl=' + currentUrl;
+                }
             }
         });
 

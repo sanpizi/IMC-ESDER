@@ -3,8 +3,6 @@ $(document).ready(function() {
         init: function() {
             this._init();
 
-            this.getUrlParams();
-
             //获取站点指标明细
             this.getSiteDetails();
         },
