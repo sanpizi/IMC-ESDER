@@ -17,7 +17,8 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(data) {
                     //总体信息
-                    $('#site-status').addClass('site-status-' + data.status.toLowerCase());
+                    $('#site-status').addClass('site-status-' + data.status.toLowerCase())
+                        .attr('title', data.status);
                     $('#site-area').html(data.areaName);
                     $('#site-name').html(data.name).attr('title', 'Site ID: ' + data.id);
 

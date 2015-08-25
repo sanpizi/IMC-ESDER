@@ -5,8 +5,10 @@
 		<title>IMC-ESDER</title>
 		<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="scripts/common.js"></script>
+		<script type="text/javascript" src="scripts/datepicker.js"></script>
 		<script type="text/javascript" src="scripts/report.js"></script>
 		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<div class="header"></div>
@@ -25,30 +27,22 @@
 					<div class="query">
 						<div class="label">Area:</div>
 						<div class="condition">
-							<select id="areaId">
-								<option value="">-- all --</option>
-								<option value="1">area1</option>
-								<option value="2">area2</option>
-								<option value="3">area3</option>
-								<option value="4">area4</option>
+							<select id="areaId" disabled="disabled">
+								<option value="">-- All --</option>
 							</select>
 						</div>
 
 						<div class="label">Site:</div>
 						<div class="condition">
-							<select id="siteId">
-								<option value="">-- all --</option>
-								<option value="1">site1</option>
-								<option value="2">site2</option>
-								<option value="3">site3</option>
-								<option value="4">site4</option>
+							<select id="siteId" disabled="disabled">
+								<option value="">-- All --</option>
 							</select>
 						</div>
 
 						<div class="label">Alarm:</div>
 						<div class="condition">
-							<select id="areaId">
-								<option value="">-- all --</option>
+							<select id="status">
+								<option value="">-- All --</option>
 								<option value="fatal">Fatal</option>
 								<option value="ugrent">Ugrent</option>
 								<option value="important">Important</option>
@@ -58,13 +52,13 @@
 
 						<div class="label">Date:</div>
 						<div class="condition">
-							<input class="date" type="text"></input>
+							<input class="date" placeholder="Start date" type="text" id="startTime" datepicker data-date-format="yyyy-mm-dd" data-auto-close="true"></input>
 							-
-							<input class="date" type="text"></input>
+							<input class="date" placeholder="End date" type="text" id="endTime" datepicker data-date-format="yyyy-mm-dd" data-auto-close="true"></input>
 						</div>
 
 						<div>
-							<input class="bt" type="button" value="Filter"></input>
+							<input id="filter" class="bt" type="button" value="Filter"></input>
 						</div>
 					</div>
 					<div class="grid"></div>

@@ -26,28 +26,22 @@
 
 						<div class="label">Area:</div>
 						<div class="condition">
-							<select id="areaId">
-								<option value="">-- all --</option>
-								<option value="1">area1</option>
-								<option value="2">area2</option>
-								<option value="3">area3</option>
-								<option value="4">area4</option>
+							<select id="areaId" disabled="disabled">
+								<option value="">-- All --</option>
 							</select>
 						</div>
 
 						<div class="label">Site:</div>
 						<div class="condition">
-							<select id="siteId">
-								<option value="">-- all --</option>
-								<option value="site1">Warning</option>
-								<option value="site2">Normal</option>
+							<select id="siteId" disabled="disabled">
+								<option value="">-- All --</option>
 							</select>
 						</div>
 
 						<div class="label">Alarm:</div>
 						<div class="condition">
-							<select id="siteId">
-								<option value="">-- all --</option>
+							<select id="status">
+								<option value="">-- All --</option>
 								<option value="fatal">Fatal</option>
 								<option value="urgent">Urgent</option>
 								<option value="important">Important</option>
@@ -56,7 +50,7 @@
 						</div>
 						
 						<div>
-							<input class="bt" type="button" value="Filter"></input>
+							<input id="filter" class="bt" type="button" value="Filter"></input>
 						</div>
 
 					</div>

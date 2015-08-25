@@ -306,6 +306,9 @@ input,select,textarea,button {
 }
 .sidebar .area-tree li .area {
     cursor: pointer;
+    position: relative;
+    left: -15px;
+    padding-left: 15px;
 }
 .sidebar .area-tree li .area:hover {
     color: #000;
