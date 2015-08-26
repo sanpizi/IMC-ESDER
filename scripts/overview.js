@@ -51,8 +51,8 @@ $(document).ready(function() {
                 type: "GET",
                 url: "/sites",
                 data: {
-                    startRecord: 1,
-                    recordNum: maxSites
+                    start: 1,
+                    amount: maxSites
                 },
                 dataType: "json",
                 success: function(data) {

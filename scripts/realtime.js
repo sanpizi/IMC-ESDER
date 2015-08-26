@@ -57,6 +57,10 @@ $(document).ready(function() {
             //拉取区域数据
             this.getAreas();
 
+
+            //根据 URL 参数设置默认选项
+            this.setDefaultSelect();
+
             //过滤数据
             $('#filter').on('click', function() {
                 grid.option.params.areaId = $('#areaId').val();
@@ -139,10 +143,17 @@ $(document).ready(function() {
                     $site.html(html).prop('disabled', false);
                 },
                 error: function(err) {
-                    //window.alert('Failed to get the global statistics data.');
-                    console.error('获取区域数据失败。');
+                    //window.alert('Failed to get the sites data.');
+                    console.error('获取站点数据失败。');
                 }
             });
+        },
+
+        //根据 URL 参数设置默认选项
+        setDefaultSelect: function() {
+            if (this.params.status.length) {
+                $('#status').val(this.params.status);
+            }
         }
     });
 

@@ -136,8 +136,8 @@ $(document).ready(function() {
                     $site.html(html).prop('disabled', false);
                 },
                 error: function(err) {
-                    //window.alert('Failed to get the global statistics data.');
-                    console.error('获取区域数据失败。');
+                    //window.alert('Failed to get the sites data.');
+                    console.error('获取站点数据失败。');
                 }
             });
         }

@@ -5,8 +5,14 @@ $(document).ready(function() {
 
             var self = this;
 
+            //拉取区域数据
+            this.getAreas();
+
+            //更新影响站点数
+            this.updateAffectSites();
+
             //拉取原始数据
-            self.getParams();
+            //self.getParams();
 
             //提交表单
             $('.form').on( 'click', '[type="button"]', function(e) {
@@ -79,6 +85,96 @@ $(document).ready(function() {
                 complete: function() {
                     //启用按钮
                     bt.disabled = false;
+                }
+            });
+        },
+
+        //拉取区域数据
+        getAreas: function() {
+            var self = this,
+                $area = $('#areaId');
+
+            $.ajax({
+                type: "GET",
+                url: "/areas",
+                dataType: "json",
+                success: function(data) {
+                    var areaList = data.areaList,
+                        html = '<option value="">-- All --</option>';
+
+                    for (var i = 0; i < areaList.length; i++) {
+                        html += '<option value="' + areaList[i].id + '">' + areaList[i].name + '</option>'
+                    }
+
+                    $area.html(html)
+                        .prop('disabled', false)
+                        .on('change', function() {
+                            self.getSites($area.val());
+                            self.updateAffectSites();
+                    });
+                },
+                error: function(err) {
+                    //window.alert('Failed to get the global statistics data.');
+                    console.error('获取区域数据失败。');
+                }
+            });
+        },
+
+        //拉取站点数据
+        getSites: function(areaId) {
+            var self = this,
+                $site = $('#siteId');
+
+            $.ajax({
+                type: "GET",
+                url: "/sites",
+                dataType: "json",
+                data: {
+                    areaId: areaId
+                },
+                success: function(data) {
+                    var siteList = data.siteList,
+                        html = '<option value="">-- All --</option>';
+
+                    for (var i = 0; i < siteList.length; i++) {
+                        html += '<option value="' + siteList[i].id + '">' + siteList[i].name + '</option>'
+                    }
+
+                    $site.html(html).prop('disabled', false).on('change', function() {
+                        var siteId = $('#siteId').val();
+                        if (siteId.length) {
+                            $('#affectSites').html(1);
+                        } else {
+                            self.updateAffectSites();
+                        }                        
+                    });
+                },
+                error: function(err) {
+                    //window.alert('Failed to get the global statistics data.');
+                    console.error('获取站点数据失败。');
+                }
+            });
+        },
+
+        //更新设置站点数
+        updateAffectSites: function() {
+            var self = this,
+                $area = $('#areaId');
+                $site = $('#siteId');
+
+            $.ajax({
+                type: "GET",
+                url: "/sites",
+                dataType: "json",
+                data: {
+                    areaId: $area.val()
+                },
+                success: function(data) {
+                    $('#affectSites').html(data.totalRecords);
+                },
+                error: function(err) {
+                    //window.alert('Failed to get the sites data.');
+                    console.error('获取区域数据失败。');
                 }
             });
         }
