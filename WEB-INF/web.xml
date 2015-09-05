@@ -34,6 +34,35 @@
             <param-name>siteOnlineInternalInMinutes</param-name> <!-- in minutes -->
             <param-value>15</param-value>
         </init-param>
+        <init-param>
+            <!-- snmpVer: 0 ~ snmp version1, 1 ~ snmp version2c, 3 ~ snmp version3 -->
+            <param-name>snmpVer</param-name>
+            <param-value>1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>snmpCommunity</param-name>
+            <param-value>public</param-value>
+        </init-param>
+        <init-param>
+            <param-name>snmpTransport</param-name>
+            <param-value>udp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>snmpHost</param-name>
+            <param-value>127.0.0.1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>snmpPort</param-name>
+            <param-value>161</param-value>
+        </init-param>
+        <init-param>
+            <param-name>snmpTimeout</param-name>
+            <param-value>3000</param-value> <!-- in MS -->
+        </init-param>
+        <init-param>
+            <param-name>snmpRetries</param-name>
+            <param-value>1</param-value>
+        </init-param>
         <load-on-startup>10</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -131,6 +160,24 @@
         <url-pattern>/hisalarms</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ConfigServlet</servlet-name>
+        <servlet-class>com.zyt.ws.ConfigServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfigServlet</servlet-name>
+        <url-pattern>/config</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExportHisAlarms</servlet-name>
+        <servlet-class>com.zyt.ws.ExportHisAlarmsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportHisAlarms</servlet-name>
+        <url-pattern>/exportHisAlarms</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.zyt.ws.AuthenticationFilter</filter-class>
@@ -145,5 +192,7 @@
         <servlet-name>SitesServlet</servlet-name>
         <servlet-name>RealAlarmsServlet</servlet-name>
         <servlet-name>HisAlarmsServlet</servlet-name>
+        <servlet-name>ConfigServlet</servlet-name>
+        <servlet-name>ExportHisAlarms</servlet-name>
     </filter-mapping>
 </web-app>

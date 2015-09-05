@@ -60,12 +60,16 @@ Page.prototype = {
 
     //获取 url 参数
     getUrlParams: function() {
-        var arrParams = location.search.replace(/^\?/, '').split('&'),
+        var search = location.search,
             params = {};
 
-        for (var i = 0; i < arrParams.length; i++) {
-            var arr = arrParams[i].split('=');
-            params[arr[0]] = arr[1] || '';
+        if (search) {
+            var arrParams = search.replace(/^\?/, '').split('&');
+
+            for (var i = 0; i < arrParams.length; i++) {
+                var arr = arrParams[i].split('=');
+                params[arr[0]] = arr[1] || '';
+            }
         }
 
         //添加到全局上下文
@@ -647,6 +651,18 @@ $.fn.extend({
                 }
                 
                 this.element.find('tbody').html('<tr><td colspan="' + this.option.columns.length + '" class="g-loading">Loading...</td></tr>');
+            },
+
+            //导出数据
+            export: function(url) {//数据查询参数
+                var self = this,
+                    queryData = self.option.paging ? $.extend({
+                        start: self.option.pageSize * (self.option.currentPage - 1) + 1,
+                        amount: self.option.pageSize
+                    }, self.option.params) : self.option.params;
+
+                //弹出下载页面
+                window.open(url + '?' + $.param(queryData));
             }
         }
 

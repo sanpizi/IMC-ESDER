@@ -529,7 +529,10 @@ input,select,textarea,button {
 .query .condition {
     margin-right: 20px;
 }
-.query .condition input, .query .condition select {
+.query .condition input {
+    width: 92px;
+}
+.query .condition select {
     width: 100px;
 }
 .query .label {

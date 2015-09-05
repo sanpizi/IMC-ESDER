@@ -65,6 +65,11 @@ $(document).ready(function() {
 
                 grid.init();
             });
+
+            //导出数据
+            $('#export').on('click', function() {
+                grid.export('/exportHisAlarms');
+            });
         },
 
         //更新总告警数
