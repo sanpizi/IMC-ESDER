@@ -1,64 +1,138 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>IMC-ESDER</title>
-		<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="scripts/common.js"></script>
-		<script type="text/javascript" src="scripts/realtime.js"></script>
-		<link href="css/main.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<div class="header"></div>
-		<div class="container">
-			<div class="sidebar shadow">
-				<div class="area-search">
-					<div class="search">
-						<input class="keywords" type="input" placeholder="Search Area" />
-					</div>
-				</div>
-				<div class="area-tree">Loading...</div>
-			</div>
-			<div class="main">
-				<div class="content">
-					<h1>Realtime Data</h1>
-					<div class="query">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IMC-ESDER</title>
+<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="scripts/common.js"></script>
+<script type="text/javascript" src="scripts/realtime.js"></script>
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+</head>
 
-						<div class="label">Area:</div>
-						<div class="condition">
-							<select id="areaId" disabled="disabled">
-								<option value="">-- All --</option>
-							</select>
-						</div>
+<body>
+	<div class="header"></div>
 
-						<div class="label">Site:</div>
-						<div class="condition">
-							<select id="siteId" disabled="disabled">
-								<option value="">-- All --</option>
-							</select>
-						</div>
-
-						<div class="label">Alarm:</div>
-						<div class="condition">
-							<select id="status">
-								<option value="">-- All --</option>
-								<option value="fatal">Fatal</option>
-								<option value="urgent">Urgent</option>
-								<option value="important">Important</option>
-								<option value="general">General</option>
-							</select>
-						</div>
-						
-						<div>
-							<input id="filter" class="bt" type="button" value="Filter"></input>
-						</div>
-
-					</div>
-					<div class="grid"></div>
+	<div class="container">
+		<div class="sidebar shadow">
+			<div class="area-search">
+				<div class="search">
+					<input class="keywords" type="input" placeholder="Search Area" />
 				</div>
 			</div>
-			<div style="clear:both"></div>
+			<div class="area-tree">Loading...</div>
 		</div>
-		<div class="footer"></div>
-	</body>
+		<div class="main">
+			<div class="pannel">
+				<div class="site-details">
+					<div class="site-details-title">
+						<span id="site-status" style="position:relative;top:0px;"></span> <span id="site-area"></span> / <span id="site-name"></span>
+					</div>
+
+					<div class="alarms">
+						<ul>
+							<li>Cureent site alarms:</li>
+							<li><span title="Fatal" class="alarm-fatal"></span>Fatal: <a href="#" id="fatalAlarmNum"></a></li>
+							<li><span title="Urgent" class="alarm-urgent"></span>Urgent: <a href="#" id="urgentAlarmNum"></a></li>
+							<li><span title="Important" class="alarm-important"></span>Important: <a href="#" id="importantAlarmNum"></a></li>
+							<li><span title="General" class="alarm-general"></span>General: <a href="#" id="generalAlarmNum"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="pannel">
+				<div class="pannel-title">Details of AC</div>
+				<div class="pannel-content">
+					<ul>
+						<li>
+							<span class="label">AC 3-phase Voltage:</span>
+							<span id="signal_01">-</span>
+						</li>
+						<li>
+							<span class="label">AC 3-phase Current:</span>
+							<span id="signal_02">-</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="pannel">
+				<div class="pannel-title">Details of air conditioner system</div>
+				<div class="pannel-content">
+					<ul>
+						<li>
+							<span class="label">AC 3-phase Current:</span>
+							<span id="signal_03">-</span>
+						</li>
+						<li>
+							<span class="label">Running status of air conditioner 1:</span>
+							<span id="signal_04">-</span>
+						</li>
+						<li>
+							<span class="label">Running status of air conditioner 2:</span>
+							<span id="signal_05">-</span>
+						</li>
+						<li>
+							<span class="label">Running status of fan:</span>
+							<span id="signal_06">-</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="pannel">
+				<div class="pannel-title">Details of equipment room environment</div>
+				<div class="pannel-content">
+					<ul>
+						<li>
+							<span class="label">Indoor temperature:</span>
+							<span id="signal_07">-</span>
+						</li>
+						<li>
+							<span class="label">Indoor humidity:</span>
+							<span id="signal_08">-</span>
+						</li>
+						<li>
+							<span class="label">Outdoor temperature:</span>
+							<span id="signal_09">-</span>
+						</li>
+						<li>
+							<span class="label">Door magnetic:</span>
+							<span id="signal_10">-</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="pannel">
+				<div class="pannel-title">Run time</div>
+				<div class="pannel-content">
+					<ul>
+						<li>
+							<span class="label">Fan total running time:</span>
+							<span id="signal_11">-</span>
+						</li>
+						<li>
+							<span class="label">Air conditioner 1 total running time:</span>
+							<span id="signal_12">-</span>
+						</li>
+						<li>
+							<span class="label">Air conditioner 2 total running time:</span>
+							<span id="signal_13">-</span>
+						</li>
+						<li>
+							<span class="label">Fan speed percentage:</span>
+							<span id="signal_14">-</span>
+						</li>
+						<li>
+							<span class="label">Fan power consumption:</span>
+							<span id="signal_15">-</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div style="clear:both"></div>
+	</div>
+
+	<div class="footer"></div>
+</body>
 </html>

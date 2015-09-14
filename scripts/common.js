@@ -142,7 +142,7 @@ Page.prototype = {
             '		<div class="navbar">' +
             '			<ul>' +
             '				<li><a href="overview.html" <%if (!path.indexOf("/overview")) {%>class="selected"<%}%>>Overview</a></li>' +
-            '				<li><a href="realtime.html" <%if (!path.indexOf("/realtime")) {%>class="selected"<%}%>>Realtime</a></li>' +
+            '				<li><a href="active-alarm.html" <%if (!path.indexOf("/active-alarm")) {%>class="selected"<%}%>>Active Alarm</a></li>' +
             '				<li><a href="report.html" <%if (!path.indexOf("/report")) {%>class="selected"<%}%>>Report</a></li>' +
             '				<li><a href="settings.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
             '			</ul>' +
@@ -387,7 +387,7 @@ Page.prototype = {
                     if (data.siteList.length) {
                         //生成 html
                         var html = '';
-                        var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status.toLowerCase()%>"></span><a<%if (selected) {%> class="selected"<%}%> href="realtime-details.html?siteId=<%=id%>"><%=name%></a></li>');
+                        var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status.toLowerCase()%>"></span><a<%if (selected) {%> class="selected"<%}%> href="realtime.html?siteId=<%=id%>"><%=name%></a></li>');
                         for (var i = 0, l = data.siteList.length; i < l; i++) {
                             data.siteList[i].selected = self.params.siteId == data.siteList[i].id;
                             html += siteTmpl(data.siteList[i]);
@@ -468,6 +468,7 @@ $.fn.extend({
         }
 
         var defaultOption = {
+            fnComplete: null,
             paging: true,
             pageSize: 10,
             pageNum: 9, //分页码个数
@@ -617,6 +618,11 @@ $.fn.extend({
 
                             //重新调整菜单高度
                             Page.prototype.initTreeHeight();
+
+                            //回调 fnComplete
+                            if (self.option.fnComplete) {
+                                self.option.fnComplete(data);
+                            }
                         }
                     },
                     error: function(err) {

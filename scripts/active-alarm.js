@@ -5,24 +5,12 @@ $(document).ready(function() {
 
             var $grid = $('.grid'),
                 grid;
-            
+
+            //生成表格
             grid = $grid.grid({
-                ajax: "/hisalarms",
+                ajax: "/alarms",
+                pageSize: 20,
                 params: this.params,
-                fnComplete: function(data) {
-                    var $export = $('#export'),
-                        max = $export.attr('data-max-records'),
-                        total = data.totalRecords;
-
-                    if (total > max) {
-                        $export.prop('disabled', true)
-                            .attr('title', 'maximum of ' + max + ' records');
-                    } else{
-                        $export.prop('disabled', false)
-                            .attr('title', '');
-                    }
-
-                },
                 columns: [
                     {
                         header: "Site Id",
@@ -69,21 +57,21 @@ $(document).ready(function() {
             //拉取区域数据
             this.getAreas();
 
+
+            //根据 URL 参数设置默认选项
+            this.setDefaultSelect();
+
             //过滤数据
             $('#filter').on('click', function() {
                 grid.option.params.areaId = $('#areaId').val();
                 grid.option.params.siteId = $('#siteId').val();
                 grid.option.params.status = $('#status').val();
-                grid.option.params.startTime = $('#startTime').val();
-                grid.option.params.endTime = $('#endTime').val();
 
                 grid.init();
             });
 
-            //导出数据
-            $('#export').on('click', function() {
-                grid.export('/exportHisAlarms');
-            });
+            //更新总告警数
+            //this.getTotalWarning();
         },
 
         //更新总告警数
@@ -159,6 +147,13 @@ $(document).ready(function() {
                     console.error('获取站点数据失败。');
                 }
             });
+        },
+
+        //根据 URL 参数设置默认选项
+        setDefaultSelect: function() {
+            if (this.params.status) {
+                $('#status').val(this.params.status);
+            }
         }
     });
 
