@@ -13,7 +13,7 @@ $(document).ready(function() {
                 params: this.params,
                 columns: [
                     {
-                        header: "Site Id",
+                        header: "Site ID",
                         content: function(data) {
                             return data.siteId;
                         }
@@ -37,16 +37,15 @@ $(document).ready(function() {
                         }
                     },
                     {
-                        header: "Sampling Time",
+                        header: "Start Time",
                         content: function(data) {
-                            return data.samplingTime;
+                            return data.startTime.toString().substr(0, 16);
                         }
                     },
                     {
-                        header: "Status",
+                        header: "Severity",
                         content: function(data) {
-                            var html = data.warning.toLowerCase() === 'yes' ? '<span style="color:#f00">Warning</span>' : 'Normal'
-                            return html;
+                            return data.severity;
                         }
                     }
                 ]

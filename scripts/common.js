@@ -275,6 +275,7 @@ Page.prototype = {
         //生成树
         function makeTree(data) {
             var self = this,
+                isNeedCacheSites = false,
                 menuStatus = {
                     //增加
                     add: function(id) {
@@ -338,6 +339,11 @@ Page.prototype = {
 
                     //缓存菜单状态
                     menuStatus.add($li.attr('data-area-id'));
+
+                    //不缓存
+                    if (!isNeedCacheSites) {
+                        $li.find('ul').html('').show();
+                    }
 
                     //无站点则加载数据
                     if ($li.find('li').length === 0) {

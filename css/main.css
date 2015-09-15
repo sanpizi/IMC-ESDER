@@ -521,7 +521,7 @@ input,select,textarea,button {
 .query {
     padding: 15px;
     background-color: #f2f2f2;
-    margin: 15px 0 20px 0;
+    margin: 10px 0 25px 0;
 }
 .query div {
     display: inline-block;

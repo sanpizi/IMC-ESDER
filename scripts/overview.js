@@ -1,6 +1,8 @@
 $(document).ready(function() {
     Page.extend({
         init: function() {
+            var self = this;
+
             this._init();
 
             //渲染统计
@@ -11,11 +13,14 @@ $(document).ready(function() {
 
             //渲染图表
             //this.renderStatistics();
+
         },
+
+        autoRefreshDely: 10 * 60 * 1000, //刷新间隔
 
         //渲染统计
         renderGlobalStats: function() {
-            var slef = this;
+            var self = this;
 
             $.ajax({
                 type: "GET",
@@ -37,13 +42,20 @@ $(document).ready(function() {
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
                     console.error('获取整体统计数据失败。');
+                },
+                complete: function(xhr, textStatus) {
+                    if (self.autoRefreshDely) {                        
+                        window.setTimeout(function() {
+                            self.renderGlobalStats();
+                        }, self.autoRefreshDely);
+                    }
                 }
             });
         },
 
         //渲染矩阵
         renderSitesMatrix: function() {
-            var slef = this,
+            var self = this,
                 maxSites = 2000; //站点矩阵最大显示数量
 
             //获取所有站点信息
@@ -58,7 +70,7 @@ $(document).ready(function() {
                 success: function(data) {
                     var arrSites = data.siteList || [],
                         html = '<div id="sites-matrix">',
-                        siteTmpl = slef.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Name: <%=siteName%>&#10;Area: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status.toLowerCase()%>"></span>');
+                        siteTmpl = self.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Name: <%=siteName%>&#10;Area: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status.toLowerCase()%>"></span>');
 
                     for (var i = 0; i < arrSites.length && i < maxSites; i++) {
                         html += siteTmpl({
@@ -82,6 +94,13 @@ $(document).ready(function() {
                 error: function(err) {
                     //window.alert('Failed to get the sites matrix info.');
                     console.error('获取站点矩阵失败。');
+                },
+                complete: function(xhr, textStatus) {
+                    if (self.autoRefreshDely) {                        
+                        window.setTimeout(function() {
+                            self.renderSitesMatrix();
+                        }, self.autoRefreshDely);
+                    }
                 }
             });
         },
