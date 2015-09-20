@@ -129,6 +129,12 @@ $(document).ready(function() {
             var self = this,
                 $site = $('#siteId');
 
+            // areaId 为空时，比如选中 all 选项时
+            if (!areaId) {
+                $site.html('<option value="">-- All --</option>').prop('disabled', true);
+                return;
+            }
+
             $.ajax({
                 type: "GET",
                 url: "/sites",
