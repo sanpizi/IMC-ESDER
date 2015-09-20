@@ -8,7 +8,7 @@
         <servlet-class>com.zyt.ws.BootstrapServlet</servlet-class>
         <init-param>
             <param-name>dbHost</param-name>
-            <param-value>192.168.1.202</param-value>
+            <param-value>127.0.0.1</param-value>
         </init-param>
         <init-param>
             <param-name>dbPort</param-name>
@@ -24,7 +24,7 @@
         </init-param>
         <init-param>
             <param-name>password</param-name>
-            <param-value>ZYT%123</param-value>
+            <param-value>000000</param-value>
         </init-param>
         <init-param>
             <param-name>connPoolCount</param-name>
