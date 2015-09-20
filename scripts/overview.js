@@ -16,8 +16,6 @@ $(document).ready(function() {
 
         },
 
-        autoRefreshDely: 10 * 60 * 1000, //刷新间隔
-
         //渲染统计
         renderGlobalStats: function() {
             var self = this;
@@ -44,10 +42,10 @@ $(document).ready(function() {
                     console.error('获取整体统计数据失败。');
                 },
                 complete: function(xhr, textStatus) {
-                    if (self.autoRefreshDely) {                        
+                    if (window.config['Automatic_Refresh_Interval']) {                        
                         window.setTimeout(function() {
                             self.renderGlobalStats();
-                        }, self.autoRefreshDely);
+                        }, window.config['Automatic_Refresh_Interval']);
                     }
                 }
             });
@@ -96,10 +94,10 @@ $(document).ready(function() {
                     console.error('获取站点矩阵失败。');
                 },
                 complete: function(xhr, textStatus) {
-                    if (self.autoRefreshDely) {                        
+                    if (window.config['Automatic_Refresh_Interval']) {                        
                         window.setTimeout(function() {
                             self.renderSitesMatrix();
-                        }, self.autoRefreshDely);
+                        }, window.config['Automatic_Refresh_Interval']);
                     }
                 }
             });

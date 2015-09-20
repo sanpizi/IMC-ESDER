@@ -1,3 +1,15 @@
+//系统配置项
+window.config = {
+    //自动刷新时间间隔，单位：毫秒。
+    //关闭自动刷新请设为 0。
+    "Automatic_Refresh_Interval": 10 * 1000, 
+
+    //是否缓存树菜单中加载过的站点。
+    //false: 每次展开菜单时都重新从服务端取数据。
+    //true: 第一次从从服务端取数据并缓存，此后使用缓存，直到刷新页面。
+    "Is_Tree_Sites_Cache": false
+}
+
 //页面基类
 var Page = function() {
     if (this.init) {

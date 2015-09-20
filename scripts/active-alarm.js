@@ -111,6 +111,11 @@ $(document).ready(function() {
                         .on('change', function() {
                         self.getSites($area.val());
                     });
+
+                    //如果 URL 参数有区域条件，则自动选中，并触发 change 事件
+                    if (self.params.areaId) {
+                        $('#areaId').val(self.params.areaId).trigger('change');
+                    }
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
@@ -140,6 +145,11 @@ $(document).ready(function() {
                     }
 
                     $site.html(html).prop('disabled', false);
+
+                    //如果 URL 参数有区域条件，则自动选中
+                    if (self.params.siteId) {
+                        $('#siteId').val(self.params.siteId);
+                    }
                 },
                 error: function(err) {
                     //window.alert('Failed to get the sites data.');
@@ -150,6 +160,9 @@ $(document).ready(function() {
 
         //根据 URL 参数设置默认选项
         setDefaultSelect: function() {
+            if (this.params.siteName) {
+                $('#siteId').val(this.params.siteId);
+            }
             if (this.params.status) {
                 $('#status').val(this.params.status);
             }

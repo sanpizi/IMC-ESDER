@@ -75,6 +75,13 @@ $(document).ready(function() {
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
                     console.error('获取站点指标明细失败。');
+                },
+                complete: function(xhr, textStatus) {
+                    if (window.config['Automatic_Refresh_Interval']) {                        
+                        window.setTimeout(function() {
+                            self.getSiteDetails();
+                        }, window.config['Automatic_Refresh_Interval']);
+                    }
                 }
             });
         }
