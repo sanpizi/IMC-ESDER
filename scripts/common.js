@@ -7,7 +7,12 @@ window.config = {
     //是否缓存树菜单中加载过的站点。
     //false: 每次展开菜单时都重新从服务端取数据。
     //true: 第一次从从服务端取数据并缓存，此后使用缓存，直到刷新页面。
-    "Is_Tree_Sites_Cache": false
+    "Is_Tree_Sites_Cache": false,
+
+    //是否允许树菜单中同时展开多个区域
+    //false: 同一时间只能有一个区域展开状态，自动刷新会生效
+    //true: 允许同一时间有多个区域展开，自动刷新将失效，因为可能产生大量 ajax 请求，增加服务端压力。
+    "Is_Allow_Expand_Multiple_Area": false
 }
 
 //页面基类
@@ -110,7 +115,7 @@ Page.prototype = {
             return;
         }
 
-        document.cookie = key + "=" + value;
+        document.cookie = key + "=" + encodeURIComponent(value);
     },
 
     //读 cookie
@@ -120,7 +125,7 @@ Page.prototype = {
         var arr = document.cookie.match(reg) || [];
 
         if (arr.length) {
-            value = arr[2];
+            value = decodeURIComponent(arr[2]);
         }
 
         return value;
@@ -342,8 +347,13 @@ Page.prototype = {
 
 
             //绑定菜单点击事件
-            $tree.on('click', '.area', function() {
+            $tree.on('click', '.area', function() {                
                 var $li = $(this).closest('li');
+
+                //如果只允许同一时刻展开一个区域
+                if (!window.config['Is_Allow_Expand_Multiple_Area']) {
+                    $li.siblings('.expanded').find('.area').trigger('click');
+                }
 
                 //切换展开/收拢样式
                 if ($li.attr('class') === 'closed') {
@@ -373,6 +383,19 @@ Page.prototype = {
                     menuStatus.remove($li.attr('data-area-id'));
                 }
             });
+
+            //加载指定区域站点
+            // function loadSites(el) {   
+            //     var refreshDelay = window.config['Automatic_Refresh_Interval'],
+            //         $el = $(el);
+            //     self.loadSites($el, function() {
+            //         if (refreshDelay) {
+            //             setTimeout(function() {
+            //                 loadSites($el);
+            //             }, refreshDelay);
+            //         }
+            //     });
+            // }
         }
     },
 
@@ -393,6 +416,32 @@ Page.prototype = {
                 //显示 loading 状态
                 $area.find('ul').html('<span style="color:#999">Loading...</span>');
             },
+            complete: function() {
+                //单区域展开模式下可自动刷新
+                if (window.config['Automatic_Refresh_Interval'] && !window.config['Is_Allow_Expand_Multiple_Area']) {
+                    var refreshDelay = window.config['Automatic_Refresh_Interval'];
+
+                    //防止多重刷新
+                    if (window.intervalRefreshArea) {
+                        clearTimeout(window.intervalRefreshArea);
+                    }
+
+                    //刷新定时
+                    window.intervalRefreshArea = setTimeout(function() {
+                        //从 cookie 取展开状态的 area
+                        var arrArea = self.getCookie('menuStatus').split(',');
+
+                        //只允许一个区域展开时定时刷新
+                        if (arrArea.length === 1) {
+                            var $area = $('li[data-area-id="' + arrArea.toString() + '"]');
+
+                            if ($area.length) {
+                                self.loadSites($area);
+                            }                            
+                        }                        
+                    }, refreshDelay);
+                }
+            },
             success: function(data) {
                 if (data.siteList) {
                     //添加到数据模型
@@ -407,7 +456,9 @@ Page.prototype = {
                         var html = '';
                         var siteTmpl = self.tmpl('<li data-site-id="<%=id%>"><span title="<%=status%>" class="site-status-<%=status.toLowerCase()%>"></span><a<%if (selected) {%> class="selected"<%}%> href="realtime.html?siteId=<%=id%>"><%=name%></a></li>');
                         for (var i = 0, l = data.siteList.length; i < l; i++) {
+                            //根据 url 中的参数判断选中状态
                             data.siteList[i].selected = self.params.siteId == data.siteList[i].id;
+
                             html += siteTmpl(data.siteList[i]);
                         };
 
