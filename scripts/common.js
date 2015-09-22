@@ -352,7 +352,9 @@ Page.prototype = {
 
                 //如果只允许同一时刻展开一个区域
                 if (!window.config['Is_Allow_Expand_Multiple_Area']) {
-                    $li.siblings('.expanded').find('.area').trigger('click');
+                    $li.siblings('.expanded').each(function(index, el) {
+                        foldMenu($(el));
+                    });;
                 }
 
                 //切换展开/收拢样式
@@ -376,6 +378,10 @@ Page.prototype = {
                         $li.find('ul').slideDown(100);
                     }
                 } else {
+                    foldMenu($li);
+                }
+
+                function foldMenu($li) {
                     //收拢菜单
                     $li.attr('class', 'closed').find('ul').slideUp(100);
 
