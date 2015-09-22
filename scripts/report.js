@@ -82,7 +82,7 @@ $(document).ready(function() {
 
             //导出数据
             $('#export').on('click', function() {
-                grid.export('/exportHisAlarms');
+                grid.exportData('/exportHisAlarms');
             });
         },
 

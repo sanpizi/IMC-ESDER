@@ -678,7 +678,7 @@ $.fn.extend({
             },
 
             //导出数据
-            export: function(url) {//数据查询参数
+            exportData: function(url) {//数据查询参数
 
                 //弹出下载页面
                 window.open(url + '?' + $.param(this.option.params));
