@@ -16,7 +16,7 @@ $(document).ready(function() {
 
                     if (total > max) {
                         $export.prop('disabled', true)
-                            .attr('title', 'maximum of ' + max + ' records');
+                            .attr('title', 'Maximum of ' + max + ' records');
                     } else{
                         $export.prop('disabled', false)
                             .attr('title', '');

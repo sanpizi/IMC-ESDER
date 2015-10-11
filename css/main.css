@@ -8,7 +8,7 @@ html {
 }
 body {
 	background-color: #f0f0f0;
-    min-width: 900px;
+    min-width: 1260px;
 }
 ul, li {
 	list-style: none;
@@ -452,6 +452,31 @@ input,select,textarea,button {
     font-weight: normal;
 }
 
+.main .tab {
+    height: 35px;
+}
+.main .tab li {
+    background-color: #fbfbfb;
+    display: block;
+    float: left;
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+    border-bottom: 2px solid #f2f2f2;
+}
+.main .tab li.selected {
+    border-bottom-color: #fff;
+    background-color: #fff;
+}
+.main .tab li:hover {
+    background-color: #fff;
+}
+.main .tab li a {
+    display: block;
+    text-decoration: none;
+    color: #666;
+    padding: 8px 30px 5px;
+}
+
 .grid table {
     width: 100%;
 }
@@ -527,16 +552,16 @@ input,select,textarea,button {
     display: inline-block;
 }
 .query .condition {
-    margin-right: 20px;
+    margin-right: 15px;
 }
 .query .condition input {
-    width: 92px;
-}
-.query .condition select {
     width: 100px;
 }
+.query .condition select {
+    width: 108px;
+}
 .query .label {
-    margin-right: 7px;
+    margin-right: 3px;
 }
 .query .bt {
     padding: 2px 7px;

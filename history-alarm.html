@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>IMC-ESDER</title>
+		<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="scripts/common.js"></script>
+		<script type="text/javascript" src="scripts/datepicker.min.js"></script>
+		<script type="text/javascript" src="scripts/history-alarm.js"></script>
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="container">
+			<div class="sidebar shadow">
+				<div class="area-search">
+					<div class="search">
+						<input class="keywords" type="input" placeholder="Search Area" />
+					</div>
+				</div>
+				<div class="area-tree">Loading...</div>
+			</div>
+			<div class="main">
+				<div class="tab">
+					<ul>
+						<li><a href="history-data.html">History Data</a></li>
+						<li class="selected"><a>History Alarm</a></li>
+					</ul>
+				</div>
+				<div class="content" style="border-top-left-radius: 0;padding-top: 10px;">
+					<!-- <h1>History Data Report</h1> -->
+					<div class="query">
+						<div class="label">Area:</div>
+						<div class="condition">
+							<select id="areaId" disabled="disabled">
+								<option value="">-- All --</option>
+							</select>
+						</div>
+
+						<div class="label">Site:</div>
+						<div class="condition">
+							<select id="siteId" disabled="disabled">
+								<option value="">-- All --</option>
+							</select>
+						</div>
+
+						<div class="label">Signal:</div>
+						<div class="condition">
+							<select id="signalId">
+								<option value="">-- All --</option>
+								<option value="0">FCS Comm Interrupt</option>
+								<option value="6">Indoor Over Temp</option>
+								<option value="19">Indoor Under Temp</option>
+								<option value="8">Indoor Over Humidity</option>
+								<option value="11">Fan Fault</option>
+								<option value="14">Filter Blocked</option>
+								<option value="15">Fire Alarm</option>
+							</select>
+						</div>
+
+						<div class="label">Date:</div>
+						<div class="condition">
+							<input style="width:70px" class="date" placeholder="Start Date" type="text" id="startTime" datepicker data-date-format="yyyy-mm-dd" data-auto-close="true"></input>
+							<span>-</span>
+							<input style="width:70px" class="date" placeholder="End Date" type="text" id="endTime" datepicker data-date-format="yyyy-mm-dd" data-auto-close="true"></input>
+						</div>
+
+						<div>
+							<input id="filter" class="bt" type="button" value="Filter"></input>
+						</div>
+
+						<div style="margin-left:5px">
+							<input id="export" class="bt" type="button" value="Export" data-max-records="65535" ></input>
+						</div>
+					</div>
+					<div class="grid"></div>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="footer"></div>
+	</body>
+</html>

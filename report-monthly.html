@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>IMC-ESDER</title>
+		<script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="scripts/common.js"></script>
+		<script type="text/javascript" src="scripts/datepicker.min.js"></script>
+		<script type="text/javascript" src="scripts/report-monthly.js"></script>
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="container">
+			<div class="sidebar shadow">
+				<div class="area-search">
+					<div class="search">
+						<input class="keywords" type="input" placeholder="Search Area" />
+					</div>
+				</div>
+				<div class="area-tree">Loading...</div>
+			</div>
+			<div class="main">
+				<div class="tab">
+					<ul>
+						<li class="selected"><a>Monthly Report</a></li>
+						<li><a href="report-daily.html">Daily Report</a></li>
+					</ul>
+				</div>
+				<div class="content" style="border-top-left-radius: 0;padding-top: 10px;">
+					<!-- <div class="query">
+						<div class="label">Area:</div>
+						<div class="condition">
+							<select id="areaId" disabled="disabled">
+								<option value="">-- All --</option>
+							</select>
+						</div>
+
+						<div class="label">Site:</div>
+						<div class="condition">
+							<select id="siteId" disabled="disabled">
+								<option value="">-- All --</option>
+							</select>
+						</div>
+
+						<div class="label">Signal:</div>
+						<div class="condition">
+							<select id="signalId">
+								<option value="">-- All --</option>
+								<option value="957">Outdoor Temperature</option>
+								<option value="958">Indoor Temperature</option>
+								<option value="959">Indoor Humidity</option>
+								<option value="969">Site Ammeter Reading</option>
+								<option value="978">Fan Running Time</option>
+								<option value="981">A/C 1 Running Time</option>
+								<option value="984">A/C 2 Running Time</option>
+								<option value="985">Fan Speed</option>
+								<option value="986">Fan Consumption</option>
+							</select>
+						</div>
+
+						<div class="label">Date:</div>
+						<div class="condition">
+							<input style="width:70px" class="date" placeholder="Start Date" type="text" id="startTime" datepicker data-date-format="yyyy-mm-dd" data-auto-close="true"></input>
+							<span>-</span>
+							<input style="width:70px" class="date" placeholder="End Date" type="text" id="endTime" datepicker data-date-format="yyyy-mm-dd" data-auto-close="true"></input>
+						</div>
+
+						<div class="label">Interval:</div>
+						<div class="condition">
+							<select id="interval" style="width:78px;">
+								<option value="">-- All --</option>
+								<option value="5">5 Min</option>
+								<option value="15">15 Min</option>
+								<option value="30">30 Min</option>
+								<option value="60">60 Min</option>
+							</select>
+						</div>
+
+						<div>
+							<input id="filter" class="bt" type="button" value="Filter"></input>
+						</div>
+
+						<div style="margin-left:5px">
+							<input id="export" class="bt" type="button" value="Export" data-max-records="65535" ></input>
+						</div>
+					</div> -->
+					<div class="grid" style="margin-top:10px"></div>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="footer"></div>
+	</body>
+</html>

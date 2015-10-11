@@ -13,9 +13,9 @@ $(document).ready(function() {
                 params: this.params,
                 columns: [
                     {
-                        header: "Site ID",
+                        header: "Area Name",
                         content: function(data) {
-                            return data.siteId;
+                            return data.areaName;
                         }
                     },
                     {
@@ -31,21 +31,15 @@ $(document).ready(function() {
                         }
                     },
                     {
-                        header: "Sampling Data",
+                        header: "Severity",
                         content: function(data) {
-                            return data.samplingData;
+                            return data.severity;
                         }
                     },
                     {
                         header: "Start Time",
                         content: function(data) {
                             return data.startTime.toString().substr(0, 16);
-                        }
-                    },
-                    {
-                        header: "Severity",
-                        content: function(data) {
-                            return data.severity;
                         }
                     }
                 ]
@@ -64,6 +58,7 @@ $(document).ready(function() {
             $('#filter').on('click', function() {
                 grid.option.params.areaId = $('#areaId').val();
                 grid.option.params.siteId = $('#siteId').val();
+                grid.option.params.signalId = $('#signalId').val();
                 grid.option.params.status = $('#status').val();
 
                 grid.init();

@@ -8,7 +8,7 @@
         <servlet-class>com.zyt.ws.BootstrapServlet</servlet-class>
         <init-param>
             <param-name>dbHost</param-name>
-            <param-value>127.0.0.1</param-value>
+            <param-value>localhost</param-value>
         </init-param>
         <init-param>
             <param-name>dbPort</param-name>
@@ -53,7 +53,7 @@
         </init-param>
         <init-param>
             <param-name>snmpPort</param-name>
-            <param-value>161</param-value>
+            <param-value>162</param-value>
         </init-param>
         <init-param>
             <param-name>snmpTimeout</param-name>
@@ -62,6 +62,38 @@
         <init-param>
             <param-name>snmpRetries</param-name>
             <param-value>1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>statsFilesFolder</param-name>
+            <param-value>statsFiles</param-value>
+        </init-param>
+        <init-param>
+            <param-name>dailyStatsFilesCount</param-name>
+            <param-value>30</param-value>
+        </init-param>
+        <init-param>
+            <param-name>monthlyStatsFilesCount</param-name>
+            <param-value>12</param-value>
+        </init-param>
+        <init-param>
+            <param-name>oracleIp</param-name>
+            <param-value>10.1.32.21</param-value>
+        </init-param>
+        <init-param>
+            <param-name>oraclePort</param-name>
+            <param-value>1521</param-value>
+        </init-param>
+        <init-param>
+            <param-name>oracleDbName</param-name>
+            <param-value>DBSTORE</param-value>
+        </init-param>
+        <init-param>
+            <param-name>oracleUserName</param-name>
+            <param-value>HDBCOOLER</param-value>
+        </init-param>
+        <init-param>
+            <param-name>oraclePassword</param-name>
+            <param-value>DBCOOLER240</param-value>
         </init-param>
         <load-on-startup>10</load-on-startup>
     </servlet>
@@ -177,6 +209,33 @@
         <servlet-name>ExportHisAlarms</servlet-name>
         <url-pattern>/exportHisAlarms</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>HisDatasServlet</servlet-name>
+        <servlet-class>com.zyt.ws.HisDatasServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HisDatasServlet</servlet-name>
+        <url-pattern>/hisdatas</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StatsFileListServlet</servlet-name>
+        <servlet-class>com.zyt.ws.StatsFileListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StatsFileListServlet</servlet-name>
+        <url-pattern>/statsFileList</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StatsFileServlet</servlet-name>
+        <servlet-class>com.zyt.ws.StatsFileListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StatsFileServlet</servlet-name>
+        <url-pattern>/statsFile</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
@@ -194,5 +253,8 @@
         <servlet-name>HisAlarmsServlet</servlet-name>
         <servlet-name>ConfigServlet</servlet-name>
         <servlet-name>ExportHisAlarms</servlet-name>
+        <servlet-name>HisDatasServlet</servlet-name>
+        <servlet-name>StatsFileListServlet</servlet-name>
+        <servlet-name>StatsFileServlet</servlet-name>
     </filter-mapping>
 </web-app>

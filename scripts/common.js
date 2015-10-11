@@ -2,7 +2,7 @@
 window.config = {
     //自动刷新时间间隔，单位：毫秒。
     //关闭自动刷新请设为 0。
-    "Automatic_Refresh_Interval": 10 * 1000, 
+    "Automatic_Refresh_Interval": 0 * 1000, 
 
     //是否缓存树菜单中加载过的站点。
     //false: 每次展开菜单时都重新从服务端取数据。
@@ -10,8 +10,8 @@ window.config = {
     "Is_Tree_Sites_Cache": false,
 
     //是否允许树菜单中同时展开多个区域
-    //false: 同一时间只能有一个区域展开状态，自动刷新会生效
-    //true: 允许同一时间有多个区域展开，自动刷新将失效，因为可能产生大量 ajax 请求，增加服务端压力。
+    //false: 同一时间只能有一个区域展开状态，自动刷新能生效
+    //true: 允许同一时间有多个区域展开，自动刷新将失效（因为可能产生大量 ajax 请求，增加服务端压力）。
     "Is_Allow_Expand_Multiple_Area": false
 }
 
@@ -159,8 +159,9 @@ Page.prototype = {
             '		<div class="navbar">' +
             '			<ul>' +
             '				<li><a href="overview.html" <%if (!path.indexOf("/overview")) {%>class="selected"<%}%>>Overview</a></li>' +
-            '				<li><a href="active-alarm.html" <%if (!path.indexOf("/active-alarm")) {%>class="selected"<%}%>>Active Alarm</a></li>' +
-            '				<li><a href="report.html" <%if (!path.indexOf("/report")) {%>class="selected"<%}%>>Report</a></li>' +
+            '				<li><a href="active-alarm.html" <%if (!path.indexOf("/active-alarm")) {%>class="selected"<%}%>>Alarms</a></li>' +
+            '               <li><a href="history-data.html" <%if (!path.indexOf("/history")) {%>class="selected"<%}%>>History</a></li>' +
+            '				<li><a href="report-monthly.html" <%if (!path.indexOf("/report")) {%>class="selected"<%}%>>Reports</a></li>' +
             '				<li><a href="settings.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
             '			</ul>' +
             '		</div>');
@@ -594,16 +595,16 @@ $.fn.extend({
                     data: queryData,
                     dataType: "json",
                     success: function(data) {
-                        var arrAlarms = data.alarmsList,
+                        var arrRecords = data.alarmsList || data.datasList,
                             $tbody = self.element.find('tbody');
-                        if (arrAlarms.length === 0) {
+                        if (arrRecords.length === 0) {
                             $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
                         } else {
                             var html = '',
-                                recordsNum = self.option.pageSize < arrAlarms.length ? self.option.pageSize : arrAlarms.length;
+                                recordsNum = self.option.pageSize < arrRecords.length ? self.option.pageSize : arrRecords.length;
                             for (var i = 0; i < recordsNum; i++) {
                                 var tr = '<tr>',
-                                    record = arrAlarms[i];
+                                    record = arrRecords[i];
                                 for (var j = 0; j < self.option.columns.length; j++) {
                                     var content = '';
                                     try {
