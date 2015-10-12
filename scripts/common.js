@@ -595,7 +595,7 @@ $.fn.extend({
                     data: queryData,
                     dataType: "json",
                     success: function(data) {
-                        var arrRecords = data.alarmsList || data.datasList,
+                        var arrRecords = data.recordList,
                             $tbody = self.element.find('tbody');
                         if (arrRecords.length === 0) {
                             $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
