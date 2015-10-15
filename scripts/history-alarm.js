@@ -72,7 +72,7 @@ $(document).ready(function() {
             $('#filter').on('click', function() {
                 grid.option.params.areaId = $('#areaId').val();
                 grid.option.params.siteId = $('#siteId').val();
-                grid.option.params.status = $('#status').val();
+                grid.option.params.signalId = $('#signalId').val();
                 grid.option.params.startTime = $('#startTime').val();
                 grid.option.params.endTime = $('#endTime').val();
 

@@ -56,16 +56,20 @@ $(document).ready(function() {
 
         //保存设置
         setParams: function($row) {
-            var bt = $row.find('[value="Save"]')[0],
+            var selectedSites = $.map($('#selectedSites li'), function(li) {
+                return li.innerText;
+            }),
+                bt = $row.find('[value="Save"]')[0],
                 input = $row.find('.setting-input')[0];
 
             $.ajax({
                 type: "POST",
-                url: "/settings",
+                url: "/config",
                 dataType: "json",
                 data: {
-                    id: input.id.replace('p_', ''),
-                    value: input.value
+                    devSn: selectedSites,
+                    signalName: input.getAttribute('signalName')
+                    newValue: input.value
                 },
                 beforeSend: function() {
                     //禁用按钮

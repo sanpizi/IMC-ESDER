@@ -7,8 +7,8 @@ $(document).ready(function() {
                 grid;
             
             grid = $grid.grid({
-                ajax: "/hisalarms",
-                params: this.params,
+                ajax: "/statsFileList",
+                params: {"type": "daily"},
                 fnComplete: function(data) {
                     var $export = $('#export'),
                         max = $export.attr('data-max-records'),
@@ -25,15 +25,9 @@ $(document).ready(function() {
                 },
                 columns: [
                     {
-                        header: "Report",
+                        header: "Report Name",
                         content: function(data) {
-                            return '<a href="/statsFile?reportId='+ data.areaId + '">' + 'HisDataDaily-' + data.startTime.toString().substr(0, 7) + '.xls' + '</a>';
-                        }
-                    },
-                    {
-                        header: "Created Time",
-                        content: function(data) {
-                            return data.startTime.toString().substr(0, 16);
+                            return '<a target="_blank" href="/statsFile?reportId='+ encodeURIComponent(data.reportName) + '">' + data.reportName + '</a>';
                         }
                     }
                 ]
