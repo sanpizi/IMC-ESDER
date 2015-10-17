@@ -230,7 +230,7 @@
 
     <servlet>
         <servlet-name>StatsFileServlet</servlet-name>
-        <servlet-class>com.zyt.ws.StatsFileListServlet</servlet-class>
+        <servlet-class>com.zyt.ws.StatsFileServlet</servlet-class> <!-- revise on 2015.10.16 -->
     </servlet>
     <servlet-mapping>
         <servlet-name>StatsFileServlet</servlet-name>

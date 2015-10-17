@@ -68,7 +68,7 @@ $(document).ready(function() {
                 dataType: "json",
                 data: {
                     devSn: selectedSites,
-                    signalName: input.getAttribute('signalName')
+                    signalName: input.getAttribute('signalName'),
                     newValue: input.value
                 },
                 beforeSend: function() {
