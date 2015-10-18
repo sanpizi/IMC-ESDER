@@ -15,7 +15,7 @@ $(document).ready(function() {
             //self.getParams();
 
             //提交表单
-            $('.form').on( 'click', '[type="button"]', function(e) {
+            $('.form').on('click', '[type="button"]', function(e) {
                 var $row = $(this).closest('tr');
 
                 if (e.target.value === 'Save') {
@@ -25,25 +25,68 @@ $(document).ready(function() {
                     $input.val($input.attr('data-default-value'));
                 }
 
-            })
+            });
+
+            //初始化树形菜单
+            $('.selector').jstree({
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+                "plugins": ["checkbox"],
+                "core": {
+                    'data': [{
+                        "text": "All sites",
+                        "state": {
+                            "opened": true
+                        },
+                        "children": [{
+                            "text": "Child node 1",
+                            "state": {
+                                "selected": true
+                            },
+                            "icon": "jstree-file"
+                        }, {
+                            "text": "Child node 2",
+                            "icon": "jstree-file"
+                        }, {
+                            "text": "Child node 2",
+                            "icon": "jstree-file"
+                        }, {
+                            "text": "Child node 2",
+                            "children": [{
+                                "text": "Child node 1",
+                                "icon": "jstree-file"
+                            }, {
+                                "text": "Child node 2",
+                                "icon": "jstree-file"
+                            }, {
+                                "text": "Child node 2",
+                                "icon": "jstree-file"
+                            }, {
+                                "text": "Child node 2",
+                                "icon": "jstree-file"
+                            }]
+                        }]
+                    }]
+                }
+            });
         },
 
         //验证表单
         validateForm: function() {
             var result = true,
                 self = this;
-               
+
             return result;
         },
 
         //拉取原始数据
-        getParams: function() {            
+        getParams: function() {
             $.ajax({
                 type: "GET",
                 url: "/settings",
                 dataType: "json",
-                data: {
-                },
+                data: {},
                 success: function(data) {
                     $('#p_1').val(data['1']);
                 },
@@ -57,8 +100,8 @@ $(document).ready(function() {
         //保存设置
         setParams: function($row) {
             var selectedSites = $.map($('#selectedSites li'), function(li) {
-                return li.innerText;
-            }),
+                    return li.innerText;
+                }),
                 bt = $row.find('[value="Save"]')[0],
                 input = $row.find('.setting-input')[0];
 
@@ -115,7 +158,7 @@ $(document).ready(function() {
                         .on('change', function() {
                             self.getSites($area.val());
                             self.updateAffectSites();
-                    });
+                        });
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
@@ -150,7 +193,7 @@ $(document).ready(function() {
                             $('#affectSites').html(1);
                         } else {
                             self.updateAffectSites();
-                        }                        
+                        }
                     });
                 },
                 error: function(err) {
@@ -164,7 +207,7 @@ $(document).ready(function() {
         updateAffectSites: function() {
             var self = this,
                 $area = $('#areaId');
-                $site = $('#siteId');
+            $site = $('#siteId');
 
             $.ajax({
                 type: "GET",

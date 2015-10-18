@@ -5,8 +5,10 @@
 <title>IMC-ESDER</title>
 <script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="scripts/common.js"></script>
+<script type="text/javascript" src="scripts/jstree.min.js"></script>
 <script type="text/javascript" src="scripts/settings.js"></script>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
+<link href="css/jsTree.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -23,9 +25,17 @@
 		</div> -->
 		<div class="main" style="margin-left:0">
 			<div class="content">
-				<h1>Set Parameter</h1>
+				<div class="steps"><strong>Step 1. </strong> Select sites</div>
 
-				<div class="grid form" style="border:none;margin:0px;">
+				<div class="select-sites">
+					<div class="selector"></div>
+					<div class="selected"></div>
+					<div style="clear:both;text-align:right;margin-top:5px;"><span id="selected-sites-count">12</span> sites selected</div>
+				</div>
+
+				<div class="steps"><strong>Step 2. </strong> Set parameters</div>
+
+				<div class="grid form" style="border:none;margin:0px 20px;">
 					<table cellspacing="0" cellpadding="0">
 						<thead>
 							<tr>
