@@ -424,6 +424,11 @@ input,select,textarea,button {
    display: inline-block;
    width: 300px;
 }
+.main .pannel .pannel-content li span.time {
+   display: inline-block;
+   width: 120px;
+   float: right;
+}
 
 .main .site-details {
     padding: 0px 20px;

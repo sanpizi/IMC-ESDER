@@ -16,7 +16,7 @@
 		<div class="sidebar shadow">
 			<div class="area-search">
 				<div class="search">
-					<input class="keywords" type="input" placeholder="Search Area" />
+					<input class="keywords" type="input" placeholder="Search Zone" />
 				</div>
 			</div>
 			<div class="area-tree">Loading...</div>
@@ -31,100 +31,145 @@
 					<div class="alarms">
 						<ul>
 							<li>Current site alarms:</li>
-							<li><span title="Fatal" class="alarm-fatal"></span>Fatal: <a id="fatalAlarmNum"></a></li>
-							<li><span title="Urgent" class="alarm-urgent"></span>Urgent: <a id="urgentAlarmNum"></a></li>
-							<li><span title="Important" class="alarm-important"></span>Important: <a id="importantAlarmNum"></a></li>
-							<li><span title="General" class="alarm-general"></span>General: <a id="generalAlarmNum"></a></li>
+							<li><span title="Fatal" class="alarm-fatal"></span>Critical: <a id="fatalAlarmNum"></a></li>
+							<li><span title="Urgent" class="alarm-urgent"></span>Major: <a id="urgentAlarmNum"></a></li>
+							<li><span title="Important" class="alarm-important"></span>Minor: <a id="importantAlarmNum"></a></li>
+							<li><span title="General" class="alarm-general"></span>Warning: <a id="generalAlarmNum"></a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 
-			<!-- <div class="pannel">
-				<div class="pannel-title">Details of AC</div>
+			<div class="pannel">
+				<div class="pannel-title">Environment Information</div>
 				<div class="pannel-content">
 					<ul>
 						<li>
-							<span class="label">AC 3-phase Voltage:</span>
-							<span id="signal_01">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Indoor Temperature</span>
+							<span id="signal_958">-</span>
 						</li>
 						<li>
-							<span class="label">AC 3-phase Current:</span>
-							<span id="signal_02">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Indoor Humidity</span>
+							<span id="signal_959">-</span>
+						</li>
+						<li>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Outdoor Temperature</span>
+							<span id="signal_957">-</span>
+						</li>
+						<li>
+							<span class="time"  title="Singal Sampling Time"></span>
+							<span class="label">Fire Alarm State</span>
+							<span id="signal_1015">-</span>
+						</li>
+						<li>
+							<span class="time"  title="Singal Sampling Time"></span>
+							<span class="label">Indoor Temp State</span>
+							<span id="signal_1006">-</span>
+						</li>
+						<li>
+							<span class="time"  title="Singal Sampling Time"></span>
+							<span class="label">Indoor Humidity State</span>
+							<span id="signal_1008">-</span>
 						</li>
 					</ul>
 				</div>
-			</div> -->
+			</div>
 			
 			<div class="pannel">
-				<div class="pannel-title">Details of air conditioner system</div>
+				<div class="pannel-title">Fan Information</div>
 				<div class="pannel-content">
 					<ul>
-						<!-- <li>
-							<span class="label">AC 3-phase Current:</span>
-							<span id="signal_03">-</span>
-						</li> -->
 						<li>
-							<span class="label">Running status of air conditioner 1:</span>
-							<span id="signal_04">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Fan Running State</span>
+							<span id="signal_962">-</span>
 						</li>
 						<li>
-							<span class="label">Running status of air conditioner 2:</span>
-							<span id="signal_05">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Fan Speed Feedback</span>
+							<span id="signal_989">-</span>
 						</li>
 						<li>
-							<span class="label">Running status of fan:</span>
-							<span id="signal_06">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Fan Speed Percentage</span>
+							<span id="signal_985">-</span>
+						</li>
+						<li>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Fan Power</span>
+							<span id="signal_987">-</span>
+						</li>
+						<li>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Fan Power Consumption</span>
+							<span id="signal_986">-</span>
+						</li>
+						<li>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Fan Running Time</span>
+							<span id="signal_977">-</span>
+						</li>
+						<li>
+							<span class="time"  title="Singal Sampling Time"></span>
+							<span class="label">Filter Blocked State</span>
+							<span id="signal_1014">-</span>
+						</li>
+						<li>
+							<span class="time"  title="Singal Sampling Time"></span>
+							<span class="label">Fan Fault State</span>
+							<span id="signal_1011">-</span>
+						</li>
+						<li>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">DC Voltage</span>
+							<span id="signal_992">-</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="pannel">
-				<div class="pannel-title">Details of equipment room environment</div>
+				<div class="pannel-title">A/C Information</div>
 				<div class="pannel-content">
 					<ul>
 						<li>
-							<span class="label">Indoor temperature:</span>
-							<span id="signal_07">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">A/C 1 Running State</span>
+							<span id="signal_960">-</span>
 						</li>
 						<li>
-							<span class="label">Indoor humidity:</span>
-							<span id="signal_08">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">A/C 2 Running State</span>
+							<span id="signal_961">-</span>
 						</li>
 						<li>
-							<span class="label">Outdoor temperature:</span>
-							<span id="signal_09">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">A/C 1 Running Time</span>
+							<span id="signal_980">-</span>
 						</li>
 						<li>
-							<span class="label">Door magnetic:</span>
-							<span id="signal_10">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">A/C 2 Running Time</span>
+							<span id="signal_983">-</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="pannel">
-				<div class="pannel-title">Run time</div>
+				<div class="pannel-title">FCS Controller</div>
 				<div class="pannel-content">
 					<ul>
 						<li>
-							<span class="label">Fan total running time:</span>
-							<span id="signal_11">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Hardware Version</span>
+							<span id="signal_957">-</span>
 						</li>
 						<li>
-							<span class="label">Air conditioner 1 total running time:</span>
-							<span id="signal_12">-</span>
-						</li>
-						<li>
-							<span class="label">Air conditioner 2 total running time:</span>
-							<span id="signal_13">-</span>
-						</li>
-						<li>
-							<span class="label">Fan speed percentage:</span>
-							<span id="signal_14">-</span>
-						</li>
-						<li>
-							<span class="label">Fan power consumption:</span>
-							<span id="signal_15">-</span>
+							<span class="time" title="Singal Sampling Time"></span>
+							<span class="label">Software Version</span>
+							<span id="signal_957">-</span>
 						</li>
 					</ul>
 				</div>

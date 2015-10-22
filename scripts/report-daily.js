@@ -27,7 +27,7 @@ $(document).ready(function() {
                     {
                         header: "Report Name",
                         content: function(data) {
-                            return '<a target="_blank" href="/statsFile?reportId='+ encodeURIComponent(data.reportName) + '">' + data.reportName + '</a>';
+                            return '<a target="_blank" href="/statsFile?name='+ encodeURIComponent(data.reportName) + '">' + data.reportName + '</a>';
                         }
                     }
                 ]

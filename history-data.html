@@ -16,7 +16,7 @@
 			<div class="sidebar shadow">
 				<div class="area-search">
 					<div class="search">
-						<input class="keywords" type="input" placeholder="Search Area" />
+						<input class="keywords" type="input" placeholder="Search Zone" />
 					</div>
 				</div>
 				<div class="area-tree">Loading...</div>
@@ -25,29 +25,29 @@
 				<div class="tab">
 					<ul>
 						<li class="selected"><a>Historical Data</a></li>
-						<li><a href="history-alarm.html">Historical Alarm</a></li>
+						<li><a href="history-alarm.html">Alarm History</a></li>
 					</ul>
 				</div>
-				<div class="content" style="height:500px;border-top-left-radius: 0;padding-top: 10px;">
+				<div class="content" style="border-top-left-radius: 0;padding-top: 10px;">
 					<!-- <h1>History Data Report</h1> -->
 					<div class="query">
-						<div class="label">Area:</div>
+						<div class="label">Zone:</div>
 						<div class="condition">
-							<select id="areaId" disabled="disabled">
+							<select id="areaId" disabled="disabled" style="width:80px;">
 								<option value="">-- All --</option>
 							</select>
 						</div>
 
 						<div class="label">Site:</div>
 						<div class="condition">
-							<select id="siteId" disabled="disabled">
+							<select id="siteId" disabled="disabled" style="width:80px;">
 								<option value="">-- All --</option>
 							</select>
 						</div>
 
 						<div class="label">Signal:</div>
 						<div class="condition">
-							<select id="signalId">
+							<select id="signalId" style="width:80px;">
 								<option value="">-- All --</option>
 								<option value="957">Outdoor Temperature</option>
 								<option value="958">Indoor Temperature</option>
@@ -69,9 +69,9 @@
 
 						<div class="label">Interval:</div>
 						<div class="condition">
-							<select id="interval" style="width:78px;">
+							<select id="interval" style="width:70px;">
 								<option value="">-- All --</option>
-								<option value="5">5 Min</option>
+								<option value="1">1 Min</option>
 								<option value="15">15 Min</option>
 								<option value="30">30 Min</option>
 								<option value="60">60 Min</option>
@@ -79,7 +79,7 @@
 						</div>
 
 						<div>
-							<input id="filter" class="bt" type="button" value="Filter"></input>
+							<input id="filter" class="bt" type="button" value="Query"></input>
 						</div>
 
 						<!-- <div style="margin-left:5px">

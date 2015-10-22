@@ -13,19 +13,19 @@ $(document).ready(function() {
                 params: this.params,
                 columns: [
                     {
-                        header: "Area Name",
+                        header: "Zone",
                         content: function(data) {
                             return data.areaName;
                         }
                     },
                     {
-                        header: "Site Name",
+                        header: "Site",
                         content: function(data) {
                             return data.siteName;
                         }
                     },
                     {
-                        header: "Signal Name",
+                        header: "Signal",
                         content: function(data) {
                             return data.signalName;
                         }

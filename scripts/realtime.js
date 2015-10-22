@@ -28,49 +28,43 @@ $(document).ready(function() {
                     $('#importantAlarmNum').text(data.alarmStats.important);
                     $('#generalAlarmNum').text(data.alarmStats.general);
 
-                    //指标
-                    $('#signal_01').html(data.details['963'] + 'V/' 
-                        + data.details['964'] + 'V/' 
-                        + data.details['965'] + 'V');
+                    //处理数据
+                    var signalData = {};
+                    for (var i = 0; i < data.recordList.length; i++) {
+                        signalData[data.recordList[i].signalId] = data.recordList[i];
+                    };
 
-                    $('#signal_02').html(data.details['966'] + 'A/' 
-                        + data.details['967'] + 'A/' 
-                        + data.details['968'] + 'A');
+                    //信号量
+                    var arrSingal = [
+                        ["958", "°C"],
+                        ["959", "%"],
+                        ["957", "°C"],
+                        ["1015", ""],
+                        ["1006", ""],
+                        ["1008", ""],
 
-                    $('#signal_03').html(data.details['970'] + 'A/' 
-                        + data.details['971'] + 'A/' 
-                        + data.details['972'] + 'A');
+                        ["962", ""],
+                        ["989", "rpm"],
+                        ["985", "%"],
+                        ["987", "W"],
+                        ["986", "kWh"],
+                        ["977", ""],
+                        ["1014", ""],
+                        ["1011", ""],
+                        ["992", "V"],
 
-                    $('#signal_04').html(data.details['960']);
+                        ["960", ""],
+                        ["961", ""],
+                        ["980", "hours"],
+                        ["983", "hours"],
 
-                    $('#signal_05').html(data.details['961']);
-
-                    $('#signal_06').html(data.details['962']);
-
-                    $('#signal_07').html(data.details['958'] + 'Celsiur');
-
-                    $('#signal_08').html(data.details['959'] + '%');
-
-                    $('#signal_09').html(data.details['957'] + 'Celsiur');
-
-                    $('#signal_10').html(data.details['1004']);
-
-                    $('#signal_11').html(data.details['976'] + ' days ' 
-                        + data.details['977'] + ' hours ' 
-                        + data.details['978'] + ' minutes');
-
-                    $('#signal_12').html(data.details['979'] + ' days ' 
-                        + data.details['980'] + ' hours ' 
-                        + data.details['981'] + ' minutes');
-
-                    $('#signal_13').html(data.details['982'] + ' days ' 
-                        + data.details['983'] + ' hours ' 
-                        + data.details['984'] + ' minutes');
-
-                    $('#signal_14').html(data.details['985'] + '%');
-
-                    $('#signal_15').html(data.details['986'] + 'kWh');
-
+                        ["990", ""],
+                        ["991", ""],
+                    ];
+                    for (var j = 0; j < arrSingal.length; j++) {
+                        var signal = signalData[arrSingal[j][0]];
+                        $('#signal_' + arrSingal[j][0]).html(signal.dataVal + arrSingal[j][1]).siblings('.time').html(signal.dataTime.slice(5,16));
+                    };
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');

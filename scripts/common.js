@@ -2,7 +2,7 @@
 window.config = {
     //自动刷新时间间隔，单位：毫秒。
     //关闭自动刷新请设为 0。
-    "Automatic_Refresh_Interval": 0 * 1000, 
+    "Automatic_Refresh_Interval": 10 * 1000, 
 
     //是否缓存树菜单中加载过的站点。
     //false: 每次展开菜单时都重新从服务端取数据。
@@ -321,7 +321,7 @@ Page.prototype = {
                 };
 
             //生成树的 html
-            var html = '<ul id="tree-root"><li class="expanded">All Area<ul id="tree-menu">',
+            var html = '<ul id="tree-root"><li class="expanded">All Zone<ul id="tree-menu">',
                 menuTmpl = self.tmpl('<li class="<%=status%>" data-area-id="<%=id%>"><span class="area"><%=name%></span><ul></ul></li>'),
                 menuStatusStr = ',' + this.getCookie('menuStatus') + ','; //树的展开状态
 
@@ -548,6 +548,7 @@ $.fn.extend({
             paging: true,
             pageSize: 10,
             pageNum: 9, //分页码个数
+            maxRecordAmount: 1000, //最大展示记录条数
             currentPage: 1,
             params: {}
         };
@@ -563,7 +564,7 @@ $.fn.extend({
             //初始化表格
             init: function() {
                 var self = this,
-                    gridHtml = Page.prototype.tmpl('<table cellpadding="0" cellspacing="0" >'+
+                    gridHtml = Page.prototype.tmpl('<table class="data-grid" cellpadding="0" cellspacing="0" >'+
                     '    <thead>'+
                     '        <tr>'+
                     '<%for (var i = 0; i < arrCols.length; i++) {%>'+
@@ -596,7 +597,16 @@ $.fn.extend({
                     dataType: "json",
                     success: function(data) {
                         var arrRecords = data.recordList,
-                            $tbody = self.element.find('tbody');
+                            $tbody = self.element.find('.data-grid>tbody');
+
+                        //记录数超过最大展示数时将被忽略
+                        if (data.totalRecords > self.option.maxRecordAmount) {
+                            data.totalRecords = self.option.maxRecordAmount;
+
+                            //给出数据被忽略的提示
+                            self.element.append('<div style="color:#999;text-align:center;padding-top:5px;">Show only the first ' + self.option.maxRecordAmount + ' entries.</div>');
+                        }
+
                         if (arrRecords.length === 0) {
                             $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
                         } else {
@@ -678,7 +688,7 @@ $.fn.extend({
                                 });
 
                                 //插入表格内容
-                                self.element.append(pagingHtml);
+                                self.element.find('.data-grid').after(pagingHtml);
 
                                 //绑定翻页事件
                                 $('#turnTo').on('click', 'li', function() {

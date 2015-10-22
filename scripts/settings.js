@@ -42,29 +42,25 @@ $(document).ready(function() {
                         "children": [{
                             "text": "Child node 1",
                             "state": {
-                                "selected": true
+                                "opened": true
+                            }
+                        }, {
+                            "text": "Child node 2"
+                        }, {
+                            "text": "Child node 2"
+                        }, {
+                            "text": "Child node 2",
+                            "state": {
+                                "opened": true
                             },
-                            "icon": "jstree-file"
-                        }, {
-                            "text": "Child node 2",
-                            "icon": "jstree-file"
-                        }, {
-                            "text": "Child node 2",
-                            "icon": "jstree-file"
-                        }, {
-                            "text": "Child node 2",
                             "children": [{
-                                "text": "Child node 1",
-                                "icon": "jstree-file"
+                                "text": "Child node 1"
                             }, {
-                                "text": "Child node 2",
-                                "icon": "jstree-file"
+                                "text": "Child node 2"
                             }, {
-                                "text": "Child node 2",
-                                "icon": "jstree-file"
+                                "text": "Child node 2"
                             }, {
-                                "text": "Child node 2",
-                                "icon": "jstree-file"
+                                "text": "Child node 2"
                             }]
                         }]
                     }]
