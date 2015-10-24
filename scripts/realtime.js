@@ -62,8 +62,11 @@ $(document).ready(function() {
                         ["991", ""],
                     ];
                     for (var j = 0; j < arrSingal.length; j++) {
-                        var signal = signalData[arrSingal[j][0]];
-                        $('#signal_' + arrSingal[j][0]).html(signal.dataVal + arrSingal[j][1]).siblings('.time').html(signal.dataTime.slice(5,16));
+                        var signal = signalData[arrSingal[j][0]] || null,
+                            dataValue = signal ? signal.dataVal + arrSingal[j][1] : '',
+                            dataTime = signal ? signal.dataTime.slice(5,16) : '';
+                            
+                        $('#signal_' + arrSingal[j][0]).html(dataValue).siblings('.time').html(dataTime);
                     };
                 },
                 error: function(err) {

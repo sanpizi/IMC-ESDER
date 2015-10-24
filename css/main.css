@@ -505,6 +505,35 @@ input,select,textarea,button {
     height: 300px;
     overflow: auto;
 }
+
+.main .select-sites .selected li {
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    width: 150px;
+    padding-left: 7px;
+    border-radius: 5px;
+    background-color: #e7f4f9;
+    margin: 5px 0 0 5px;
+}
+.main .select-sites .selected li span {
+    float: left;
+    display: block;
+}
+.main .select-sites .selected li .site {
+    width: 125px;
+    overflow: hidden;
+}
+.main .select-sites .selected li .delete {
+    float: right;
+    cursor: pointer;
+    width: 24px;
+    text-align: center;
+}
+.main .select-sites .selected li .delete:hover {
+    color: #c00;
+}
+
 .grid table {
     width: 100%;
 }

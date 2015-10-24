@@ -95,6 +95,18 @@
             <param-name>oraclePassword</param-name>
             <param-value>DBCOOLER240</param-value>
         </init-param>
+        <init-param>
+            <param-name>requiredSignalsForSiteDetails</param-name>
+            <param-value>957,958,959,960,961,962,977,980,983,985,986,987,989,990,991,992,1006,1008,1011,1014,1015</param-value>
+        </init-param>
+        <init-param>
+            <param-name>requiredSignalsForHisData</param-name>
+            <param-value>957,958,959,969,978,981,984,985,986</param-value>
+        </init-param>
+        <init-param>
+            <param-name>requiredTypeIdsForAlarm</param-name>
+            <param-value>0,6,8,11,14,15,19</param-value>
+        </init-param>
         <load-on-startup>10</load-on-startup>
     </servlet>
     <servlet-mapping>

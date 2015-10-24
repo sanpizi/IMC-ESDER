@@ -35,32 +35,32 @@ $(document).ready(function() {
                 "plugins": ["checkbox"],
                 "core": {
                     'data': [{
-                        "text": "All sites",
+                        "text": "All Zone",
                         "state": {
                             "opened": true
                         },
                         "children": [{
-                            "text": "Child node 1",
+                            "text": "Site 1",
                             "state": {
                                 "opened": true
                             }
                         }, {
-                            "text": "Child node 2"
+                            "text": "Site 2"
                         }, {
-                            "text": "Child node 2"
+                            "text": "Site 2"
                         }, {
-                            "text": "Child node 2",
+                            "text": "Zone 2",
                             "state": {
                                 "opened": true
                             },
                             "children": [{
-                                "text": "Child node 1"
+                                "text": "Site 1"
                             }, {
-                                "text": "Child node 2"
+                                "text": "Site 2"
                             }, {
-                                "text": "Child node 2"
+                                "text": "Site 2"
                             }, {
-                                "text": "Child node 2"
+                                "text": "Site 2"
                             }]
                         }]
                     }]
