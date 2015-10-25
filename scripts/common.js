@@ -160,7 +160,7 @@ Page.prototype = {
             '			<ul>' +
             '				<li><a href="overview.html" <%if (!path.indexOf("/overview")) {%>class="selected"<%}%>>Overview</a></li>' +
             '				<li><a href="active-alarm.html" <%if (!path.indexOf("/active-alarm")) {%>class="selected"<%}%>>Alarms</a></li>' +
-            '               <li><a href="history-data.html" <%if (!path.indexOf("/history")) {%>class="selected"<%}%>>History</a></li>' +
+            '               <li><a href="history-alarm.html" <%if (!path.indexOf("/history")) {%>class="selected"<%}%>>History</a></li>' +
             '				<li><a href="report-monthly.html" <%if (!path.indexOf("/report")) {%>class="selected"<%}%>>Reports</a></li>' +
             '				<li><a href="settings.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
             '			</ul>' +
@@ -321,7 +321,7 @@ Page.prototype = {
                 };
 
             //生成树的 html
-            var html = '<ul id="tree-root"><li class="expanded">All Zone<ul id="tree-menu">',
+            var html = '<ul id="tree-root"><li class="expanded">All Zones<ul id="tree-menu">',
                 menuTmpl = self.tmpl('<li class="<%=status%>" data-area-id="<%=id%>"><span class="area"><%=name%></span><ul></ul></li>'),
                 menuStatusStr = ',' + this.getCookie('menuStatus') + ','; //树的展开状态
 
@@ -604,7 +604,7 @@ $.fn.extend({
                             data.totalRecords = self.option.maxRecordAmount;
 
                             //给出数据被忽略的提示
-                            self.element.append('<div style="color:#999;text-align:center;padding-top:5px;">Show only the first ' + self.option.maxRecordAmount + ' entries.</div>');
+                            self.element.remove('.paging-overflow').append('<div class="paging-overflow">Show only the first ' + self.option.maxRecordAmount + ' entries.</div>');
                         }
 
                         if (arrRecords.length === 0) {
@@ -688,7 +688,7 @@ $.fn.extend({
                                 });
 
                                 //插入表格内容
-                                self.element.find('.data-grid').after(pagingHtml);
+                                self.element.remove('.paging').find('.data-grid').after(pagingHtml);
 
                                 //绑定翻页事件
                                 $('#turnTo').on('click', 'li', function() {

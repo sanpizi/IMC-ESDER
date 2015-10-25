@@ -11,6 +11,10 @@ $(document).ready(function() {
                 ajax: "/alarms",
                 pageSize: 20,
                 params: this.params,
+                fnComplete: function(data) {
+                    //启用查询按钮
+                    $filter.prop('disabled', false);
+                },
                 columns: [
                     {
                         header: "Zone",
@@ -56,6 +60,13 @@ $(document).ready(function() {
 
             //过滤数据
             $('#filter').on('click', function() {
+                if (this.disabled) {
+                    return;
+                }
+
+                //禁用，防止连续查询，必须等待上次请求完成后再启用
+                this.disabled = true;
+
                 grid.option.params.areaId = $('#areaId').val();
                 grid.option.params.siteId = $('#siteId').val();
                 grid.option.params.signalId = $('#signalId').val();

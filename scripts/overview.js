@@ -68,7 +68,7 @@ $(document).ready(function() {
                 success: function(data) {
                     var arrSites = data.siteList || [],
                         html = '<div id="sites-matrix">',
-                        siteTmpl = self.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Name: <%=siteName%>&#10;Zone: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status.toLowerCase()%>"></span>');
+                        siteTmpl = self.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Site: <%=siteName%>&#10;Zone: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status.toLowerCase()%>"></span>');
 
                     for (var i = 0; i < arrSites.length && i < maxSites; i++) {
                         html += siteTmpl({

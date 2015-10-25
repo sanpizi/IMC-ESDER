@@ -5,8 +5,8 @@ $(document).ready(function() {
 
             var self = this;
 
-            //拉取区域数据
-            this.getAreas();
+            //初始化站点选择器
+            this.initSitesSelector();
 
             //更新影响站点数
             this.updateAffectSites();
@@ -25,46 +25,6 @@ $(document).ready(function() {
                     $input.val($input.attr('data-default-value'));
                 }
 
-            });
-
-            //初始化树形菜单
-            $('.selector').jstree({
-                "checkbox": {
-                    "keep_selected_style": false
-                },
-                "plugins": ["checkbox"],
-                "core": {
-                    'data': [{
-                        "text": "All Zone",
-                        "state": {
-                            "opened": true
-                        },
-                        "children": [{
-                            "text": "Site 1",
-                            "state": {
-                                "opened": true
-                            }
-                        }, {
-                            "text": "Site 2"
-                        }, {
-                            "text": "Site 2"
-                        }, {
-                            "text": "Zone 2",
-                            "state": {
-                                "opened": true
-                            },
-                            "children": [{
-                                "text": "Site 1"
-                            }, {
-                                "text": "Site 2"
-                            }, {
-                                "text": "Site 2"
-                            }, {
-                                "text": "Site 2"
-                            }]
-                        }]
-                    }]
-                }
             });
         },
 
@@ -132,71 +92,151 @@ $(document).ready(function() {
             });
         },
 
-        //拉取区域数据
-        getAreas: function() {
-            var self = this,
-                $area = $('#areaId');
-
-            $.ajax({
-                type: "GET",
-                url: "/areas",
-                dataType: "json",
-                success: function(data) {
-                    var areaList = data.areaList,
-                        html = '<option value="">-- All --</option>';
-
-                    for (var i = 0; i < areaList.length; i++) {
-                        html += '<option value="' + areaList[i].id + '">' + areaList[i].name + '</option>'
-                    }
-
-                    $area.html(html)
-                        .prop('disabled', false)
-                        .on('change', function() {
-                            self.getSites($area.val());
-                            self.updateAffectSites();
-                        });
-                },
-                error: function(err) {
-                    //window.alert('Failed to get the global statistics data.');
-                    console.error('获取区域数据失败。');
-                }
-            });
-        },
-
-        //拉取站点数据
-        getSites: function(areaId) {
-            var self = this,
-                $site = $('#siteId');
+        //初始化站点选择器
+        initSitesSelector: function() {
+            //拉取树形菜单数据            
+            var self = this;
 
             $.ajax({
                 type: "GET",
                 url: "/sites",
                 dataType: "json",
-                data: {
-                    areaId: areaId
-                },
                 success: function(data) {
                     var siteList = data.siteList,
-                        html = '<option value="">-- All --</option>';
+                        areas = {},
+                        sites = {},
+                        treeData = [{
+                            "text": "All Zones",
+                            "state": {
+                                "opened": true
+                            },
+                            "children": []
+                        }];
 
+                    //提取所有区域、站点数据
                     for (var i = 0; i < siteList.length; i++) {
-                        html += '<option value="' + siteList[i].id + '">' + siteList[i].name + '</option>'
+                        var areaId = siteList[i].areaId,
+                            areaName = siteList[i].areaName,
+                            site = {
+                                "id": "site_" + siteList[i].id,
+                                "text": siteList[i].name,
+                                "icon": "jstree-" + siteList[i].status
+                            };
+
+                        //建立站点数据模型
+                        sites[siteList[i].id] = siteList[i];
+
+                        //提取所有区域
+                        if (!(areaId in areas)) {
+                            areas[areaId] = {
+                                "id": "area_" + areaId,
+                                "text": areaName,
+                                "state": {
+                                    "opened": false
+                                },
+                                "children": []
+                            }
+                        }
+
+                        areas[areaId].children.push(site);
+                    };
+
+                    //建立站点数据模型
+                    self.sites = sites;
+
+                    //构造 jsTree 所需要的数据格式
+                    for(var x in areas) {
+                        treeData[0].children.push(areas[x]);
                     }
 
-                    $site.html(html).prop('disabled', false).on('change', function() {
-                        var siteId = $('#siteId').val();
-                        if (siteId.length) {
-                            $('#affectSites').html(1);
-                        } else {
-                            self.updateAffectSites();
-                        }
-                    });
+                    //创建树
+                    self.makeTree(treeData);
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
                     console.error('获取站点数据失败。');
                 }
             });
+
+        },
+
+        //生成树形菜单
+        makeTree: function(data) {
+            var self = this;
+
+            //初始化树形菜单
+            $('.selector').jstree({
+                'plugins': ["checkbox"],
+                'core': {
+                    'data': data
+                }
+            }).on('changed.jstree', function (e, data) {
+                //获取选中的末级节点数
+                var arrSelectedSites = data.instance.get_bottom_selected(),
+                    selectedSites = {};
+
+                for (var i = 0; i < arrSelectedSites.length; i++) {
+                    selectedSites[arrSelectedSites[i].slice(5)] = 1;
+                }
+
+                //更新站点数据模型
+                for (var x in self.sites) {
+                    if (x in selectedSites) {
+                        self.sites[x].selected = true;
+                    } else {
+                        self.sites[x].selected = false;
+                    }
+                }
+
+                //更新受影响站点数
+                $('#selected-sites-count').html(arrSelectedSites.length);
+
+                //刷新已选区域
+                self.selector.refreshSelected();
+            });
+
+            //绑定已选项删除事件
+            $('.selected').on('click', '.delete', function() {
+                //要删除的站点
+                var siteId = $(this).prev('.site').attr('data-site-id'),
+                    nodeId = 'site_' + siteId;
+
+                //操作
+                $('.selector').jstree().uncheck_node(nodeId);
+            });
+        },
+
+        selector: {
+            //更新已选站点
+            refreshSelected: function() {
+                var $selected = $('.selected ul'),
+                    sites = window.page.sites || {},
+                    siteTmpl = Page.prototype.tmpl('' +
+                        '<%for (var x in sites) {%>'+
+                            '<%if (sites[x].selected) {%>'+
+                                '<li>' +
+                                    '<span class="site" data-site-id="<%=sites[x].id%>" title="ID: <%=sites[x].id%>&#10;Site: <%=sites[x].name%>&#10;Zone: <%=sites[x].areaName%>"><%=sites[x].areaName%>/<%=sites[x].name%></span>' +
+                                    '<span class="delete" title="Remove">&times;</span>' +
+                                '</li>' + 
+                            '<%}%>'+
+                        '<%}%>'+
+                        '');
+
+                var html = siteTmpl({sites: sites});
+
+                $selected.html(html);
+            },
+
+            //获取已选择站点 ID 数组
+            getSelected: function() {
+                var arrSites = $('.selector').jstree().get_bottom_checked();
+
+                arrSites = $.map(arrSites, function(site) {
+                    return site.slice(5);
+                })
+
+                return arrSites;
+            }
         },
 
         //更新设置站点数

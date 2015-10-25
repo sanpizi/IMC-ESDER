@@ -60,7 +60,7 @@
   display: none;
 }
 .jstree-anchor > .jstree-themeicon {
-  margin-right: 2px;
+  margin-right: 0px;
 }
 .jstree-no-icons .jstree-themeicon,
 .jstree-anchor > .jstree-themeicon-hidden {
@@ -416,6 +416,12 @@
 .jstree-default .jstree-themeicon {
   background-position: -260px -4px;
 }
+.jstree-default .jstree-closed > a > .jstree-themeicon {
+  background-position: -260px -4px;
+}
+.jstree-default .jstree-open > a > .jstree-themeicon {
+  background-position: -260px -36px;
+}
 .jstree-default > .jstree-no-dots .jstree-node,
 .jstree-default > .jstree-no-dots .jstree-leaf > .jstree-ocl {
   background: transparent;
@@ -504,6 +510,15 @@
 }
 .jstree-default .jstree-file {
   background: url("../images/jsTree.png") -100px -68px no-repeat;
+}
+.jstree-default .jstree-Offline {
+  background: url("../images/jsTree.png") -132px -68px no-repeat;
+}
+.jstree-default .jstree-Normal {
+  background: url("../images/jsTree.png") -164px -68px no-repeat;
+}
+.jstree-default .jstree-Alarm {
+  background: url("../images/jsTree.png") -196px -68px no-repeat;
 }
 .jstree-default .jstree-folder {
   background: url("../images/jsTree.png") -260px -4px no-repeat;

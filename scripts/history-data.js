@@ -11,9 +11,11 @@ $(document).ready(function() {
                 params: this.params,
                 fnComplete: function(data) {
                     var $export = $('#export'),
+                        $filter = $('#filter'),
                         max = $export.attr('data-max-records'),
                         total = data.totalRecords;
 
+                    //记录条数过多时禁止导出功能，因为 Excell 只能容纳 65536 条记录
                     if (total > max) {
                         $export.prop('disabled', true)
                             .attr('title', 'Maximum of ' + max + ' records');
@@ -22,6 +24,8 @@ $(document).ready(function() {
                             .attr('title', '');
                     }
 
+                    //启用查询按钮
+                    $filter.prop('disabled', false);
                 },
                 columns: [
                     {
@@ -64,6 +68,13 @@ $(document).ready(function() {
 
             //过滤数据
             $('#filter').on('click', function() {
+                if (this.disabled) {
+                    return;
+                }
+                
+                //禁用，防止连续查询，必须等待上次请求完成后再启用
+                this.disabled = true;
+
                 grid.option.params.areaId = $('#areaId').val();
                 grid.option.params.siteId = $('#siteId').val();
                 grid.option.params.signalId = $('#signalId').val();

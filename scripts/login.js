@@ -8,7 +8,9 @@ $(document).ready(function() {
             this.getUrlParams();
 
             //设置焦点
-            $('#username').focus();
+            setTimeout(function() {
+                $('#username').focus();
+            }, 1);
 
             //绑定 login 按钮事件
             $login.prop('disabled', false).on('click', function() {
