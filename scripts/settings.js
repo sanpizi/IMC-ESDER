@@ -16,12 +16,14 @@ $(document).ready(function() {
 
             //提交表单
             $('.form').on('click', '[type="button"]', function(e) {
-                var $row = $(this).closest('tr');
+                var $row = $(this).closest('tr'),
+                    $input = $row.find('.setting-input'),
+                    $target = $(e.target);
 
-                if (e.target.value === 'Save') {
+                if ($target.hasClass('save')) { //点击保存按钮
+                    //提交参数设置
                     self.setParams($row);
-                } else if (e.target.value === 'Reset') {
-                    var $input = $row.find('.setting-input');
+                } else if ($target.hasClass('reset')) { //点击默认值按钮
                     $input.val($input.attr('data-default-value'));
                 }
 
@@ -55,19 +57,24 @@ $(document).ready(function() {
 
         //保存设置
         setParams: function($row) {
-            var selectedSites = $.map($('#selectedSites li'), function(li) {
-                    return li.innerText;
-                }),
-                bt = $row.find('[value="Save"]')[0],
+            var self = this,
+                selectedSites = self.selector.getSelected().join(','),
+                signalName = $row.find('td:first').text(),
+                bt = $row.find('.save')[0],
                 input = $row.find('.setting-input')[0];
+
+            if (!selectedSites) {
+                alert('No site was selected.');
+                return;
+            }
 
             $.ajax({
                 type: "POST",
                 url: "/config",
                 dataType: "json",
                 data: {
-                    devSn: selectedSites,
-                    signalName: input.getAttribute('signalName'),
+                    siteId: selectedSites,
+                    signalName: signalName,
                     newValue: input.value
                 },
                 beforeSend: function() {
@@ -76,7 +83,7 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     if (data.result === 0) {
-                        //
+                        alert('Operation sent successfully.');
                     } else {
                         alert(data.errMsg);
                     }

@@ -46,163 +46,199 @@
 								<th width="150">Value</th>
 								<th width="70">Unit</th>
 								<th>Description</th>
-								<th width="120">Operation</th>
+								<th width="150">Operation</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>DeviceReset</td>
-								<td><input type="input" class="setting-input" value="" id="p_1" data-default-value="" placeholder="21930" /></td>
+								<td>FCS Reset</td>
+								<td><input type="input" class="setting-input" value="" id="p_1" data-default-value="" placeholder="" /></td>
 								<td>-</td>
-								<td>The settting value is 21930, the device will reset.</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>1：Reset</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>AC1Status</td>
-								<td><input type="input" class="setting-input" value="" id="p_2" data-default-value="" placeholder="0,1" /></td>
+								<td>A/C 1 Control</td>
+								<td><input type="input" class="setting-input" value="" id="p_2" data-default-value="" placeholder="" /></td>
 								<td>-</td>
-								<td>0: stop, 1: run.</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>0: Off, 1: On</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>AC2Status</td>
-								<td><input type="input" class="setting-input" value="" id="p_3" data-default-value="" placeholder="0,1" /></td>
+								<td>A/C 2 Control</td>
+								<td><input type="input" class="setting-input" value="" id="p_3" data-default-value="" placeholder="" /></td>
 								<td>-</td>
-								<td>0: stop, 1: run.</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>0: Off, 1: On</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>FanStatus</td>
-								<td><input type="input" class="setting-input" value="" id="p_4" data-default-value="" placeholder="0,1" /></td>
+								<td>Fan Control</td>
+								<td><input type="input" class="setting-input" value="" id="p_4" data-default-value="" placeholder="" /></td>
 								<td>-</td>
-								<td>0: stop, 1: run.</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>0: Off, 1: On</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Tun off fan when low voltage</td>
-								<td><input type="input" class="setting-input" value="" id="p_5" data-default-value="1" placeholder="0,1" /></td>
+								<td>Turn Off Fan UnderVoltage</td>
+								<td><input type="input" class="setting-input" value="" id="p_5" data-default-value="1" placeholder="1" /></td>
 								<td>-</td>
-								<td>0: Disable, 1: Enable (default).</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>0: Disable, 1: Enable</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Indoor &amp; outdoor temperature diffrence</td>
-								<td><input type="input" class="setting-input" value="" id="p_6" data-default-value="2" placeholder="[1,10]" /></td>
+								<td>Temp Diff between Indoor and Outdoor</td>
+								<td><input type="input" class="setting-input" value="" id="p_6" data-default-value="2" placeholder="2" /></td>
 								<td>Celsius</td>
-								<td>Scope: [1, 10], default vaule: 2.</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>Scope: [1, 5]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Clear Fan Power Consumption</td>
-								<td><input type="input" class="setting-input" value="" id="p_7" data-default-value="" placeholder="0,1" /></td>
+								<td>Over Humidity</td>
+								<td><input type="input" class="setting-input" value="" id="p_16" data-default-value="" placeholder="" /></td>
+								<td>%</td>
+								<td>Scope: [0, 100]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr>
+							<!-- <tr>
+								<td>Humidity Limit ON/OFF</td>
+								<td><input type="input" class="setting-input" value="" id="p_81" data-default-value="1" placeholder="1" /></td>
 								<td>-</td>
-								<td>1: Clear, 0: Not Clear</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
+								<td>0: Disabled, 1: Enabled</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr> -->
 							<tr>
-								<td>Indoor temperature lower limit</td>
-								<td><input type="input" class="setting-input" value="" id="p_8" data-default-value="" placeholder="[-20,80]" /></td>
+								<td>Indoor Under Temp</td>
+								<td><input type="input" class="setting-input" value="" id="p_8" data-default-value="0" placeholder="0" /></td>
 								<td>Celsius</td>
-								<td>Scope:[-20,80], Unit:Celsius</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>Scope: [-20, 80]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>AC minimum running time</td>
-								<td><input type="input" class="setting-input" value="" id="p_9" data-default-value="35" placeholder="" /></td>
+								<td>Indoor Over Temp</td>
+								<td><input type="input" class="setting-input" value="" id="p_14" data-default-value="40" placeholder="40" /></td>
+								<td>Celsius</td>
+								<td>Scope: [-20, 80]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr>
+							<tr>
+								<td>A/C Minimum Duration</td>
+								<td><input type="input" class="setting-input" value="" id="p_9" data-default-value="35" placeholder="35" /></td>
 								<td>min</td>
-								<td>Scope:[8,60] DefaultValue:35. Unit:Minute</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>Scope: [8, 60]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Work mode</td>
-								<td><input type="input" class="setting-input" value="" id="p_10" data-default-value="1" placeholder="0,1,2,3,4" /></td>
+								<td>Work Mode</td>
+								<td><input type="input" class="setting-input" value="" id="p_10" data-default-value="1" placeholder="1" /></td>
+								<td>Celsius</td>
+								<td>0: Manual, 1: Fan + 2A/C, 2: Fan + 1A/C, 3: Fan Only, 4: 2A/C</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr>
+							<tr>
+								<td>Fan Start Temp</td>
+								<td><input type="input" class="setting-input" value="" id="p_11" data-default-value="23" placeholder="23" /></td>
+								<td>Celsius</td>
+								<td>Scope: [20, 29]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr>
+							<tr>
+								<td>A/C Start Temp</td>
+								<td><input type="input" class="setting-input" value="" id="p_12" data-default-value="30" placeholder="30" /></td>
+								<td>Celsius</td>
+								<td>Scope: [Fan StartTemp + 6, 37]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr>
+							<tr>
+								<td>Emergency On Temp</td>
+								<td><input type="input" class="setting-input" value="" id="p_13" data-default-value="35" placeholder="35" /></td>
+								<td>Celsius</td>
+								<td>Scope: [A/C StartTemp + 3, 44]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
+							</tr>
+							<tr>
+								<td>Turn Off Fan OverHumidity</td>
+								<td><input type="input" class="setting-input" value="" id="p_15" data-default-value="1" placeholder="1" /></td>
 								<td>-</td>
-								<td>0:Manual mode, 1:2 A/C (default),2:1 A/C, 3:0 AC, 4:AC mode</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>0: Disabled, 1: Enabled</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Fan Startup Temp</td>
-								<td><input type="input" class="setting-input" value="" id="p_11" data-default-value="23" placeholder="[20,29]" /></td>
-								<td>Celsius</td>
-								<td>Scope:[20,29], DefaultValue:23, Unit:Celsius</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>A/C Startup Temp</td>
-								<td><input type="input" class="setting-input" value="" id="p_12" data-default-value="30" placeholder="[fanStartupTemp+6,37]" /></td>
-								<td>Celsius</td>
-								<td>Scope:[fanStartupTemp+6,37], DefaultValue:30, Unit:Celsius</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>Emergency Mode Temp</td>
-								<td><input type="input" class="setting-input" value="" id="p_13" data-default-value="35" placeholder="[ACStartupTemp+3,44]" /></td>
-								<td>Celsius</td>
-								<td>Scope:[ACStartupTemp+3,44], DefaultValue:35, Unit:Celsius</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>High Temp Alarm Temp</td>
-								<td><input type="input" class="setting-input" value="" id="p_14" data-default-value="40" placeholder="[emergencyModeTemp+2,48]" /></td>
-								<td>Celsius</td>
-								<td>Scope:[emergencyModeTemp+2,48], DefaultValue:40, Unit:Celsius</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>Allow humidity limit</td>
-								<td><input type="input" class="setting-input" value="" id="p_15" data-default-value="1" placeholder="0,1" /></td>
-								<td>-</td>
-								<td>0:Not allow, 1:Allow(defalut)</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>Humidity upper Limit</td>
-								<td><input type="input" class="setting-input" value="" id="p_16" data-default-value="" placeholder="[0,100]" /></td>
-								<td>%</td>
-								<td>Scope:[0,100]</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>Fan minimum running time</td>
-								<td><input type="input" class="setting-input" value="" id="p_17" data-default-value="5" placeholder="[1,10]" /></td>
+								<td>Fan Minimum Duration</td>
+								<td><input type="input" class="setting-input" value="" id="p_17" data-default-value="5" placeholder="5" /></td>
 								<td>min</td>
-								<td>Scope:[1,10], DefaultValue:5, Unit:Minute</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>Scope: [1, 10]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Fan Low Speed</td>
-								<td><input type="input" class="setting-input" value="" id="p_18" data-default-value="29" placeholder="[0,29]" /></td>
+								<td>Fan Speed Control</td>
+								<td><input type="input" class="setting-input" value="" id="p_21" data-default-value="0" placeholder="0" /></td>
 								<td>%</td>
-								<td>Scope:[0,29], DefaultValue:29, Unit:%</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>Scope: [29, 100]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 							<tr>
-								<td>Fan Medium Speed</td>
-								<td><input type="input" class="setting-input" value="" id="p_19" data-default-value="43" placeholder="[Fan Low Speed,100]" /></td>
-								<td>%</td>
-								<td>Scope:[Fan Low Speed,100], DefaultValue:43, Unit:%</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>Fan High Speed</td>
-								<td><input type="input" class="setting-input" value="" id="p_20" data-default-value="100" placeholder="[fanMediumSpeed,100]" /></td>
-								<td>%</td>
-								<td>Scope:[fanMediumSpeed,100], DefaultValue:100, Unit:%</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>Manual control of the fan speed</td>
-								<td><input type="input" class="setting-input" value="" id="p_21" data-default-value="0" placeholder="[0,100]" /></td>
-								<td>%</td>
-								<td>Scope:[0,100]</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
-							</tr>
-							<tr>
-								<td>DC voltage lower limit</td>
-								<td><input type="input" class="setting-input" value="" id="p_22" data-default-value="42" placeholder="[0,60]" /></td>
+								<td>DC Under Voltage</td>
+								<td><input type="input" class="setting-input" value="" id="p_22" data-default-value="45" placeholder="45" /></td>
 								<td>V</td>
-								<td>Scope:[0,60], DefaultValue:42, Unit:V</td>
-								<td><input class="setting-button" type="button" title="Set a new value" value="  Set  " /> <input class="setting-button" type="button" title="Load the default value" value="Default" /></td>
+								<td>Scope: [0, 60]</td>
+								<td>
+									<input class="setting-button save" type="button" title="Set a new value" value="Set" />
+									<input class="setting-button reset" type="button" title="Load the default value" value="Default" />
+								</td>
 							</tr>
 						</tbody>
 					</table>

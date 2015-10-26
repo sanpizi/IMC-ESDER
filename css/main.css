@@ -674,6 +674,9 @@ input,select,textarea,button {
 .form table .setting-button {
     padding: 2px 7px;
 }
+.form table .setting-button.save {
+    padding: 2px 18px;
+}
 
 
 /*

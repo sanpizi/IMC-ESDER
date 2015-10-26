@@ -608,7 +608,7 @@ $.fn.extend({
                         }
 
                         if (arrRecords.length === 0) {
-                            $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
+                            $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data.</td></tr>');
                         } else {
                             var html = '',
                                 recordsNum = self.option.pageSize < arrRecords.length ? self.option.pageSize : arrRecords.length;
@@ -713,7 +713,7 @@ $.fn.extend({
                     },
                     error: function(err) {
                         console.error('加载表格数据失败。')
-                        self.element.find('tbody').html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data...</td></tr>');
+                        self.element.find('tbody').html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data.</td></tr>');
                     }
                 });
             },
