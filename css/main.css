@@ -426,7 +426,7 @@ input,select,textarea,button {
 }
 .main .pannel .pannel-content li span.time {
    display: inline-block;
-   width: 120px;
+   width: 150px;
    float: right;
 }
 

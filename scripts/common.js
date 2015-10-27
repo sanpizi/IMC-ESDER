@@ -701,14 +701,14 @@ $.fn.extend({
                                     self.turnTo($li.text());
                                 });
                             }
+                        }
 
-                            //重新调整菜单高度
-                            Page.prototype.initTreeHeight();
+                        //重新调整菜单高度
+                        Page.prototype.initTreeHeight();
 
-                            //回调 fnComplete
-                            if (self.option.fnComplete) {
-                                self.option.fnComplete(data);
-                            }
+                        //回调 fnComplete
+                        if (self.option.fnComplete) {
+                            self.option.fnComplete(data);
                         }
                     },
                     error: function(err) {

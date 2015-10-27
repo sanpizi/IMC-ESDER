@@ -36,37 +36,48 @@ $(document).ready(function() {
 
                     //信号量
                     var arrSingal = [
-                        ["958", "°C"],
-                        ["959", "%"],
-                        ["957", "°C"],
-                        ["1015", ""],
-                        ["1006", ""],
-                        ["1008", ""],
+                        ["958",     "°C",     1],
+                        ["959",     "%",      0],
+                        ["957",     "°C",     1],
+                        ["1015",    "",       0],
+                        ["1006",    "",       0],
+                        ["1008",    "",       0],
+        
+                        ["962",     "",       0],
+                        ["989",     "rpm",    1],
+                        ["985",     "%",      0],
+                        ["987",     "W",      1],
+                        ["986",     "kWh",    1],
+                        ["977",     "hours",  1],
+                        ["1014",    "",       0],
+                        ["1011",    "",       0],
+                        ["992",     "V",      1],
+        
+                        ["960",     "",       0],
+                        ["961",     "",       0],
+                        ["980",     "hours",  1],
+                        ["983",     "hours",  1],
 
-                        ["962", ""],
-                        ["989", "rpm"],
-                        ["985", "%"],
-                        ["987", "W"],
-                        ["986", "kWh"],
-                        ["977", ""],
-                        ["1014", ""],
-                        ["1011", ""],
-                        ["992", "V"],
-
-                        ["960", ""],
-                        ["961", ""],
-                        ["980", "hours"],
-                        ["983", "hours"],
-
-                        ["990", ""],
-                        ["991", ""],
+                        ["990",     "",       0],
+                        ["991",     "",       0],
                     ];
+
                     for (var j = 0; j < arrSingal.length; j++) {
                         var signal = signalData[arrSingal[j][0]] || null,
-                            dataValue = signal ? signal.dataVal + arrSingal[j][1] : '',
-                            dataTime = signal ? signal.dataTime.slice(5,16) : '';
-                            
+                            dataValue = signal ? format(signal.dataVal, arrSingal[j][2]) + ' ' + arrSingal[j][1] : '',
+                            dataTime = signal ? signal.dataTime.substr(0, 19) : '';
+                        
+
                         $('#signal_' + arrSingal[j][0]).html(dataValue).siblings('.time').html(dataTime);
+
+                        //数字精度
+                        function format(str, accuracy) {
+                            if ($.isNumeric(str) && ~str.indexOf('.')) {
+                                str = parseFloat(str).toFixed(accuracy).toString();
+                            }
+
+                            return str;
+                        }
                     };
                 },
                 error: function(err) {

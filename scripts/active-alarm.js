@@ -13,7 +13,7 @@ $(document).ready(function() {
                 params: this.params,
                 fnComplete: function(data) {
                     //启用查询按钮
-                    $filter.prop('disabled', false);
+                    $('#filter').prop('disabled', false);
                 },
                 columns: [
                     {
