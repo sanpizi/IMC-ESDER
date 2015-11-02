@@ -279,6 +279,7 @@ input,select,textarea,button {
     border: 1px solid #ddd;
     border-radius: 15px;
     background: url(../images/icon.png) no-repeat 185px -82px;
+    position: relative;
 }
 .sidebar .area-search .search .keywords {
     border: none;
@@ -295,6 +296,33 @@ input,select,textarea,button {
 .sidebar .area-search .search .keywords::-webkit-input-placeholder {
     color: #ccc;
 }
+.sidebar .area-search .search-result {
+    position: absolute;
+    top: 30px;
+    left: 13px;
+    width: 190px;
+    overflow: auto;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    border-radius: 0 0 2px 3px;
+    padding-bottom: 3px;
+    border: 1px solid #ddd;
+    display: none;
+}
+.sidebar .area-search .search-result li {
+    cursor: pointer;
+    display: block;
+    padding: 2px 12px;
+}
+.sidebar .area-search .search-result li:hover {
+    background-color: #F1F4FB;
+}
+.sidebar .area-search .search-result li.selected {
+    background-color: #E1E8F5;
+}
+
+
 .sidebar .area-tree {
     padding: 15px 0;
     margin-left: 10px;

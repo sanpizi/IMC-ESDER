@@ -12,12 +12,15 @@ window.config = {
     //是否允许树菜单中同时展开多个区域
     //false: 同一时间只能有一个区域展开状态，自动刷新能生效
     //true: 允许同一时间有多个区域展开，自动刷新将失效（因为可能产生大量 ajax 请求，增加服务端压力）。
-    "Is_Allow_Expand_Multiple_Area": false
+    "Is_Allow_Expand_Multiple_Area": false,
+
+    //站点搜索时，结果下拉框中最多显示的站点个数
+    "Maximum_Number_Of_Site_Search_Result": 5
 }
 
 //页面基类
 var Page = function() {
-    if (this.init) {
+    if (this.init && typeof this.init === 'function') {
         this.init.apply(this, arguments);
     } else {
         this._init.apply(this, arguments);
@@ -50,7 +53,7 @@ Page.prototype = {
         //生成 footer
         this.renderFooter();
 
-        //老版本的 chrome 在 domready 时有高度计算 bug，加setTimeout 可解决
+        //老版本的 chrome 在 domready 时有高度计算 bug，加 setTimeout 可解决
         window.setTimeout(function() {
             self.initTreeHeight();
         }, 1);
@@ -204,27 +207,173 @@ Page.prototype = {
 
     //初始化区域搜索框
     initSearchArea: function() {
-        $('.search .keywords').on('keyup', function() {
-            var keywords = this.value.toLowerCase();
-            var $treeMenu = $('#tree-menu');
-            $treeMenu.children('li').each(function(index, el) {
-                var areaName = $(el).find('.area').text().toLowerCase();
-                if (~areaName.indexOf(keywords)) {
-                    $(el).show();
-                } else {
-                    $(el).hide();
-                }
-            });
+        var searchTmpl = this.tmpl('' +
+            '       <ul>' +
+            '       <% for (var i = 0; i < arrResult.length; i++) { %>' +
+            '           <li data-site-id="<%= arrResult[i].id %>"  title="<%= arrResult[i].areaName %>" <% if (i ===0) { %>class="selected"<% } %>><%= arrResult[i].name %></li>' +
+            '       <% } %>' +
+            '       </ul>'),
+            searchHtml = '',
+            $searchResult = $('.search-result'),
+            $search = $('.search .keywords'),
+            siteList,
+            arrResult;
 
-            //无结果时显示提示信息
-            var resultNum = $treeMenu.children('li:visible').length;
-            if (resultNum === 0) {
-                if ($treeMenu.children('span').length === 0)
-                    $treeMenu.append('<span style="color:#999">No result</span>');
-            } else {
-                $treeMenu.children('span').remove();
+        //页面跳转函数
+        var jump = function(li) {
+            var url = '/realtime.html?siteId=' + $(li).attr('data-site-id');
+            window.location.href = url;
+        }
+
+        //点击搜索结果时        
+        $searchResult.on('click', 'li', function() {
+            jump(this);
+        });
+
+
+        //获取焦点时加载所有站点数据供搜索
+        $search.on('focus', function() {
+            siteList = $('.search').data('siteList') || (window.sessionStorage && sessionStorage['siteList'] && JSON.parse(sessionStorage['siteList'])) || null;
+
+            if (!siteList) {
+                //获取所有站点信息
+                $.ajax({
+                    type: "GET",
+                    url: "/sites",
+                    dataType: "json",
+                    beforeSend: function() {
+                        //加载数据期间禁用
+                        $search.prop('disabled', true);
+                    },
+                    success: function(data) {
+                        //给站点搜索框提供搜索数据
+                        if (window.sessionStorage) {
+                            sessionStorage['siteList'] = JSON.stringify(data.siteList);
+                        }
+                        $('.search').data('siteList', data.siteList);
+                    },
+                    error: function(err) {
+                        //window.alert('Failed to get the full sites info.');
+                        console.error('获取所有站点数据失败。');
+                    },
+                    complete: function(xhr, textStatus) {    
+                        //加载完数据后启用
+                        $search.prop('disabled', false).focus();
+                    }
+                });
             }
         });
+
+        //搜索框失去焦点时
+        $search.on('blur', function() {
+            $searchResult.slideUp(100);
+        });
+
+        //搜索框按下键盘时
+        $search.on('keydown', function(e) {
+            if (this.disabled) return;
+
+            var keycode = e.keyCode,
+                $selected = $searchResult.find('.selected');
+
+            switch (keycode) {
+                case 13:
+                    jump($selected);
+                    break;                    
+                case 38:
+                    moveSelected('up');
+                    e.preventDefault();
+                    break;
+                case 40:
+                    moveSelected('down');
+                    e.preventDefault();
+                    break;
+            }
+
+            function moveSelected(direction) {
+                var li = $searchResult.find('li'),
+                    selectedIndex = li.filter('.selected').index();
+
+                if (direction === 'up' && selectedIndex > 0) {
+                    li.removeClass('selected').eq(selectedIndex - 1).addClass('selected');
+                }
+
+                if (direction === 'down' && selectedIndex < li.length - 1) {
+                    li.removeClass('selected').eq(selectedIndex + 1).addClass('selected');
+                }
+            };
+        });
+
+        //搜索框按下键盘时
+        $search.on('keyup', function(e) {
+            if (this.disabled) return;
+
+            var maxNum = window.config["Maximum_Number_Of_Site_Search_Result"],
+                $input = $(this),
+                keywords = $.trim($input.val());
+
+            if (keywords !== $input.data('keywords')) {
+                $input.data('keywords', keywords);
+
+                if (keywords === '') {
+                    $searchResult.slideUp(100);
+                } else {
+                    //从 siteList 中搜索
+                    arrResult = search(keywords);
+
+                    if (arrResult.length) {
+                        if (arrResult.length > maxNum) {
+                            arrResult.length = maxNum;
+                        }
+
+                        //填充搜索结果
+                        searchHtml = searchTmpl({
+                            arrResult: arrResult
+                        });
+                        $searchResult.html(searchHtml).slideDown(100);
+
+                    } else {
+                        $searchResult.html('<div style="padding:5px 15px;color:#999">No matched site.</div>').slideDown(100);
+                    }
+                }
+            }
+
+            //从 siteList 中搜索
+            function search(keywords) {
+                var keywords = keywords.toLowerCase(),
+                    result = [];
+
+                if (siteList.length) {
+                    result = siteList;
+                };
+
+                return result
+            }
+        });
+
+
+        //点击结果
+        // $('.search .keywords').on('keyup', function() {
+        //     var keywords = this.value.toLowerCase();
+        //     var $treeMenu = $('#tree-menu');
+        //     $treeMenu.children('li').each(function(index, el) {
+        //         var areaName = $(el).find('.area').text().toLowerCase();
+        //         if (~areaName.indexOf(keywords)) {
+        //             $(el).show();
+        //         } else {
+        //             $(el).hide();
+        //         }
+        //     });
+
+        //     //无结果时显示提示信息
+        //     var resultNum = $treeMenu.children('li:visible').length;
+        //     if (resultNum === 0) {
+        //         if ($treeMenu.children('span').length === 0)
+        //             $treeMenu.append('<span style="color:#999">No result</span>');
+        //     } else {
+        //         $treeMenu.children('span').remove();
+        //     }
+        // });
     },
 
     //初始化右上角下拉菜单

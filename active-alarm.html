@@ -14,7 +14,8 @@
 			<div class="sidebar shadow">
 				<div class="area-search">
 					<div class="search">
-						<input class="keywords" type="input" placeholder="Search Zone" />
+						<input class="keywords" type="input" placeholder="Search Site" />
+						<div class="search-result"></div>
 					</div>
 				</div>
 				<div class="area-tree">Loading...</div>
@@ -42,12 +43,15 @@
 							<select id="signalId">
 								<option value="">-- All --</option>
 								<option value="0">FCS Comm Interrupt</option>
-								<option value="6">Indoor Over Temp</option>
-								<option value="19">Indoor Under Temp</option>
-								<option value="8">Indoor Over Humidity</option>
 								<option value="11">Fan Fault</option>
 								<option value="14">Filter Blocked</option>
 								<option value="15">Fire Alarm</option>
+								<option value="22">Indoor Humidity Sensor Disconnected</option>	
+								<option value="8">Indoor Over Humidity</option>
+								<option value="6">Indoor Over Temp</option>
+								<option value="21">Indoor Temp Sensor Disconnected</option>	
+								<option value="19">Indoor Under Temp</option>
+								<option value="20">Outdoor Temp Sensor Disconnected</option>						
 							</select>
 						</div>
 
