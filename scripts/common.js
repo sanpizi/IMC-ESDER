@@ -319,7 +319,7 @@ Page.prototype = {
                     $searchResult.slideUp(100);
                 } else {
                     //从 siteList 中搜索
-                    arrResult = search(keywords);
+                    arrResult = search(keywords, siteList);
 
                     if (arrResult.length) {
                         if (arrResult.length > maxNum) {
@@ -339,13 +339,33 @@ Page.prototype = {
             }
 
             //从 siteList 中搜索
-            function search(keywords) {
-                var keywords = keywords.toLowerCase(),
-                    result = [];
+            function search(keywords, siteList) {
+                var arrKeywords = keywords.toLowerCase().split(''),
+                    result = $.extend([], siteList);
 
-                if (siteList.length) {
-                    result = siteList;
+                for (var k = 0; k < result.length; k++) {
+                    result[k].matched = result[k].name.toLowerCase();
+                    result[k].order = [];
                 };
+
+                if (result.length) {
+                    for (var i = 0; i < arrKeywords.length; i++) {
+                        for (var j = 0; j < result.length; j++) {
+                            var index = result[j].matched.indexOf(arrKeywords[i]);
+                            if (~index) {
+                                result[j].order.push(('000' + index).slice(-3));
+                                result[j].matched = result[j].matched.slice(index + 1);
+                            } else {
+                                result.splice(j, 1);
+                                j--;
+                            }
+                        };
+                    };
+                };
+
+                result.sort(function(a, b) {
+                    return a.order.join('') > b.order.join('');
+                });
 
                 return result
             }
