@@ -266,7 +266,7 @@ Page.prototype = {
 
         //搜索框失去焦点时
         $search.on('blur', function() {
-            //$searchResult.slideUp(100);
+            $searchResult.slideUp(100);
         });
 
         //搜索框按下键盘时
