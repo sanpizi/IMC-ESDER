@@ -310,11 +310,12 @@ Page.prototype = {
 
             var maxNum = window.config["Maximum_Number_Of_Site_Search_Result"],
                 $input = $(this),
-                keywords = $.trim($input.val());
+                keywords = $input.val();
 
             if (keywords !== $input.data('keywords')) {
                 $input.data('keywords', keywords);
 
+                keywords = $.trim(keywords);
                 if (keywords === '') {
                     $searchResult.slideUp(100);
                 } else {
