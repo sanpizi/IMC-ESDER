@@ -266,7 +266,9 @@ Page.prototype = {
 
         //搜索框失去焦点时
         $search.on('blur', function() {
-            $searchResult.slideUp(100);
+            setTimeout(function() {
+                $searchResult.slideUp(100);
+            }, 100);            
         });
 
         //搜索框按下键盘时
@@ -371,6 +373,11 @@ Page.prototype = {
 
                 return result
             }
+        });
+
+        //点击搜索结果时
+        $search.on('click', 'li', function() {
+            jump(this);
         });
 
 
