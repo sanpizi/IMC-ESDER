@@ -14,7 +14,7 @@ window.config = {
     //true: 允许同一时间有多个区域展开，自动刷新将失效（因为可能产生大量 ajax 请求，增加服务端压力）。
     "Is_Allow_Expand_Multiple_Area": false,
 
-    //站点搜索时，结果下拉框中最多显示的站点个数
+    //站点搜索时，最多显示的结果个数
     "Maximum_Number_Of_Site_Search_Result": 5
 }
 
