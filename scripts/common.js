@@ -343,14 +343,14 @@ Page.prototype = {
                 var arrKeywords = keywords.toLowerCase().split(''),
                     result = $.extend(true, [], siteList);
 
-                for (var k = 0; k < result.length; k++) {
-                    result[k].matched = result[k].name.toLowerCase();
-                    result[k].order = [];
-                };
-
                 if (result.length) {
                     for (var i = 0; i < arrKeywords.length; i++) {
                         for (var j = 0; j < result.length; j++) {
+                            if (result[j].matched === undefined) {
+                                result[j].matched = result[j].name.toLowerCase();
+                                result[j].order = [];
+                            }
+
                             var index = result[j].matched.indexOf(arrKeywords[i]);
                             if (~index) {
                                 result[j].order.push(('000' + index).slice(-3));
