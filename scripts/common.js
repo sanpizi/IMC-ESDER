@@ -266,7 +266,7 @@ Page.prototype = {
 
         //搜索框失去焦点时
         $search.on('blur', function() {
-            $searchResult.slideUp(100);
+            //$searchResult.slideUp(100);
         });
 
         //搜索框按下键盘时
@@ -341,7 +341,7 @@ Page.prototype = {
             //从 siteList 中搜索
             function search(keywords, siteList) {
                 var arrKeywords = keywords.toLowerCase().split(''),
-                    result = $.extend([], siteList);
+                    result = $.extend(true, [], siteList);
 
                 for (var k = 0; k < result.length; k++) {
                     result[k].matched = result[k].name.toLowerCase();
@@ -355,6 +355,7 @@ Page.prototype = {
                             if (~index) {
                                 result[j].order.push(('000' + index).slice(-3));
                                 result[j].matched = result[j].matched.slice(index + 1);
+                                result[j].name = result[j].name.replace(new RegExp('(' + arrKeywords[i] + ')(' + result[j].matched + '$)', 'i'), '<strong>$1</strong>$2');
                             } else {
                                 result.splice(j, 1);
                                 j--;
