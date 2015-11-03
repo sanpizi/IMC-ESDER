@@ -216,20 +216,9 @@ Page.prototype = {
             searchHtml = '',
             $searchResult = $('.search-result'),
             $search = $('.search .keywords'),
+            timer,
             siteList,
             arrResult;
-
-        //页面跳转函数
-        var jump = function(li) {
-            var url = '/realtime.html?siteId=' + $(li).attr('data-site-id');
-            window.location.href = url;
-        }
-
-        //点击搜索结果时        
-        $searchResult.on('click', 'li', function() {
-            jump(this);
-        });
-
 
         //获取焦点时加载所有站点数据供搜索
         $search.on('focus', function() {
@@ -262,147 +251,142 @@ Page.prototype = {
                     }
                 });
             }
-        });
 
-        //搜索框失去焦点时
-        $search.on('blur', function() {
-            setTimeout(function() {
-                $searchResult.slideUp(100);
-            }, 100);            
-        });
 
-        //搜索框按下键盘时
-        $search.on('keydown', function(e) {
-            if (this.disabled) return;
-
-            var keycode = e.keyCode,
-                $selected = $searchResult.find('.selected');
-
-            switch (keycode) {
-                case 13:
-                    jump($selected);
-                    break;                    
-                case 38:
-                    moveSelected('up');
-                    e.preventDefault();
-                    break;
-                case 40:
-                    moveSelected('down');
-                    e.preventDefault();
-                    break;
+            //页面跳转函数
+            var jump = function(li) {
+                var url = '/realtime.html?siteId=' + $(li).attr('data-site-id');
+                window.location.href = url;
             }
 
-            function moveSelected(direction) {
-                var li = $searchResult.find('li'),
-                    selectedIndex = li.filter('.selected').index();
+            //点击搜索结果时        
+            $searchResult.on('click', 'li', function() {
+                jump(this);
+            });
 
-                if (direction === 'up' && selectedIndex > 0) {
-                    li.removeClass('selected').eq(selectedIndex - 1).addClass('selected');
+            //搜索框失去焦点时隐藏搜索结果
+            // $search.on('blur', function() {
+            //     setTimeout(function() {
+            //         $searchResult.slideUp(100);
+            //     }, 100);            
+            // });
+
+            //点击空白地方时隐藏搜索结果
+            $(document).on('click', function() {
+                $searchResult.slideUp(100);
+            });
+
+
+            //搜索框按下键盘时
+            $search.on('keydown', function(e) {
+                if (this.disabled) return;
+
+                var keycode = e.keyCode,
+                    $selected = $searchResult.find('.selected');
+
+                switch (keycode) {
+                    case 13:
+                        jump($selected);
+                        break;                    
+                    case 38:
+                        moveSelected('up');
+                        e.preventDefault();
+                        break;
+                    case 40:
+                        moveSelected('down');
+                        e.preventDefault();
+                        break;
                 }
 
-                if (direction === 'down' && selectedIndex < li.length - 1) {
-                    li.removeClass('selected').eq(selectedIndex + 1).addClass('selected');
-                }
-            };
-        });
+                function moveSelected(direction) {
+                    var li = $searchResult.find('li'),
+                        selectedIndex = li.filter('.selected').index();
 
-        //搜索框按下键盘时
-        $search.on('keyup', function(e) {
-            if (this.disabled) return;
+                    if (direction === 'up' && selectedIndex > 0) {
+                        li.removeClass('selected').eq(selectedIndex - 1).addClass('selected');
+                    }
 
-            var maxNum = window.config["Maximum_Number_Of_Site_Search_Result"],
-                $input = $(this),
-                keywords = $input.val();
+                    if (direction === 'down' && selectedIndex < li.length - 1) {
+                        li.removeClass('selected').eq(selectedIndex + 1).addClass('selected');
+                    }
+                };
+            });
 
-            if (keywords !== $input.data('keywords')) {
-                $input.data('keywords', keywords);
+            //搜索框按下键盘时
+            $search.on('keyup', function(e) {
+                if (this.disabled) return;
 
-                keywords = $.trim(keywords);
-                if (keywords === '') {
-                    $searchResult.slideUp(100);
-                } else {
-                    //从 siteList 中搜索
-                    arrResult = search(keywords, siteList);
+                var maxNum = window.config["Maximum_Number_Of_Site_Search_Result"],
+                    $input = $(this),
+                    keywords = $input.val();
 
-                    if (arrResult.length) {
-                        if (arrResult.length > maxNum) {
-                            arrResult.length = maxNum;
-                        }
+                if (keywords !== $input.data('keywords')) {
+                    $input.data('keywords', keywords);
 
-                        //填充搜索结果
-                        searchHtml = searchTmpl({
-                            arrResult: arrResult
-                        });
-                        $searchResult.html(searchHtml).slideDown(100);
-
+                    keywords = $.trim(keywords);
+                    if (keywords === '') {
+                        $searchResult.slideUp(100);
                     } else {
-                        $searchResult.html('<div style="padding:5px 15px;color:#999">No matched site.</div>').slideDown(100);
+                        if (timer) clearTimeout(timer);
+
+                        //从 siteList 中搜索
+                        arrResult = search(keywords, siteList);
+
+                        if (arrResult.length) {
+                            if (arrResult.length > maxNum) {
+                                arrResult.length = maxNum;
+                            }
+
+                            //填充搜索结果
+                            searchHtml = searchTmpl({
+                                arrResult: arrResult
+                            });
+                            $searchResult.html(searchHtml).slideDown(100);
+
+                        } else {
+                            $searchResult.html('<div style="padding:5px 15px;color:#999">No matched site.</div>').slideDown(100);
+                            timer = setTimeout(function() {
+                                $searchResult.slideUp(100);
+                            }, 1500);
+                        }
                     }
                 }
-            }
 
-            //从 siteList 中搜索
-            function search(keywords, siteList) {
-                var arrKeywords = keywords.toLowerCase().split(''),
-                    result = $.extend(true, [], siteList);
+                //从 siteList 中搜索
+                function search(keywords, siteList) {
+                    var arrKeywords = keywords.toLowerCase().split(''),
+                        result = $.extend(true, [], siteList);
 
-                if (result.length) {
-                    for (var i = 0; i < arrKeywords.length; i++) {
-                        for (var j = 0; j < result.length; j++) {
-                            if (result[j].matched === undefined) {
-                                result[j].matched = result[j].name.toLowerCase();
-                                result[j].order = [];
-                            }
+                    if (result.length) {
+                        for (var i = 0; i < arrKeywords.length; i++) {
+                            for (var j = 0; j < result.length; j++) {
+                                if (result[j].matched === undefined) {
+                                    result[j].matched = result[j].name.toLowerCase();
+                                    result[j].order = [];
+                                }
 
-                            var index = result[j].matched.indexOf(arrKeywords[i]);
-                            if (~index) {
-                                result[j].order.push(('000' + index).slice(-3));
-                                result[j].matched = result[j].matched.slice(index + 1);
-                                result[j].name = result[j].name.replace(new RegExp('(' + arrKeywords[i] + ')(' + result[j].matched + '$)', 'i'), '<strong>$1</strong>$2');
-                            } else {
-                                result.splice(j, 1);
-                                j--;
-                            }
+                                var index = result[j].matched.indexOf(arrKeywords[i]);
+                                if (~index) {
+                                    result[j].order.push(('000' + index).slice(-3));
+                                    result[j].matched = result[j].matched.slice(index + 1);
+                                    result[j].name = result[j].name.replace(new RegExp('(' + arrKeywords[i] + ')(' + result[j].matched + '$)', 'i'), '<strong>$1</strong>$2');
+                                } else {
+                                    result.splice(j, 1);
+                                    j--;
+                                }
+                            };
                         };
                     };
-                };
 
-                result.sort(function(a, b) {
-                    return a.order.join('') > b.order.join('');
-                });
+                    result.sort(function(a, b) {
+                        return a.order.join('') > b.order.join('');
+                    });
 
-                return result
-            }
+                    return result
+                }
+            });
+
         });
-
-        //点击搜索结果时
-        $search.on('click', 'li', function() {
-            jump(this);
-        });
-
-
-        //点击结果
-        // $('.search .keywords').on('keyup', function() {
-        //     var keywords = this.value.toLowerCase();
-        //     var $treeMenu = $('#tree-menu');
-        //     $treeMenu.children('li').each(function(index, el) {
-        //         var areaName = $(el).find('.area').text().toLowerCase();
-        //         if (~areaName.indexOf(keywords)) {
-        //             $(el).show();
-        //         } else {
-        //             $(el).hide();
-        //         }
-        //     });
-
-        //     //无结果时显示提示信息
-        //     var resultNum = $treeMenu.children('li:visible').length;
-        //     if (resultNum === 0) {
-        //         if ($treeMenu.children('span').length === 0)
-        //             $treeMenu.append('<span style="color:#999">No result</span>');
-        //     } else {
-        //         $treeMenu.children('span').remove();
-        //     }
-        // });
     },
 
     //初始化右上角下拉菜单
