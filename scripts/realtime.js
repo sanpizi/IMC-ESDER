@@ -16,6 +16,9 @@ $(document).ready(function() {
                 url: "/site/" + self.params.siteId,
                 dataType: "json",
                 success: function(data) {
+                    //生动展开树菜单到站点
+                    $('li.closed[data-area-id=' + data.areaId + ']>span.area').trigger('click');
+
                     //总体信息
                     $('#site-status').addClass('site-status-' + data.status.toLowerCase())
                         .attr('title', data.status);

@@ -634,10 +634,10 @@ Page.prototype = {
                         //添加到菜单
                         $area.find('ul').html(html);
                     } else {
-                        $area.find('ul').html('<span style="color:#999">No data</span>');
+                        $area.find('ul').html('<span style="color:#999">No data.</span>');
                     }
                 } else {
-                    $area.find('ul').html('<span style="color:#999">No data</span>');
+                    $area.find('ul').html('<span style="color:#999">No data.</span>');
                     //window.alert('Failed to get the sites data.')
                     console.error('获取站点数据失败。')
                 }
