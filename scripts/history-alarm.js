@@ -55,13 +55,13 @@ $(document).ready(function() {
                     {
                         header: "Start Time",
                         content: function(data) {
-                            return data.startTime.toString().substr(0, 16);
+                            return data.startTime.toString().substr(0, 19);
                         }
                     },
                     {
                         header: "End Time",
                         content: function(data) {
-                            return data.endTime && data.endTime.toString().substr(0, 16) || '-';
+                            return data.endTime && data.endTime.toString().substr(0, 19) || '-';
                         }
                     }
                 ]

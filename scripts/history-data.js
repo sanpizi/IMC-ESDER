@@ -55,7 +55,7 @@ $(document).ready(function() {
                     {
                         header: "Time",
                         content: function(data) {
-                            return data.time.toString().substr(0, 16);
+                            return data.time.toString().substr(0, 19);
                         }
                     }
                 ]
