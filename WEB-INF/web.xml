@@ -97,7 +97,7 @@
         </init-param>
         <init-param>
             <param-name>requiredSignalsForSiteDetails</param-name>
-            <param-value>957,958,959,960,961,962,977,980,983,985,986,987,989,990,991,992,1006,1008,1011,1014,1015</param-value>
+            <param-value>957,958,959,960,961,962,977,980,983,985,986,987,989,990,991,992,993,994,1011,1014,1015</param-value>
         </init-param>
         <init-param>
             <param-name>requiredSignalsForHisData</param-name>
