@@ -710,7 +710,7 @@ $.fn.extend({
             paging: true,
             pageSize: 10,
             pageNum: 9, //分页码个数
-            maxRecordAmount: 30000, //最大展示记录条数
+            maxRecordAmount: 10000, //最大展示记录条数
             currentPage: 1,
             params: {}
         };
