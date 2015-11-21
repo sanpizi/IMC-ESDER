@@ -49,13 +49,7 @@ $(document).ready(function() {
                     {
                         header: "Severity",
                         content: function(data) {
-                            var replace = {
-                                "General": "Warning",
-                                "Important": "Minor",
-                                "Urgent": "Major",
-                                "Fatal": "Critical"
-                            }
-                            return replace[data.severity];
+                            return data.severity;
                         }
                     },
                     {
