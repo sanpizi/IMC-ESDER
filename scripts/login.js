@@ -27,7 +27,7 @@ $(document).ready(function() {
                     return;
                 }
 
-                if (event.keyCode === 13) {
+                if (event.keyCode === 13 && event.target.type === 'password') {
                     self.login();
                 }
             });
