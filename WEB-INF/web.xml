@@ -111,6 +111,10 @@
             <param-name>maxhisrecordsamount</param-name>
             <param-value>10000</param-value>
         </init-param>
+        <init-param>
+            <param-name>maxhisdataexportcacheline</param-name> <!-- max cached line amount while exporting his data, added on 2015.11.30, affects hisdatastats -->
+            <param-value>1000</param-value>
+        </init-param>
         <load-on-startup>10</load-on-startup>
     </servlet>
     <servlet-mapping>
