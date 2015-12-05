@@ -101,7 +101,7 @@
         </init-param>
         <init-param>
             <param-name>requiredSignalsForHisData</param-name>
-            <param-value>957,958,959,969,978,981,984,985,986</param-value>
+            <param-value>957,958,959,969,977,980,983,985,986</param-value>
         </init-param>
         <init-param>
             <param-name>requiredTypeIdsForAlarm</param-name>
