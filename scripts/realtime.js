@@ -71,8 +71,8 @@ $(document).ready(function() {
                         signal = signalData[arrSingal[j][0]];
                         dataValue = signal !== undefined ? format(signal.dataVal, arrSingal[j][2]) : '-';
                         dataValue = arrSingal[j][3][dataValue] || dataValue;
-                        dataValue = dataValue + ' ' + arrSingal[j][1];
-                        dataTime = signal ? signal.dataTime.substr(0, 19) : '';                        
+                        dataValue = dataValue === '-' ? '-' : dataValue + ' ' + arrSingal[j][1];
+                        dataTime = dataValue !== '-' ? signal.dataTime.substr(0, 19) : '-';                        
 
                         $('#signal_' + arrSingal[j][0]).html(dataValue).siblings('.time').html(dataTime);
                     };
