@@ -42,7 +42,7 @@ $(document).ready(function() {
                         ["958",     "°C",     1,    {}],
                         ["959",     "%",      0,    {}],
                         ["957",     "°C",     1,    {}],
-                        ["1015",    "",       0,    {'0':'Normal ', '1':'Alarm'}],
+                        ["1015",    "",       0,    {'0':'Normal', '1':'Alarm'}],
                         ["993",     "",       0,    {'0': 'Normal', '1': 'Over Temp', '2': 'Under Temp', '3': 'Sensor Disconnected'}],
                         ["994",     "",       0,    {'0': 'Normal', '1': 'Over Temp', '2': 'Under Humidity', '3': 'Sensor Disconnected'}],
         
@@ -52,8 +52,8 @@ $(document).ready(function() {
                         ["987",     "W",      1,    {}],
                         ["986",     "kWh",    1,    {}],
                         ["977",     "hours",  1,    {}],
-                        ["1014",    "",       0,    {'0':'Normal ', '1':'Alarm'}],
-                        ["1011",    "",       0,    {'0':'Normal ', '1':'Alarm'}],
+                        ["1014",    "",       0,    {'0':'Normal', '1':'Alarm'}],
+                        ["1011",    "",       0,    {'0':'Normal', '1':'Alarm'}],
                         ["992",     "V",      1,    {}],
         
                         ["960",     "",       0,    {}],
@@ -68,10 +68,10 @@ $(document).ready(function() {
                     for (var j = 0; j < arrSingal.length; j++) {
                         var signal, dataValue, dataTime;
 
-                        signal = signalData[arrSingal[j][0]] || null;
-                        dataValue = signal ? format(signal.dataVal, arrSingal[j][2]) : '';
+                        signal = signalData[arrSingal[j][0]];
+                        dataValue = signal !== undefined ? format(signal.dataVal, arrSingal[j][2]) : '-';
                         dataValue = arrSingal[j][3][dataValue] || dataValue;
-                        dataValue = dataValue ?  dataValue + ' ' + arrSingal[j][1] : '';
+                        dataValue = dataValue + ' ' + arrSingal[j][1];
                         dataTime = signal ? signal.dataTime.substr(0, 19) : '';                        
 
                         $('#signal_' + arrSingal[j][0]).html(dataValue).siblings('.time').html(dataTime);
