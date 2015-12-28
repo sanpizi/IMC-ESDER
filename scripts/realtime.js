@@ -26,10 +26,14 @@ $(document).ready(function() {
                     $('#site-name').html(data.name).attr('title', 'Site ID: ' + data.id);
 
                     //告警
-                    $('#fatalAlarmNum').text(data.alarmStats.fatal);
-                    $('#urgentAlarmNum').text(data.alarmStats.urgent);
-                    $('#importantAlarmNum').text(data.alarmStats.important);
-                    $('#generalAlarmNum').text(data.alarmStats.general);
+                    $('#fatalAlarmNum').text(data.alarmStats.fatal)
+                        .attr('href', 'active-alarm.html?status=critical&areaId=' + data.areaId + '&siteId=' + data.id);
+                    $('#urgentAlarmNum').text(data.alarmStats.urgent)
+                        .attr('href', 'active-alarm.html?status=major&areaId=' + data.areaId + '&siteId=' + data.id);
+                    $('#importantAlarmNum').text(data.alarmStats.important)
+                        .attr('href', 'active-alarm.html?status=mnor&areaId=' + data.areaId + '&siteId=' + data.id);
+                    $('#generalAlarmNum').text(data.alarmStats.general)
+                        .attr('href', 'active-alarm.html?status=warning&areaId=' + data.areaId + '&siteId=' + data.id);
 
                     //处理数据
                     var signalData = {};

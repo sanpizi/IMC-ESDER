@@ -54,7 +54,6 @@ $(document).ready(function() {
             //拉取区域数据
             this.getAreas();
 
-
             //根据 URL 参数设置默认选项
             this.setDefaultSelect();
 
@@ -73,25 +72,6 @@ $(document).ready(function() {
                 grid.option.params.status = $('#status').val();
 
                 grid.init();
-            });
-
-            //更新总告警数
-            //this.getTotalWarning();
-        },
-
-        //更新总告警数
-        getTotalWarning: function() {
-            $.ajax({
-                type: "GET",
-                url: "/globalStats",
-                dataType: "json",
-                success: function(data) {
-                    $('#totalWarningSite').text(data.sites.alarm);
-                },
-                error: function(err) {
-                    //window.alert('Failed to get the global statistics data.');
-                    console.error('获取整体统计数据失败。');
-                }
             });
         },
 
@@ -115,13 +95,14 @@ $(document).ready(function() {
                     $area.html(html)
                         .prop('disabled', false)
                         .on('change', function() {
-                        self.getSites($area.val());
+                            self.getSites($area.val());
                     });
 
-                    //如果 URL 参数有区域条件，则自动选中，并触发 change 事件
-                    if (self.params.areaId) {
-                        $('#areaId').val(self.params.areaId).trigger('change');
-                    }
+                    // 如果 URL 参数有区域条件，则自动选中，并触发 change 事件
+                    // 2015-12-28 需求，默认显示所有站点
+                    // if (self.params.areaId) {
+                        $area.val(self.params.areaId).trigger('change');
+                    // }
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
@@ -136,10 +117,11 @@ $(document).ready(function() {
                 $site = $('#siteId');
 
             // areaId 为空时，比如选中 all 选项时
-            if (!areaId) {
-                $site.html('<option value="">-- All --</option>').prop('disabled', true);
-                return;
-            }
+            // 2015-12-28 需求，默认显示所有站点
+            // if (!areaId) {
+            //     $site.html('<option value="">-- All --</option>').prop('disabled', true);
+            //     return;
+            // }
 
             $.ajax({
                 type: "GET",

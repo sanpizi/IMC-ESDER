@@ -133,7 +133,7 @@ $(document).ready(function() {
                         .prop('disabled', false)
                         .on('change', function() {
                         self.getSites($area.val());
-                    });
+                    }).trigger('change');
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
