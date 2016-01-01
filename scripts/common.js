@@ -553,6 +553,12 @@ Page.prototype = {
                 }
             });
 
+            //菜单操作事件，记录滚动高度到 cookie 中，供刷新后自动定位到
+            $tree.on('mousedown', function() {
+                var scrollTop = $(this).scrollTop();
+                self.setCookie('menuScrollTop', scrollTop);
+            });
+
             //加载指定区域站点
             // function loadSites(el) {   
             //     var refreshDelay = window.config['Automatic_Refresh_Interval'],
@@ -609,7 +615,7 @@ Page.prototype = {
                             }                            
                         }                        
                     }, refreshDelay);
-                }
+                };
             },
             success: function(data) {
                 if (data.siteList) {
@@ -633,6 +639,12 @@ Page.prototype = {
 
                         //添加到菜单
                         $area.find('ul').html(html);
+
+                        //自动定位滚动条到选中菜单的位置
+                        var scrollTop = self.getCookie('menuScrollTop');
+                        if (scrollTop) {
+                            $('.area-tree').scrollTop(scrollTop);
+                        }
                     } else {
                         $area.find('ul').html('<span style="color:#999">No data.</span>');
                     }
