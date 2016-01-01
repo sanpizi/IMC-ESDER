@@ -14,7 +14,7 @@ $(document).ready(function() {
             //拉取原始数据
             //self.getParams();
 
-            //提交表单
+            //表单事件
             $('.form').on('click', '[type="button"]', function(e) {
                 var $row = $(this).closest('tr'),
                     $input = $row.find('.setting-input'),
