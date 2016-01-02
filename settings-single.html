@@ -6,7 +6,7 @@
 <script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="scripts/common.js"></script>
 <script type="text/javascript" src="scripts/jstree.min.js"></script>
-<script type="text/javascript" src="scripts/settings.js"></script>
+<script type="text/javascript" src="scripts/settings-single.js"></script>
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/jsTree.css" rel="stylesheet" type="text/css" />
 </head>
@@ -24,21 +24,20 @@
 			<div class="area-tree">Loading...</div>
 		</div> -->
 		<div class="main" style="margin-left:0">
-			<div class="content">
-				<div class="steps"><strong>Step 1 </strong> Select sites</div>
+			<div class="tab">
+				<ul>
+					<li class="selected"><a>Single Site Settings</a></li>
+					<li><a href="settings-batch.html">Batch Site Settings</a></li>
+				</ul>
+			</div>
 
-				<div class="select-sites">
-					<div class="selector"></div>
-					<div class="selected">
-						<ul>
-						</ul>
-					</div>
-					<div style="clear:both;text-align:right;margin-top:5px;"><span id="selected-sites-count">0</span> sites selected</div>
+			<div class="content" style="border-top-left-radius: 0;padding-top: 10px;">
+				<div class="select-sites" style="float:left; margin: 10px 0 0 0;">
+					<div class="selector" style="width: 220px; height: 787px;"></div>
 				</div>
 
-				<div class="steps"><strong>Step 2 </strong> Set parameters</div>
-
-				<div class="grid form" style="border:none;margin:0px 20px;">
+				<div class="grid form" style="border:none;margin:0px 20px 0 250px;padding-top:10px;">
+					<div id="currentSite" style="padding:10px; font-size:16px; margin-bottom:20px; background-color:#f2f2f2;">Loading...</div>
 					<table cellspacing="0" cellpadding="0">
 						<thead>
 							<tr>

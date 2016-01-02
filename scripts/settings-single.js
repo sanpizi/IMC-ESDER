@@ -9,10 +9,10 @@ $(document).ready(function() {
             this.initSitesSelector();
 
             //更新影响站点数
-            this.updateAffectSites();
+            //this.updateAffectSites();
 
-            //拉取原始数据
-            //self.getParams();
+            //禁用表单
+            $('.grid :input').prop('disabled', true);
 
             //表单事件
             $('.form').on('click', '[type="button"]', function(e) {
@@ -39,14 +39,33 @@ $(document).ready(function() {
         },
 
         //拉取原始数据
-        getParams: function() {
+        getParams: function(siteId) {
+            var self = this;
+            if (!siteId) return;
+
+            //更新标题
+            for (var x in self.sites) {
+                if (self.sites[x].id == siteId) {
+                    var htmlTmpl = self.tmpl('<span title="Zone ID: <%=areaId%>"><%=areaName%></span> / <span title="Site ID: <%=id%>"><%=name%></span>');
+                    $('#currentSite').html(htmlTmpl(self.sites[x]));
+                    break;
+                }
+            };
+
+            //启用表单
+            $('.grid :input').prop('disabled', false);
+
             $.ajax({
                 type: "GET",
-                url: "/settings",
+                url: "/config",
                 dataType: "json",
-                data: {},
+                data: {
+                    siteId: siteId
+                },
                 success: function(data) {
-                    $('#p_1').val(data['1']);
+                   for (var i = data.recordList.length - 1; i >= 0; i--) {
+                       $('td:contains("' + data.recordList[i].signalName + '")').next().children('input').val(data.recordList[i].value);
+                   };
                 },
                 error: function(err) {
                     //window.alert('Failed to get the settings.');
@@ -65,6 +84,12 @@ $(document).ready(function() {
 
             if (!selectedSites) {
                 alert('No site was selected.');
+                return;
+            }
+
+            if (!input.value) {
+                alert('Please enter a value.');
+                input.focus();
                 return;
             }
 
@@ -109,6 +134,8 @@ $(document).ready(function() {
                 url: "/sites",
                 dataType: "json",
                 success: function(data) {
+                    if (!data.siteList.length) return;
+
                     var siteList = data.siteList,
                         areas = {},
                         sites = {},
@@ -127,7 +154,10 @@ $(document).ready(function() {
                             site = {
                                 "id": "site_" + siteList[i].id,
                                 "text": siteList[i].name,
-                                "icon": "jstree-" + siteList[i].status
+                                "icon": "jstree-" + siteList[i].status,
+                                "state": {
+                                    "selected": i === 0 //默认选中第一个
+                                }
                             };
 
                         //建立站点数据模型
@@ -139,7 +169,7 @@ $(document).ready(function() {
                                 "id": "area_" + areaId,
                                 "text": areaName,
                                 "state": {
-                                    "opened": false
+                                    "opened": true
                                 },
                                 "children": []
                             }
@@ -158,6 +188,9 @@ $(document).ready(function() {
 
                     //创建树
                     self.makeTree(treeData);
+
+                    //默认加载第一个站点的配置信息
+                    self.getParams(siteList[0].id);
                 },
                 error: function(err) {
                     //window.alert('Failed to get the global statistics data.');
@@ -173,17 +206,24 @@ $(document).ready(function() {
 
             //初始化树形菜单
             $('.selector').jstree({
-                'plugins': ["checkbox"],
                 'core': {
-                    'data': data
+                    'data': data,
+                    'multiple': false
                 }
             }).on('changed.jstree', function (e, data) {
                 //获取选中的末级节点数
                 var arrSelectedSites = data.instance.get_bottom_selected(),
+                    siteId = null,
                     selectedSites = {};
 
                 for (var i = 0; i < arrSelectedSites.length; i++) {
-                    selectedSites[arrSelectedSites[i].slice(5)] = 1;
+                    siteId = arrSelectedSites[i].slice(5);
+                    selectedSites[siteId] = 1;
+
+                    //加载选中站点的配置信息
+                    $('#currentSite').html('Loading...');
+                    $('.grid :input').prop('disabled', true); //禁用表单
+                    self.getParams(siteId);
                 }
 
                 //更新站点数据模型
@@ -194,49 +234,14 @@ $(document).ready(function() {
                         self.sites[x].selected = false;
                     }
                 }
-
-                //更新受影响站点数
-                $('#selected-sites-count').html(arrSelectedSites.length);
-
-                //刷新已选区域
-                self.selector.refreshSelected();
-            });
-
-            //绑定已选项删除事件
-            $('.selected').on('click', '.delete', function() {
-                //要删除的站点
-                var siteId = $(this).prev('.site').attr('data-site-id'),
-                    nodeId = 'site_' + siteId;
-
-                //操作
-                $('.selector').jstree().uncheck_node(nodeId);
             });
         },
 
         selector: {
-            //更新已选站点
-            refreshSelected: function() {
-                var $selected = $('.selected ul'),
-                    sites = window.page.sites || {},
-                    siteTmpl = Page.prototype.tmpl('' +
-                        '<%for (var x in sites) {%>'+
-                            '<%if (sites[x].selected) {%>'+
-                                '<li>' +
-                                    '<span class="site" data-site-id="<%=sites[x].id%>" title="ID: <%=sites[x].id%>&#10;Site: <%=sites[x].name%>&#10;Zone: <%=sites[x].areaName%>"><%=sites[x].areaName%>/<%=sites[x].name%></span>' +
-                                    '<span class="delete" title="Remove">&times;</span>' +
-                                '</li>' + 
-                            '<%}%>'+
-                        '<%}%>'+
-                        '');
-
-                var html = siteTmpl({sites: sites});
-
-                $selected.html(html);
-            },
 
             //获取已选择站点 ID 数组
             getSelected: function() {
-                var arrSites = $('.selector').jstree().get_bottom_checked();
+                var arrSites = $('.selector').jstree().get_bottom_selected();
 
                 arrSites = $.map(arrSites, function(site) {
                     return site.slice(5);
@@ -244,29 +249,6 @@ $(document).ready(function() {
 
                 return arrSites;
             }
-        },
-
-        //更新设置站点数
-        updateAffectSites: function() {
-            var self = this,
-                $area = $('#areaId');
-            $site = $('#siteId');
-
-            $.ajax({
-                type: "GET",
-                url: "/sites",
-                dataType: "json",
-                data: {
-                    areaId: $area.val()
-                },
-                success: function(data) {
-                    $('#affectSites').html(data.totalRecords);
-                },
-                error: function(err) {
-                    //window.alert('Failed to get the sites data.');
-                    console.error('获取区域数据失败。');
-                }
-            });
         }
     });
 
