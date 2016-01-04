@@ -64,7 +64,7 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                    for (var i = data.recordList.length - 1; i >= 0; i--) {
-                        var signalName = data.recordList[i].signalName && data.recordList[i].signalName.replace(/^\w|\s+\w/gi, function($) {return $.toUpperCase();});
+                        var signalName = data.recordList[i].signalName;
                         var signalValue = data.recordList[i].value && data.recordList[i].value.replace('-', '') || '';
                         $('td:contains("' + signalName + '")').next().children('input').val(signalValue);
                    };
