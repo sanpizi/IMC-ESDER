@@ -184,28 +184,30 @@ $(document).ready(function() {
                     'data': data
                 }
             }).on('changed.jstree', function (e, data) {
-                //获取选中的末级节点数
-                var arrSelectedSites = data.instance.get_bottom_selected(),
-                    selectedSites = {};
+                 if (data.action === 'select_node' || data.action === 'deselect_node') {
+                    //获取选中的末级节点数
+                    var arrSelectedSites = data.instance.get_bottom_selected(),
+                        selectedSites = {};
 
-                for (var i = 0; i < arrSelectedSites.length; i++) {
-                    selectedSites[arrSelectedSites[i].slice(5)] = 1;
-                }
-
-                //更新站点数据模型
-                for (var x in self.sites) {
-                    if (x in selectedSites) {
-                        self.sites[x].selected = true;
-                    } else {
-                        self.sites[x].selected = false;
+                    for (var i = 0; i < arrSelectedSites.length; i++) {
+                        selectedSites[arrSelectedSites[i].slice(5)] = 1;
                     }
+
+                    //更新站点数据模型
+                    for (var x in self.sites) {
+                        if (x in selectedSites) {
+                            self.sites[x].selected = true;
+                        } else {
+                            self.sites[x].selected = false;
+                        }
+                    }
+
+                    //更新受影响站点数
+                    $('#selected-sites-count').html(arrSelectedSites.length);
+
+                    //刷新已选区域
+                    self.selector.refreshSelected();
                 }
-
-                //更新受影响站点数
-                $('#selected-sites-count').html(arrSelectedSites.length);
-
-                //刷新已选区域
-                self.selector.refreshSelected();
             });
 
             //绑定已选项删除事件

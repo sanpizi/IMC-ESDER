@@ -329,7 +329,7 @@ input,select,textarea,button {
     overflow: auto;
 }
 .sidebar .area-tree li {
-    line-height: 26px;
+    line-height: 24px;
     margin-left: 0px;
 }
 .sidebar .area-tree li .area {
@@ -354,13 +354,13 @@ input,select,textarea,button {
 }
 .sidebar .area-tree li a {
     text-decoration: none;
+    padding: 3px 5px;
 }
 .sidebar .area-tree li a:hover {
     text-decoration: underline;
 }
 .sidebar .area-tree li a.selected {
     color: #fff;
-    padding: 1px 3px;
     border-radius: 5px;
     background-color: #637594;
 }
@@ -392,18 +392,20 @@ input,select,textarea,button {
     margin-left: 10px;
 }
 .main .sitemap {
-    min-height: 520px;
+   /* min-height: 520px;
     background: #fff url(../images/map.gif) no-repeat center center;
-    background-size: auto 100%;
+    background-size: auto 100%;*/
     margin-top: 15px;
     line-height: 0;
+    overflow: auto;
+    position: relative;
+    box-shadow: 0 0 3px rgba(0,0,0,.2);
 }
 #sites-matrix {
-    padding: 10px;
 }
 #sites-matrix span {
     cursor: pointer;
-    margin: 5px;
+    position: absolute;
     box-shadow: 1px 1px 1px rgba(0,0,0,.5);
 }
 #sites-matrix span:hover {
@@ -529,7 +531,7 @@ input,select,textarea,button {
 }
 .main .select-sites .selected {
     border: 1px solid #ddd;
-    margin-left: 250px;
+    margin-left: 245px;
     height: 300px;
     overflow: auto;
 }

@@ -46,34 +46,40 @@ $(document).ready(function() {
             //更新标题
             for (var x in self.sites) {
                 if (self.sites[x].id == siteId) {
-                    var htmlTmpl = self.tmpl('<span title="Zone ID: <%=areaId%>"><%=areaName%></span> / <span title="Site ID: <%=id%>"><%=name%></span>');
+                    var htmlTmpl = self.tmpl('<span class="site-status-<%=status.toLowerCase()%>" title="<%=status%>" style="position:relative;top:0px;"></span> <span title="Zone ID: <%=areaId%>"><%=areaName%></span> / <span title="Site ID: <%=id%>"><%=name%></span>');
                     $('#currentSite').html(htmlTmpl(self.sites[x]));
                     break;
                 }
             };
 
-            //启用表单
-            $('.grid :input').prop('disabled', false);
+            //如果站点不在线，置空所有值，且不可配置
+            var siteStatus = self.sites[siteId].status.toLowerCase();
+            if (siteStatus === 'offline') {
+                $('.grid :text').val('');
+            } else {
+                //启用表单
+                $('.grid :input').prop('disabled', false);
 
-            $.ajax({
-                type: "GET",
-                url: "/config",
-                dataType: "json",
-                data: {
-                    siteId: siteId
-                },
-                success: function(data) {
-                   for (var i = data.recordList.length - 1; i >= 0; i--) {
-                        var signalName = data.recordList[i].signalName;
-                        var signalValue = data.recordList[i].value && data.recordList[i].value.replace('-', '') || '';
-                        $('td:contains("' + signalName + '")').next().children('input').val(signalValue);
-                   };
-                },
-                error: function(err) {
-                    //window.alert('Failed to get the settings.');
-                    console.error('获取配置信息失败。');
-                }
-            });
+                $.ajax({
+                    type: "GET",
+                    url: "/config",
+                    dataType: "json",
+                    data: {
+                        siteId: siteId
+                    },
+                    success: function(data) {
+                       for (var i = data.recordList.length - 1; i >= 0; i--) {
+                            var signalName = data.recordList[i].signalName;
+                            var signalValue = data.recordList[i].value && data.recordList[i].value.replace('-', '') || '';
+                            $('td:contains("' + signalName + '")').next().children('input').val(signalValue);
+                       };
+                    },
+                    error: function(err) {
+                        //window.alert('Failed to get the settings.');
+                        console.error('获取配置信息失败。');
+                    }
+                });
+            }
         },
 
         //保存设置
@@ -213,28 +219,30 @@ $(document).ready(function() {
                     'multiple': false
                 }
             }).on('changed.jstree', function (e, data) {
-                //获取选中的末级节点数
-                var arrSelectedSites = data.instance.get_bottom_selected(),
-                    siteId = null,
-                    selectedSites = {};
+                if (data.action === 'select_node') {
+                    //获取选中的末级节点数
+                    var arrSelectedSites = data.instance.get_bottom_selected(),
+                        siteId = null,
+                        selectedSites = {};
 
-                for (var i = 0; i < arrSelectedSites.length; i++) {
-                    siteId = arrSelectedSites[i].slice(5);
-                    selectedSites[siteId] = 1;
+                    for (var i = 0; i < arrSelectedSites.length; i++) {
+                        siteId = arrSelectedSites[i].slice(5);
+                        selectedSites[siteId] = 1;
 
-                    //加载选中站点的配置信息
-                    $('#currentSite').html('Loading...');
-                    $('.grid :input').prop('disabled', true); //禁用表单
-                    self.getParams(siteId);
-                }
-
-                //更新站点数据模型
-                for (var x in self.sites) {
-                    if (x in selectedSites) {
-                        self.sites[x].selected = true;
-                    } else {
-                        self.sites[x].selected = false;
+                        //加载选中站点的配置信息
+                        $('#currentSite').html('Loading...');
+                        $('.grid :input').prop('disabled', true); //禁用表单
+                        self.getParams(siteId);
                     }
+
+                    //更新站点数据模型
+                    for (var x in self.sites) {
+                        if (x in selectedSites) {
+                            self.sites[x].selected = true;
+                        } else {
+                            self.sites[x].selected = false;
+                        }
+                    }                    
                 }
             });
         },

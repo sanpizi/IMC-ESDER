@@ -1,7 +1,8 @@
 $(document).ready(function() {
     Page.extend({
         init: function() {
-            var self = this;
+            var self = this,
+                $sitemap = $('.sitemap');
 
             this._init();
 
@@ -13,6 +14,21 @@ $(document).ready(function() {
 
             //渲染图表
             //this.renderStatistics();
+
+            //图片加载完后把 map 滚动条默认滚动中间位置
+            $(window).on('load', function() {
+                setTimeout(function() {
+                    $sitemap.scrollTop(($sitemap.prop('scrollHeight') - $sitemap.height()) / 2).scrollLeft(($sitemap.prop('scrollWidth') - $sitemap.width()) / 2);
+                }, 5);
+            });
+
+            //绑定站点点击事件
+            $sitemap.on('click','span', function() {
+                var siteId = this.getAttribute('data-site-id');
+                if (!siteId) return;
+
+                window.location.href = '/realtime.html?siteId=' + siteId;
+            });
 
         },
 
@@ -66,9 +82,10 @@ $(document).ready(function() {
                 },
                 dataType: "json",
                 success: function(data) {
-                    var arrSites = data.siteList || [],
-                        html = '<div id="sites-matrix">',
-                        siteTmpl = self.tmpl('<span title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Site: <%=siteName%>&#10;Zone: <%=areaName%>" data-site-id="<%=siteId%>" data-site-name="<%=siteName%>" data-area-id="<%=areaId%>" data-area-name="<%=areaName%>" class="site-status-<%=status.toLowerCase()%>"></span>');
+                    var $sitesMatrix = $('#sites-matrix'),
+                        arrSites = data.siteList || [],
+                        html = '',
+                        siteTmpl = self.tmpl('<span style="top:<%=x - 5%>px; left:<%=y - 5%>px;" title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Site: <%=siteName%>&#10;Zone: <%=areaName%>" data-site-id="<%=siteId%>" class="site-status-<%=status.toLowerCase()%>"></span>');
 
                     for (var i = 0; i < arrSites.length && i < maxSites; i++) {
                         html += siteTmpl({
@@ -76,18 +93,13 @@ $(document).ready(function() {
                             siteName: arrSites[i].name,
                             areaId: arrSites[i].areaId,
                             areaName: arrSites[i].areaName,
-                            status: arrSites[i].status
+                            status: arrSites[i].status,
+                            x: arrSites[i].x_pos,
+                            y: arrSites[i].y_pos
                         });
                     };
 
-                    html += '</div>';
-
-                    $('.sitemap').html(html);
-
-                    //绑定站点点击事件
-                    $('#sites-matrix').on('click','span', function() {
-                        window.location.href = '/realtime.html?siteId=' + this.getAttribute('data-site-id');
-                    });
+                    $sitesMatrix.html(html);
                 },
                 error: function(err) {
                     //window.alert('Failed to get the sites matrix info.');

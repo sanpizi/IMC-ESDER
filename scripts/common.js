@@ -2,7 +2,7 @@
 window.config = {
     //自动刷新时间间隔，单位：毫秒。
     //关闭自动刷新请设为 0。
-    "Automatic_Refresh_Interval": 10 * 1000, 
+    "Automatic_Refresh_Interval": 30 * 1000, 
 
     //是否缓存树菜单中加载过的站点。
     //false: 每次展开菜单时都重新从服务端取数据。
@@ -203,6 +203,9 @@ Page.prototype = {
 
         //适应窗口高度
         $('.area-tree').height($(window).height() - 205);
+
+        //把 map 的高度也改一下
+        $('.sitemap').height($(window).height() - 157);
     },
 
     //初始化区域搜索框
