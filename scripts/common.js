@@ -18,6 +18,7 @@ window.config = {
     "Maximum_Number_Of_Site_Search_Result": 5
 }
 
+
 //页面基类
 var Page = function() {
     if (this.init && typeof this.init === 'function') {
@@ -76,6 +77,27 @@ Page.prototype = {
         $('#logout').on('click', function() {
             self.logout();
         });
+
+        //权限判断
+        setTimeout(function() {
+            var curUserRole = self.role[self.getCookie('role')];
+            $('[role]').each(function(index, el) {
+                var $el = $(el),
+                    role = $el.attr('role');
+
+                if (curUserRole >= role) {
+                    $el.show();
+                }
+            });
+        }, 1);
+    },
+
+    //角色权限定义
+    role: {        
+        "admin": 4,
+        "engineer": 3,
+        "operato": 2,
+        "guest": 1
     },
 
     //获取 url 参数
@@ -165,7 +187,7 @@ Page.prototype = {
             '				<li><a href="active-alarm.html" <%if (!path.indexOf("/active-alarm")) {%>class="selected"<%}%>>Alarms</a></li>' +
             '               <li><a href="history-alarm.html" <%if (!path.indexOf("/history")) {%>class="selected"<%}%>>History</a></li>' +
             '				<li><a href="report-monthly.html" <%if (!path.indexOf("/report")) {%>class="selected"<%}%>>Reports</a></li>' +
-            '				<li><a href="settings-single.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
+            '				<li role="2" style="display:none"><a href="settings-single.html" <%if (!path.indexOf("/settings")) {%>class="selected"<%}%>>Settings</a></li>' +
             '			</ul>' +
             '		</div>');
 

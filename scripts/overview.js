@@ -85,7 +85,7 @@ $(document).ready(function() {
                     var $sitesMatrix = $('#sites-matrix'),
                         arrSites = data.siteList || [],
                         html = '',
-                        siteTmpl = self.tmpl('<span style="top:<%=x - 5%>px; left:<%=y - 5%>px;" title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Site: <%=siteName%>&#10;Zone: <%=areaName%>" data-site-id="<%=siteId%>" class="site-status-<%=status.toLowerCase()%>"></span>');
+                        siteTmpl = self.tmpl('<span style="top:<%=y-5%>px; left:<%=x-5%>px;" title="Status: <%=status%>&#10;ID: <%=siteId%>&#10;Site: <%=siteName%>&#10;Zone: <%=areaName%>" data-site-id="<%=siteId%>" class="site-status-<%=status.toLowerCase()%>"></span>');
 
                     for (var i = 0; i < arrSites.length && i < maxSites; i++) {
                         html += siteTmpl({

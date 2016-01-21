@@ -71,6 +71,7 @@ $(document).ready(function() {
                 success: function(data) {
                     if (data.result === 0) {
                         document.cookie = "username=" + $username.val();
+                        document.cookie = "role=" + data.tag.toLowerCase();
                         if (self.params.goUrl) {
                             window.location.href = decodeURIComponent(self.params.goUrl);
                         } else {
