@@ -7,6 +7,7 @@ $(document).ready(function() {
                 grid;
             
             grid = $grid.grid({
+                paging: false,
                 ajax: "/statsFileList",
                 params: {"type": "monthly"},
                 fnComplete: function(data) {

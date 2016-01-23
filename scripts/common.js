@@ -810,7 +810,7 @@ $.fn.extend({
                             $tbody.html('<tr><td colspan="' + self.option.columns.length + '" class="g-error">No data.</td></tr>');
                         } else {
                             var html = '',
-                                recordsNum = self.option.pageSize < arrRecords.length ? self.option.pageSize : arrRecords.length;
+                                recordsNum = (self.option.pageSize < arrRecords.length && self.paging) ? self.option.pageSize : arrRecords.length;
                             for (var i = 0; i < recordsNum; i++) {
                                 var tr = '<tr>',
                                     record = arrRecords[i];
