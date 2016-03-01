@@ -119,20 +119,27 @@ public class SiteDetail {
             logger.debug("start querying site's brief recordList");
             stmt = conn.createStatement();
 
-            String briefQuery = String.format(SqlStmts.SITE_DETAILS_BRIEF,
-                    BootstrapServlet.getSiteOnlineInternalInMinutes(), BootstrapServlet.getRequiredTypeIdsForAlarm(), id);
+            String briefQuery = String.format(SqlStmts.SITE_DETAILS_BRIEF, id);
             logger.debug("query string is " + briefQuery);
             rs = stmt.executeQuery(briefQuery);
             if (rs.next()) {
                 this.name = rs.getString(2);
-                this.status = rs.getString(3);
-                if (this.status.equals("Normal") && rs.getString(4).equals("true")) {
-                    this.status = "Alarm";
+                this.status = "Offline";
+                switch (rs.getInt(3)) {
+                    case 1:
+                        this.status = "Alarm";
+                        break;
+                    case 0:
+                        this.status = "Normal";
+                        break;
+                    case -1:
+                    default:
+                        this.status = "Offline";
                 }
-                this.areaId = rs.getInt(5);
-                this.areaName = rs.getString(6);
-                this.x_pos = rs.getInt(7);
-                this.y_pos = rs.getInt(8);
+                this.areaId = rs.getInt(4);
+                this.areaName = rs.getString(5);
+                this.x_pos = rs.getInt(6);
+                this.y_pos = rs.getInt(7);
             }
             Util.safeClose(rs);
             logger.debug("end of querying site's brief recordList");
@@ -141,6 +148,7 @@ public class SiteDetail {
 
             logger.debug("start querying site's signal recordList");
             String detailsQuery = String.format(SqlStmts.SITE_DETAILS_SIGNALS, id, BootstrapServlet.getRequiredSignalsForSiteDetails());
+            logger.debug("signals details query string is " + detailsQuery);
             rs = stmt.executeQuery(detailsQuery);
             while (rs.next()) {
                 recordList.add(new SignalRecord(rs.getInt(1), rs.getString(2), rs.getString(3)));

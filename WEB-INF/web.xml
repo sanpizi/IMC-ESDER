@@ -12,7 +12,7 @@
         </init-param>
         <init-param>
             <param-name>dbPort</param-name>
-            <param-value>1433</param-value>
+            <param-value>9999</param-value>
         </init-param>
         <init-param>
             <param-name>dbName</param-name>
@@ -24,7 +24,7 @@
         </init-param>
         <init-param>
             <param-name>password</param-name>
-            <param-value>000000</param-value>
+            <param-value>tong1218</param-value>
         </init-param>
         <init-param>
             <param-name>connPoolCount</param-name>
@@ -105,11 +105,11 @@
         </init-param>
         <init-param>
             <param-name>requiredTypeIdsForAlarm</param-name>
-            <param-value>0,6,8,11,14,15,19,20,21,22</param-value>
+            <param-value>0,6,8,11,14,15,19</param-value>
         </init-param>
         <init-param>
-            <param-name>maxhisrecordsamount</param-name>
-            <param-value>10000</param-value>
+            <param-name>maxhisrecordsamount</param-name> <!-- changed from maxhisalarmsexportamount to maxhisrecordsamount on 2015.11.18, affects hisalarms, hisdatas, exportHisAlarms -->
+            <param-value>10000</param-value> <!-- changed to 10000 according to requirements -->
         </init-param>
         <init-param>
             <param-name>maxhisdataexportcacheline</param-name> <!-- max cached line amount while exporting his data, added on 2015.11.30, affects hisdatastats -->

@@ -108,6 +108,7 @@ public class AlarmStats {
         ResultSet rs = null;
 
         String queryStr = String.format(SqlStmts.SITE_DETAILS_ALARMSTATS, BootstrapServlet.getRequiredTypeIdsForAlarm(), siteId);
+        logger.debug("alarm stats query string is " + queryStr);
         try {
             logger.debug("start querying siteDetail.alarmStats");
             stmt = conn.createStatement();

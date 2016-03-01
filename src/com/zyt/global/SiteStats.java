@@ -60,24 +60,24 @@ public class SiteStats {
         Statement stmt = null;
         ResultSet rs = null;
 
-        String queryStr = String.format(SqlStmts.GLOBALSTATS_SITE, BootstrapServlet.getSiteOnlineInternalInMinutes(),
-                BootstrapServlet.getRequiredTypeIdsForAlarm());
+        String queryStr = String.format(SqlStmts.GLOBALSTATS_SITE);
         logger.debug("queryStr is " + queryStr);
         try {
             stmt = conn.createStatement();
             logger.debug("start querying globalStats.sites");
             rs = stmt.executeQuery(queryStr);
             while (rs.next()) {
-                String status = rs.getString(2);
-                String alarmFlag = rs.getString(3);
-                if (status.equals("Normal")) {
-                    if (alarmFlag.equals("true")) {
+                int dataAlarm = rs.getInt(2);
+                switch (dataAlarm) {
+                    case 1:
                         alarm++;
-                    } else {
+                        break;
+                    case 0:
                         normal++;
-                    }
-                } else {
-                    offline++;
+                        break;
+                    case -1:
+                    default:
+                        offline++;
                 }
             }
             this.totalize();

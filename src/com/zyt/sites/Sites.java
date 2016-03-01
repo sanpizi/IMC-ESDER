@@ -48,7 +48,7 @@ public class Sites {
             } else if (orderField.equalsIgnoreCase("name")) {
                 orderBy = "name";
             } else if (orderField.equalsIgnoreCase("status")) {
-                orderBy = "status";
+                orderBy = "DataAlarm";
             } else if (orderField.equalsIgnoreCase("areaId")) {
                 orderBy = "zone_id";
             } else if (orderField.equalsIgnoreCase("areaName")) {
@@ -62,11 +62,11 @@ public class Sites {
         StringBuilder statusCondition = new StringBuilder();
         if (status != null) {
             if (status.equalsIgnoreCase("Normal")) {
-                statusCondition.append("and status='Normal'");
+                statusCondition.append("and DataAlarm=0");
             } else if (status.equalsIgnoreCase("Offline")) {
-                statusCondition.append("and status='Offline'");
+                statusCondition.append("and DataAlarm=-1");
             } else if (status.equalsIgnoreCase("Alarm")) {
-                statusCondition.append("and status='Normal' and alarm='true'");
+                statusCondition.append("and DataAlarm=1");
             }
         }
 
@@ -81,9 +81,7 @@ public class Sites {
         if (status != null) {
             statusConditionForTotalNumber = statusCondition.toString().replaceFirst("and", "where");
         }
-        String queryTotalRecordsStmt = String.format(SqlStmts.SITES_WITH_AREAID_SPECIFIED_TOTALNUMBER, orderBy, orderDir,
-                BootstrapServlet.getSiteOnlineInternalInMinutes(), BootstrapServlet.getRequiredTypeIdsForAlarm(),
-                statusConditionForTotalNumber, zoneIdConditions);
+        String queryTotalRecordsStmt = String.format(SqlStmts.SITES_WITH_AREAID_SPECIFIED_TOTALNUMBER, statusConditionForTotalNumber, zoneIdConditions);
         logger.debug("sitesTotalRecordsStmt: " + queryTotalRecordsStmt);
         try {
             logger.debug("start querying sites total number");
@@ -104,7 +102,6 @@ public class Sites {
             recordNum = this.totalRecords;
         }
         String queryStmt = String.format(SqlStmts.SITES_WITH_AREAID_SPECIFIED, orderBy, orderDir,
-                BootstrapServlet.getSiteOnlineInternalInMinutes(), BootstrapServlet.getRequiredTypeIdsForAlarm(),
                 startRecord, (startRecord + recordNum),
                 statusCondition.toString(), zoneIdConditions);
         logger.debug("sitesQueryStmt: " + queryStmt);
@@ -116,14 +113,22 @@ public class Sites {
                 count++;
                 int siteId = rs.getInt(2);
                 String siteName = rs.getString(3);
-                String siteStatus = rs.getString(4);
-                if (siteStatus.equals("Normal") && rs.getString(5).equals("true")) {
-                    siteStatus = "Alarm";
+                String siteStatus = "Offline";
+                switch (rs.getInt(4)) {
+                    case 1:
+                        siteStatus = "Alarm";
+                        break;
+                    case 0:
+                        siteStatus = "Normal";
+                        break;
+                    case -1:
+                    default:
+                        siteStatus = "Offline";
                 }
-                int areaId = rs.getInt(6);
-                String areaName = rs.getString(7);
-                int x_pos = rs.getInt(8);
-                int y_pos = rs.getInt(9);
+                int areaId = rs.getInt(5);
+                String areaName = rs.getString(6);
+                int x_pos = rs.getInt(7);
+                int y_pos = rs.getInt(8);
                 siteList.add(new Site(siteId, siteName, siteStatus, areaId, areaName, x_pos, y_pos));
             }
             Util.safeClose(rs, stmt);
@@ -148,7 +153,7 @@ public class Sites {
             } else if (orderField.equalsIgnoreCase("name")) {
                 orderBy = "name";
             } else if (orderField.equalsIgnoreCase("status")) {
-                orderBy = "status";
+                orderBy = "DataAlarm";
             } else if (orderField.equalsIgnoreCase("areaId")) {
                 orderBy = "zone_id";
             } else if (orderField.equalsIgnoreCase("areaName")) {
@@ -162,20 +167,15 @@ public class Sites {
         StringBuilder statusCondition = new StringBuilder();
         if (status != null) {
             if (status.equalsIgnoreCase("Normal")) {
-                statusCondition.append("and status='Normal'");
+                statusCondition.append("and DataAlarm=0");
             } else if (status.equalsIgnoreCase("Offline")) {
-                statusCondition.append("and status='Offline'");
+                statusCondition.append("and DataAlarm=-1");
             } else if (status.equalsIgnoreCase("Alarm")) {
-                statusCondition.append("and status='Normal' and alarm='true'");
+                statusCondition.append("and DataAlarm=1");
             }
         }
 
-        String statusConditionForTotalNumber = "";
-        if (status != null) {
-            statusConditionForTotalNumber = statusCondition.toString().replaceFirst("and", "where");
-        }
-        String queryTotalRecordsStmt = String.format(SqlStmts.SITES_TOTALNUMBER, orderBy, orderDir,
-                BootstrapServlet.getSiteOnlineInternalInMinutes(), BootstrapServlet.getRequiredTypeIdsForAlarm(), statusConditionForTotalNumber);
+        String queryTotalRecordsStmt = String.format(SqlStmts.SITES_TOTALNUMBER, statusCondition.toString());
         logger.debug("sitesTotalRecordsStmt: " + queryTotalRecordsStmt);
         try {
             logger.debug("start querying sites total number");
@@ -196,7 +196,6 @@ public class Sites {
             recordNum = this.totalRecords + 1;
         }
         String queryStmt = String.format(SqlStmts.SITES, orderBy, orderDir,
-                BootstrapServlet.getSiteOnlineInternalInMinutes(), BootstrapServlet.getRequiredTypeIdsForAlarm(),
                 startRecord, (startRecord + recordNum),
                 statusCondition.toString());
         logger.debug("sitesQueryStmt: " + queryStmt);
@@ -208,14 +207,22 @@ public class Sites {
                 count++;
                 int siteId = rs.getInt(2);
                 String siteName = rs.getString(3);
-                String siteStatus = rs.getString(4);
-                if (siteStatus.equals("Normal") && rs.getString(5).equals("true")) {
-                    siteStatus = "Alarm";
+                String siteStatus = "Offline";
+                switch (rs.getInt(4)) {
+                    case 1:
+                        siteStatus = "Alarm";
+                        break;
+                    case 0:
+                        siteStatus = "Normal";
+                        break;
+                    case -1:
+                    default:
+                        siteStatus = "Offline";
                 }
-                int areaId = rs.getInt(6);
-                String areaName = rs.getString(7);
-                int x_pos = rs.getInt(8);
-                int y_pos = rs.getInt(9);
+                int areaId = rs.getInt(5);
+                String areaName = rs.getString(6);
+                int x_pos = rs.getInt(7);
+                int y_pos = rs.getInt(8);
                 siteList.add(new Site(siteId, siteName, siteStatus, areaId, areaName, x_pos, y_pos));
             }
             Util.safeClose(rs, stmt);

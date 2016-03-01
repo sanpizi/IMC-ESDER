@@ -5,56 +5,29 @@ package com.zyt;
  */
 public final class SqlStmts {
     //for /globalStats
-    public static final String GLOBALSTATS_SITE = "select a.site_id, " +
-            "  case when (select datediff(mi, max(datatime), getdate()) from dbo.tab_site_rtdata where SiteId=a.site_id) < %1$d then 'Normal' else 'Offline' end as status," +
-            "  case when (exists (select b.SiteId from dbo.tab_site_rtdata b, dbo.tab_alarm_def c where b.DataAlarm=1 and b.SiteId=a.site_id and datediff(mi, b.datatime, getdate()) < %1$d and b.DevType=c.devType and b.DevSn=c.devSn and (b.SignalNo-1000)=c.typeId and b.DevType=163 and b.DataTime<>'1899-12-31 00:00:00.000' and c.typeId in (%2$s))) then 'true' else 'false' end as alarm" +
-            "  from dbo.tab_siteattr_WS a";
-    public static final String GLOBALSTATS_ALARM = "select count(a.SiteId) as count, b.levelFlag " +
-            "from dbo.tab_site_rtdata a, dbo.tab_alarm_def b " +
+    public static final String GLOBALSTATS_SITE = "select a.site_id, b.DataAlarm from dbo.tab_siteattr_WS a, dbo.tab_site_rtdata b where a.site_id=b.SiteId and b.signalNo=1000";
+    public static final String GLOBALSTATS_ALARM = "select count(a.SiteId) as count, b.levelFlag from dbo.tab_site_rtdata a, dbo.tab_alarm_def b " +
             "where a.devType=b.devType and a.devSn=b.devSn and (a.SignalNo-1000)=b.typeId and b.TypeId in (%1$s)" +
             "and a.DataAlarm=1 and a.DevType=163 and a.DataTime<>'1899-12-31 00:00:00.000' group by b.levelFlag";
-
     //for /areas
     public static final String AREAS = "select zone_id, zone_name from dbo.tab_zone_attr order by zone_id asc";
 
     //for /sites
-    public static final String SITES = "with sitedata as (select row_number() over (order by %1$s %2$s) as rownumber, a.site_id, a.name," +
-            "  case when (select datediff(mi, max(datatime), getdate()) from dbo.tab_site_rtdata where SiteId=a.site_id) < %3$d then 'Normal' else 'Offline' end as status," +
-            "  case when (exists (select d.SiteId from dbo.tab_site_rtdata d, dbo.tab_alarm_def c where d.DataAlarm=1 and d.SiteId=a.site_id and datediff(mi, d.datatime, getdate()) < %3$d and d.DevType=c.devType and d.DevSn=c.devSn and (d.SignalNo-1000)=c.typeId and d.DevType=163 and d.DataTime<>'1899-12-31 00:00:00.000' and c.typeId in (%4$s))) then 'true' else 'false' end as alarm," +
-            "  b.zone_id, b.zone_name, a.x_pos, a.y_pos" +
-            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b" +
-            "  where a.zone_id=b.zone_id)" +
-            "  select * from sitedata where rownumber >= %5$d and rownumber < %6$d %7$s";
-    public static final String SITES_TOTALNUMBER = "with sitedata as (select a.site_id, a.name," +
-            "  case when (select datediff(mi, max(datatime), getdate()) from dbo.tab_site_rtdata where SiteId=a.site_id) < %3$d then 'Normal' else 'Offline' end as status," +
-            "  case when (exists (select d.SiteId from dbo.tab_site_rtdata d, dbo.tab_alarm_def c where d.DataAlarm=1 and d.SiteId=a.site_id and datediff(mi, d.datatime, getdate()) < %3$d and d.DevType=c.devType and d.DevSn=c.devSn and (d.SignalNo-1000)=c.typeId and d.DevType=163 and d.DataTime<>'1899-12-31 00:00:00.000' and c.typeId in (%4$s))) then 'true' else 'false' end as alarm," +
-            "  b.zone_id, b.zone_name" +
-            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b" +
-            "  where a.zone_id=b.zone_id)" +
-            "  select count(*) as totalrecords from sitedata %5$s";
+    public static final String SITES = "with sitedata as (select row_number() over (order by %1$s %2$s) as rownumber, a.site_id, a.name, c.DataAlarm, b.zone_id, b.zone_name, a.x_pos, a.y_pos  from dbo.tab_siteattr a, dbo.tab_zone_attr b, dbo.Tab_site_rtdata c " +
+            "where a.zone_id=b.zone_id and a.site_id=c.SiteId and c.SignalNo=1000 %5$s)  select * from sitedata where rownumber >= %3$d and rownumber < %4$d";
+    public static final String SITES_TOTALNUMBER = "with sitedata as (select a.site_id, a.name, c.DataAlarm, b.zone_id, b.zone_name from dbo.tab_siteattr a, dbo.tab_zone_attr b, dbo.tab_site_rtdata c" +
+            "  where a.zone_id=b.zone_id and a.site_id=c.SiteId and c.SignalNo=1000 %1$s) select count(*) as totalrecords from sitedata";
 
-    public static final String SITES_WITH_AREAID_SPECIFIED = "with sitedata as (select row_number() over (order by %1$s %2$s) as rownumber, a.site_id, a.name," +
-            "  case when (select datediff(mi, max(datatime), getdate()) from dbo.tab_site_rtdata where SiteId=a.site_id) < %3$d then 'Normal' else 'Offline' end as status," +
-            "  case when (exists (select d.SiteId from dbo.tab_site_rtdata d, dbo.tab_alarm_def c where d.DataAlarm=1 and d.SiteId=a.site_id and datediff(mi, d.datatime, getdate()) < %3$d and d.DevType=c.devType and d.DevSn=c.devSn and (d.SignalNo-1000)=c.typeId and d.DevType=163 and d.DataTime<>'1899-12-31 00:00:00.000' and c.typeId in (%4$s))) then 'true' else 'false' end as alarm," +
-            "  b.zone_id, b.zone_name, a.x_pos, a.y_pos" +
-            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b" +
-            "  where a.zone_id=b.zone_id and a.zone_id in (%8$s))" +
-            "  select * from sitedata where rownumber >= %5$d and rownumber < %6$d %7$s";
-    public static final String SITES_WITH_AREAID_SPECIFIED_TOTALNUMBER = "with sitedata as (select a.site_id, a.name," +
-            "  case when (select datediff(mi, max(datatime), getdate()) from dbo.tab_site_rtdata where SiteId=a.site_id) < %3$d then 'Normal' else 'Offline' end as status," +
-            "  case when (exists (select d.SiteId from dbo.tab_site_rtdata d, dbo.tab_alarm_def c where d.DataAlarm=1 and d.SiteId=a.site_id and datediff(mi, d.datatime, getdate()) < %3$d and d.DevType=c.devType and d.DevSn=c.devSn and (d.SignalNo-1000)=c.typeId and d.DevType=163 and d.DataTime<>'1899-12-31 00:00:00.000' and c.typeId in (%4$s))) then 'true' else 'false' end as alarm," +
-            "  b.zone_id, b.zone_name" +
-            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b" +
-            "  where a.zone_id=b.zone_id and a.zone_id in (%6$s))" +
-            "  select count(*) as totalrecords from sitedata %5$s";
+    public static final String SITES_WITH_AREAID_SPECIFIED = "with sitedata as (select row_number() over (order by %1$s %2$s) as rownumber, a.site_id, a.name, c.DataAlarm, b.zone_id, b.zone_name, a.x_pos, a.y_pos" +
+            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b, dbo.tab_site_rtdata c where a.zone_id=b.zone_id and a.zone_id in (%6$s) and a.site_id=c.SiteId and c.SignalNo=1000 %5$s)" +
+            "  select * from sitedata where rownumber >= %3$d and rownumber < %4$d";
+    public static final String SITES_WITH_AREAID_SPECIFIED_TOTALNUMBER = "with sitedata as (select a.site_id, a.name, c.DataAlarm, b.zone_id, b.zone_name" +
+            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b, dbo.tab_site_rtdata c where a.zone_id=b.zone_id and a.zone_id in (%2$s) and a.site_id=c.SiteId and c.SignalNo=1000 %1$s)" +
+            "  select count(*) as totalrecords from sitedata";
 
     //for /site/{siteid}
-    public static final String SITE_DETAILS_BRIEF = "select a.site_id, a.name," +
-            "  case when (select datediff(mi, max(datatime), getdate()) from dbo.tab_site_rtdata where SiteId=a.site_id) < %1$d then 'Normal' else 'Offline' end as status," +
-            "  case when (exists (select d.SiteId from dbo.tab_site_rtdata d, dbo.tab_alarm_def c where d.DataAlarm=1 and d.SiteId=a.site_id and datediff(mi, d.datatime, getdate()) < %1$d and d.DevType=c.devType and d.DevSn=c.devSn and (d.SignalNo-1000)=c.typeId and d.DevType=163 and d.DataTime<>'1899-12-31 00:00:00.000' and c.typeId in (%2$s))) then 'true' else 'false' end as alarm," +
-            "  b.zone_id, b.zone_name, a.x_pos, a.y_pos" +
-            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b" +
-            "  where a.zone_id=b.zone_id and a.site_id=%3$d";
+    public static final String SITE_DETAILS_BRIEF = "select a.site_id, a.name, c.DataAlarm, b.zone_id, b.zone_name, a.x_pos, a.y_pos" +
+            "  from dbo.tab_siteattr a, dbo.tab_zone_attr b, dbo.tab_site_rtdata c where a.zone_id=b.zone_id and a.site_id=%1$d";
     public static final String SITE_DETAILS_ALARMSTATS = "select count(a.SiteId) as count, b.levelFlag " +
             "from dbo.tab_site_rtdata a, dbo.tab_alarm_def b " +
             "where a.devType=b.devType and a.devSn=b.devSn and (a.SignalNo-1000)=b.typeId and a.DevType=163 and a.DataTime<>'1899-12-31 00:00:00.000' and b.typeId in (%1$s)" +
